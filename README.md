@@ -1,4 +1,4 @@
-# Abd-Master
+# Abd_Master
 
 LaTeX-based academic project workspace.
 
@@ -40,4 +40,3 @@ C:\Users\abdul\AppData\Local\Programs\MiKTeX\miktex\bin\x64
 - `scripts/`: scripts for figures, tables, and analysis
 - `data/`: project data; keep sensitive or large raw data out of Git unless intentionally approved
 - `build/`: generated LaTeX outputs
-
