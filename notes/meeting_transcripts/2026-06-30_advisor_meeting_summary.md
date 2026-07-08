@@ -1,8 +1,10 @@
-# Advisor Meeting Summary - 2026-06-30
+# Advisor Meeting Summary
+
+Date: 2026-06-30
 
 Source material: advisor meeting transcript PDF and handwritten meeting note provided by the user.
 
-Sensitive data handling: any SSH credentials, usernames, passwords, hostnames, IP addresses, or private login details mentioned in the transcript must remain outside Git. If needed later, store them only in local/private credential tools, never in project notes. Credentials are represented here as `[REDACTED]`.
+Sensitive data handling: any SSH credentials, usernames, passwords, hostnames, IP addresses, private project IDs, or private login details mentioned in the transcript must remain outside Git. If needed later, store them only in local/private credential tools, never in project notes. Credentials are represented here as `[REDACTED]`.
 
 ## Big Picture
 
@@ -17,13 +19,8 @@ The advisor emphasized avoiding idle waiting time: there are several independent
 - Learn the basics of SSH for remote login.
 - Learn how the `.ssh/config` file works so repeated SSH connections can be made through aliases instead of typing full connection details.
 - Do not commit SSH config entries, host details, usernames, passwords, private keys, or login commands containing private information.
-- The shared-machine work area for this project is:
-
-```text
-/mnt/data/GUEST/ABDULLAH
-```
-
-Only work in that folder on the shared machine.
+- Only work in the advisor-approved shared-machine project folder.
+- Keep the exact remote path outside Git; use `[REDACTED_REMOTE_WORKDIR]` as the placeholder in repository notes.
 
 ## VS Code Remote Workflow
 
@@ -121,4 +118,3 @@ Short private summary:
 - Which supercomputer project/account details are required after CINECA/UserDB registration?
 - What minimum validation plots should be reproduced before enabling buoyancy?
 - Which reference datasets should be used for baseline comparison?
-

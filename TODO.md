@@ -1,4 +1,4 @@
-# TODO
+# Project TODO
 
 ## Immediate setup tasks
 
@@ -17,7 +17,8 @@
 - [ ] Test SSH connection using private credentials supplied outside this repository.
 - [ ] Connect with VS Code Remote SSH.
 - [ ] Open a remote terminal through VS Code after connection.
-- [ ] Work only in `/mnt/data/GUEST/ABDULLAH` on the shared machine.
+- [ ] Work only in the advisor-approved shared-machine project folder.
+- [ ] Keep the exact remote path outside Git; use `[REDACTED_REMOTE_WORKDIR]` if a placeholder is needed.
 
 ## Supercomputer access tasks
 
@@ -45,7 +46,8 @@
 ## Simulation plan
 
 - [ ] Run tiny local/shared-machine tests only to learn the workflow.
-- [ ] Keep local grids small; avoid large local simulations, with about `128` points per direction as an approximate local upper limit.
+- [ ] Keep local grids small.
+- [ ] Avoid large local simulations, with about `128` points per direction as an approximate local upper limit.
 - [ ] First reproduce a non-buoyant baseline channel-flow case.
 - [ ] Check baseline mean velocity profile and core turbulence statistics.
 - [ ] Check passive-scalar or temperature behavior in the non-buoyant baseline.
@@ -86,4 +88,3 @@
 - [ ] Which reference DNS datasets should be used for the non-buoyant baseline?
 - [ ] What grid and runtime should be used for the first supercomputer test?
 - [ ] What final statistics and figures are expected for the thesis report?
-
