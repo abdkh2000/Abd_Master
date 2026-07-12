@@ -65,6 +65,7 @@
 
 ## Theory reading list
 
+- [x] Start theory notes on turbulent channel flow basics.
 - [ ] Wall-bounded turbulent flows.
 - [ ] Direct Numerical Simulation of turbulence.
 - [ ] Pope, `Turbulent Flows`, focusing on core turbulence concepts.
