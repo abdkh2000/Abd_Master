@@ -17,7 +17,7 @@
 - [x] Test SSH connection using private credentials supplied outside this repository.
 - [ ] Connect with VS Code Remote SSH.
 - [ ] Open a remote terminal through VS Code after connection.
-- [ ] Work only in the advisor-approved shared-machine project folder.
+- [x] Work only in the advisor-approved shared-machine project folder.
 - [ ] Keep the exact remote path outside Git; use `[REDACTED_REMOTE_WORKDIR]` if a placeholder is needed.
 
 ## Supercomputer access tasks
@@ -31,7 +31,7 @@
 
 ## BRINE code usage tasks
 
-- [ ] Verify the exact server-side code/folder name: `Brine`, `BRINE36`, `BRINE3G`, or another variant.
+- [x] Verify the exact server-side code/folder name: `Brine`, `BRINE36`, `BRINE3G`, or another variant.
 - [ ] Keep one untouched clean copy of the code.
 - [ ] For every simulation, copy the clean folder and work only in the copy.
 - [ ] Build libraries once after copying the folder.
