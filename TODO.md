@@ -35,7 +35,7 @@
 - [ ] Keep one untouched clean copy of the code.
 - [ ] For every simulation, copy the clean folder and work only in the copy.
 - [ ] Build libraries once after copying the folder.
-- [ ] Identify the correct machine-specific build and run scripts.
+- [x] Identify the correct machine-specific build and run scripts.
 - [ ] Locate and document the purpose of `input.inp`.
 - [ ] Locate and document the purpose of `ic.inp`.
 - [ ] Locate where `module.F90` sets `nx`, `ny`, and `nz`.
