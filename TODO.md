@@ -13,8 +13,8 @@
 
 - [ ] Install or confirm VS Code extension `Remote - SSH`.
 - [ ] Learn the structure of `.ssh/config`.
-- [ ] Configure remote SSH aliases locally, but do not commit the config file or any login data.
-- [ ] Test SSH connection using private credentials supplied outside this repository.
+- [x] Configure remote SSH aliases locally, but do not commit the config file or any login data.
+- [x] Test SSH connection using private credentials supplied outside this repository.
 - [ ] Connect with VS Code Remote SSH.
 - [ ] Open a remote terminal through VS Code after connection.
 - [ ] Work only in the advisor-approved shared-machine project folder.
