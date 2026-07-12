@@ -36,10 +36,10 @@
 - [ ] For every simulation, copy the clean folder and work only in the copy.
 - [ ] Build libraries once after copying the folder.
 - [x] Identify the correct machine-specific build and run scripts.
-- [ ] Locate and document the purpose of `input.inp`.
-- [ ] Locate and document the purpose of `ic.inp`.
-- [ ] Locate where `module.F90` sets `nx`, `ny`, and `nz`.
-- [ ] Locate where `main.F90` controls flags.
+- [x] Locate and document the purpose of `input.inp`.
+- [x] Locate and document the purpose of `ic.inp`.
+- [x] Locate where `module.F90` sets `nx`, `ny`, and `nz`.
+- [x] Locate where `main.F90` controls flags.
 - [ ] Identify the exact buoyancy/thermal-stratification flags.
 - [ ] Never commit the full external codebase unless the advisor explicitly permits it and it is legally appropriate.
 
