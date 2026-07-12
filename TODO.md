@@ -5,7 +5,7 @@
 - [ ] Restart VS Code and terminal so newly installed Git, Perl, MiKTeX, and PATH updates are fully available.
 - [ ] Open this repository folder in VS Code.
 - [ ] Keep the reference thesis PDF outside Git; use it only as private structural guidance.
-- [ ] Keep all credentials, SSH config entries, usernames, passwords, private keys, IP addresses, and host details outside Git.
+- [x] Keep all credentials, SSH config entries, usernames, passwords, private keys, IP addresses, and host details outside Git.
 - [ ] Practice terminal basics: `cd`, `ls`/`dir`, `pwd`, `mkdir`, copy, move, and remove temporary files.
 - [ ] Update `PROJECT_LOG.md` after each meaningful work session.
 
@@ -18,16 +18,16 @@
 - [ ] Connect with VS Code Remote SSH.
 - [ ] Open a remote terminal through VS Code after connection.
 - [x] Work only in the advisor-approved shared-machine project folder.
-- [ ] Keep the exact remote path outside Git; use `[REDACTED_REMOTE_WORKDIR]` if a placeholder is needed.
+- [x] Keep the exact remote path outside Git; use `[REDACTED_REMOTE_PATH]` if a placeholder is needed.
 
 ## Supercomputer access tasks
 
-- [ ] Create CINECA/UserDB account.
-- [ ] Email the advisor after the account exists so he can add the account to the project.
-- [ ] Complete any required two-factor authentication setup.
-- [ ] Follow the official connection procedure for the supercomputer.
+- [x] Create CINECA/UserDB account.
+- [x] Email the advisor after the account exists so he can add the account to the project.
+- [x] Complete any required two-factor authentication setup.
+- [x] Follow the official connection procedure for the supercomputer.
 - [ ] Confirm where thesis-scale runs should be launched and how job scripts should be written.
-- [ ] Do not place supercomputer credentials, account names, project IDs, or login commands in Git.
+- [x] Do not place supercomputer credentials, account names, project IDs, or login commands in Git.
 
 ## BRINE code usage tasks
 
@@ -82,7 +82,7 @@
 
 ## Open questions for advisor
 
-- [ ] What is the exact server-side code folder name?
+- [x] What is the exact server-side code folder name?
 - [ ] Which code version should be treated as the clean baseline?
 - [ ] Which flags in `main.F90` enable buoyancy?
 - [ ] Which input parameters control the Boussinesq buoyancy term?

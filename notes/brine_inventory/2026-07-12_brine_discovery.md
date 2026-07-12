@@ -45,6 +45,8 @@ No folder structure was recorded because the advisor-approved remote work direct
 - Buoyancy-related keyword files found: no
 - Keywords planned for the next accessible inspection: `buoy`, `bouss`, `strat`, `temp`, `theta`, `scalar`, `gravity`, `density`, `rho`
 
+Reliability clarification: this first discovery attempt did not access the advisor-approved work directory, so it is not evidence that buoyancy-related identifiers were absent. The later accessible discovery retry, workflow inventory, and edit-map notes supersede this attempt for BRINE keyword and file-presence results.
+
 ## Sanitized Failure
 
 The advisor SSH alias resolved and the remote connection worked, but the entered advisor-approved remote work directory was not accessible from that login session.
