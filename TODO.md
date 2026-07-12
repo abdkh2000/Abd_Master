@@ -43,6 +43,7 @@
 - [x] Prepare tiny edit plan for the BRINE working copy.
 - [x] Apply first tiny grid edit in the BRINE working copy.
 - [x] Attempt first tiny compile/run smoke test.
+- [x] Diagnose first tiny-grid run failure from sanitized remote log.
 - [ ] Identify the exact buoyancy/thermal-stratification flags.
 - [ ] Never commit the full external codebase unless the advisor explicitly permits it and it is legally appropriate.
 
