@@ -32,8 +32,8 @@
 ## BRINE code usage tasks
 
 - [x] Verify the exact server-side code/folder name: `Brine`, `BRINE36`, `BRINE3G`, or another variant.
-- [ ] Keep one untouched clean copy of the code.
-- [ ] For every simulation, copy the clean folder and work only in the copy.
+- [x] Keep one untouched clean copy of the code.
+- [x] For every simulation, copy the clean folder and work only in the copy.
 - [ ] Build libraries once after copying the folder.
 - [x] Identify the correct machine-specific build and run scripts.
 - [x] Locate and document the purpose of `input.inp`.
