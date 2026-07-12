@@ -41,6 +41,8 @@
 - [x] Locate where `module.F90` sets `nx`, `ny`, and `nz`.
 - [x] Locate where `main.F90` controls flags.
 - [x] Prepare tiny edit plan for the BRINE working copy.
+- [x] Apply first tiny grid edit in the BRINE working copy.
+- [x] Attempt first tiny compile/run smoke test.
 - [ ] Identify the exact buoyancy/thermal-stratification flags.
 - [ ] Never commit the full external codebase unless the advisor explicitly permits it and it is legally appropriate.
 
