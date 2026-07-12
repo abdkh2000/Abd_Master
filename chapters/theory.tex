@@ -1,0 +1,173 @@
+\section{Theoretical Background}
+\label{sec:theoretical-background}
+
+\subsection{Wall-Bounded Turbulent Channel Flow and Governing Equations}
+\label{sec:channel-flow-governing-equations}
+
+Plane channel flow provides a well-defined configuration for studying the
+interaction between turbulence and solid walls. It consists of fluid motion
+between two stationary, parallel, impermeable walls separated by the full
+channel height $2\delta$, where $\delta$ is the channel half-height. The
+streamwise, wall-normal, and spanwise coordinates are denoted by $x$, $y$, and
+$z$, respectively. The corresponding instantaneous velocity components are
+$u$, $v$, and $w$, so that the velocity vector is
+$\mathbf{u}=(u,v,w)$. Figure~\ref{fig:channel-geometry} summarizes this
+coordinate system. This idealized geometry is widely used for fundamental
+studies because it retains the essential influence of no-slip walls while
+remaining homogeneous in the two wall-parallel directions
+\cite{kimMoinMoser1987}.
+
+\begin{figure}[htbp]
+  \centering
+  \setlength{\unitlength}{1mm}
+  \begin{picture}(120,46)
+    \put(12,8){\line(1,0){96}}
+    \put(12,36){\line(1,0){96}}
+    \put(15,3){stationary wall, $y=-\delta$}
+    \put(15,39){stationary wall, $y=\delta$}
+    \put(43,22){\vector(1,0){30}}
+    \put(75,20){$x$}
+    \put(43,22){\vector(0,1){11}}
+    \put(39,33){$y$}
+    \put(43,22){\circle*{1.2}}
+    \put(38,17){$z$ out of the page}
+    \put(86,22){\vector(1,0){15}}
+    \put(88,25){mean flow}
+  \end{picture}
+  \caption{Idealized plane-channel geometry and coordinate directions. The
+  spanwise direction $z$ is parallel to the walls and perpendicular to the
+  page.}
+  \label{fig:channel-geometry}
+\end{figure}
+
+The lower and upper walls are located at $y=-\delta$ and $y=\delta$. For
+stationary walls, impermeability and the no-slip condition require
+\begin{equation}
+  \mathbf{u}(x,-\delta,z,t)
+  =\mathbf{u}(x,\delta,z,t)=\mathbf{0},
+  \label{eq:channel-no-slip}
+\end{equation}
+where $t$ denotes time. In an ideal channel simulation, the domain is commonly
+periodic in $x$ and $z$. If its streamwise and spanwise lengths are $L_x$ and
+$L_z$, respectively, the velocity therefore satisfies
+\begin{equation}
+  \mathbf{u}(x+L_x,y,z,t)=\mathbf{u}(x,y,z,t),
+  \qquad
+  \mathbf{u}(x,y,z+L_z,t)=\mathbf{u}(x,y,z,t).
+  \label{eq:channel-periodicity}
+\end{equation}
+These periodic conditions represent a spatially repeating section of a channel;
+they do not imply that individual turbulent structures are steady.
+
+The fluid is initially treated as Newtonian, incompressible, and of constant
+density $\rho$ and constant kinematic viscosity $\nu$. Here, $\rho$ is measured
+in $\mathrm{kg\,m^{-3}}$ and $\nu$ in $\mathrm{m^2\,s^{-1}}$. Conservation of
+mass then reduces to the incompressible continuity equation
+\begin{equation}
+  \boldsymbol{\nabla}\mathbin{\cdot}\mathbf{u}=0,
+  \label{eq:incompressible-continuity}
+\end{equation}
+where $\boldsymbol{\nabla}$ is the spatial gradient operator. Conservation of
+momentum is governed by the incompressible Navier--Stokes equations
+\begin{equation}
+  \frac{\partial \mathbf{u}}{\partial t}
+  +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
+  =-\frac{1}{\rho}\boldsymbol{\nabla}p
+  +\nu\boldsymbol{\nabla}^{2}\mathbf{u},
+  \label{eq:incompressible-navier-stokes}
+\end{equation}
+in which $p$ is the pressure in pascals and
+$\boldsymbol{\nabla}^{2}$ is the Laplace operator. The terms in
+Eq.~\eqref{eq:incompressible-navier-stokes} describe, from left to right,
+local acceleration, convective acceleration, acceleration caused by the
+pressure gradient, and viscous momentum diffusion. Equations
+\eqref{eq:incompressible-continuity} and
+\eqref{eq:incompressible-navier-stokes}, together with the boundary conditions
+in Eqs.~\eqref{eq:channel-no-slip} and \eqref{eq:channel-periodicity}, form the
+dimensional mechanical description used here \cite{pope2000}.
+
+A streamwise pressure gradient is required to maintain a non-zero flow through
+the channel. A convenient representation separates the pressure into a linear
+mean contribution and a periodic remainder $\widetilde{p}$:
+\begin{equation}
+  p(x,y,z,t)=-Gx+\widetilde{p}(x,y,z,t),
+  \qquad
+  G=-\frac{\mathrm{d}\langle p\rangle}{\mathrm{d}x}>0,
+  \label{eq:channel-pressure-decomposition}
+\end{equation}
+where $G$ is the imposed streamwise pressure drop per unit length, measured in
+$\mathrm{Pa\,m^{-1}}$, and angle brackets denote a statistical average. The
+periodic pressure remainder $\widetilde{p}$ can satisfy the same streamwise
+periodicity as the velocity. Substitution of
+Eq.~\eqref{eq:channel-pressure-decomposition} into
+Eq.~\eqref{eq:incompressible-navier-stokes} gives
+\begin{equation}
+  \frac{\partial \mathbf{u}}{\partial t}
+  +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
+  =-\frac{1}{\rho}\boldsymbol{\nabla}\widetilde{p}
+  +\nu\boldsymbol{\nabla}^{2}\mathbf{u}
+  +\frac{G}{\rho}\mathbf{e}_x,
+  \label{eq:pressure-driven-navier-stokes}
+\end{equation}
+where $\mathbf{e}_x$ is the unit vector in the positive streamwise direction.
+Thus, the mean pressure gradient appears as a uniform streamwise acceleration.
+Numerically, an equivalent forcing can be adjusted in time to maintain a
+prescribed flow rate rather than a prescribed value of $G$.
+
+Fully developed flow is understood in a statistical sense. Its averaged
+velocity and turbulence statistics are independent of $x$ and $z$, although
+the instantaneous turbulent field remains three-dimensional and time-dependent.
+For the velocity, this condition is expressed as
+\begin{equation}
+  \langle\mathbf{u}\rangle=\bigl(U(y),0,0\bigr),
+  \label{eq:fully-developed-channel-flow}
+\end{equation}
+where $U(y)=\langle u\rangle$ is the mean streamwise velocity. The averaging
+operation and the turbulent fluctuations about this mean will be formalized in
+the subsequent treatment of turbulence statistics.
+
+For a bulk scaling, the bulk mean velocity is defined by
+\begin{equation}
+  U_b=\frac{1}{2\delta}\int_{-\delta}^{\delta}U(y)\,\mathrm{d}y.
+  \label{eq:channel-bulk-velocity}
+\end{equation}
+Using $\delta$ as the reference length and $U_b$ as the reference velocity
+introduces the dimensionless variables
+\begin{equation}
+  \mathbf{x}^{*}=\frac{\mathbf{x}}{\delta},
+  \qquad
+  t^{*}=\frac{tU_b}{\delta},
+  \qquad
+  \mathbf{u}^{*}=\frac{\mathbf{u}}{U_b},
+  \qquad
+  p^{*}=\frac{\widetilde{p}}{\rho U_b^2},
+  \label{eq:channel-bulk-scaling}
+\end{equation}
+where a superscript $*$ identifies a dimensionless quantity. Equations
+\eqref{eq:incompressible-continuity} and
+\eqref{eq:pressure-driven-navier-stokes} then become
+\begin{align}
+  \boldsymbol{\nabla}^{*}\mathbin{\cdot}\mathbf{u}^{*}&=0,
+  \label{eq:dimensionless-continuity}\\
+  \frac{\partial\mathbf{u}^{*}}{\partial t^{*}}
+  +(\mathbf{u}^{*}\mathbin{\cdot}\boldsymbol{\nabla}^{*})\mathbf{u}^{*}
+  &=-\boldsymbol{\nabla}^{*}p^{*}
+  +\frac{1}{\mathrm{Re}_b}\boldsymbol{\nabla}^{*2}\mathbf{u}^{*}
+  +\Pi\mathbf{e}_x,
+  \label{eq:dimensionless-channel-momentum}
+\end{align}
+with
+\begin{equation}
+  \mathrm{Re}_b=\frac{U_b\delta}{\nu},
+  \qquad
+  \Pi=\frac{G\delta}{\rho U_b^2}.
+  \label{eq:bulk-reynolds-pressure-parameter}
+\end{equation}
+Here, $\boldsymbol{\nabla}^{*}$ denotes differentiation with respect to
+$\mathbf{x}^{*}$, $\mathrm{Re}_b$ is the bulk Reynolds number based on the
+channel half-height, and $\Pi$ is the dimensionless pressure-gradient parameter.
+Some literature defines the bulk Reynolds number using the full height
+$2\delta$; stating the reference length is therefore necessary when values are
+compared. This bulk scaling exposes the relative strength of inertia and
+viscosity. A later subsection will introduce the complementary friction-velocity
+scaling needed to describe the near-wall region.

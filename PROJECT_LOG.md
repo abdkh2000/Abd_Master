@@ -2,6 +2,15 @@
 
 ## 2026-07-12
 
+### Theory Chapter Drafting
+
+- Added the first theory subsection on wall-bounded turbulent channel flow and
+  the governing incompressible equations.
+- Defined the channel geometry, boundary conditions, fully developed-flow
+  assumptions, pressure-gradient forcing, and bulk nondimensionalization.
+- Added verified foundational references for the governing theory and canonical
+  turbulent-channel DNS configuration.
+
 ### Leonardo And Advisor Access
 
 - Confirmed Leonardo login, environment checks, Slurm queue access, and a controlled-output smoke test.
