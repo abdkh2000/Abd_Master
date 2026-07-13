@@ -13,6 +13,14 @@
   covering the physical configuration, governing equations, boundary
   conditions, and validation statistics.
 
+### Introduction And Document Formatting
+
+- Replaced the placeholder introduction with a project-specific motivation,
+  planned BRINE workflow, and non-buoyant-to-buoyant comparison strategy.
+- Configured XeLaTeX to use 12-point Times New Roman with one-and-a-half line
+  spacing and placed the bibliography on a separate page.
+- Added a verified reference on stably stratified turbulent channel flow.
+
 ## 2026-07-12
 
 ### Theory Chapter Drafting

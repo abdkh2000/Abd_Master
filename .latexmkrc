@@ -1,5 +1,5 @@
-$pdf_mode = 1;
+$pdf_mode = 5;
 $out_dir = 'build';
 $aux_dir = 'build';
-$pdflatex = 'pdflatex -interaction=nonstopmode -file-line-error -synctex=1 %O %S';
-
+$xelatex = 'xelatex -interaction=nonstopmode -file-line-error -synctex=1 %O %S';
+$pdflatex = $xelatex;
