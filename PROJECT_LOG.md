@@ -1,5 +1,18 @@
 # Project Log
 
+## 2026-07-13
+
+### Reynolds Decomposition And Turbulence Statistics
+
+- Added the theory subsection on Reynolds decomposition, channel-DNS
+  averaging, Reynolds stresses, RMS velocity fluctuations, and turbulent
+  kinetic energy.
+- Identified the baseline statistics required for later non-buoyant channel-DNS
+  validation before buoyancy effects are interpreted.
+- Reorganised the existing theory into a concise engineering-thesis structure
+  covering the physical configuration, governing equations, boundary
+  conditions, and validation statistics.
+
 ## 2026-07-12
 
 ### Theory Chapter Drafting

@@ -1,21 +1,21 @@
 \section{Theoretical Background}
 \label{sec:theoretical-background}
 
-\subsection{Wall-Bounded Turbulent Channel Flow and Governing Equations}
+This chapter defines the physical configuration, governing equations, and
+turbulence statistics required for the present work. It first establishes the
+incompressible, non-buoyant channel-flow baseline; thermal stratification will
+be introduced later.
+
+\subsection{Governing Equations and Physical Configuration}
 \label{sec:channel-flow-governing-equations}
 
-Plane channel flow provides a well-defined configuration for studying the
-interaction between turbulence and solid walls. It consists of fluid motion
-between two stationary, parallel, impermeable walls separated by the full
-channel height $2\delta$, where $\delta$ is the channel half-height. The
-streamwise, wall-normal, and spanwise coordinates are denoted by $x$, $y$, and
-$z$, respectively. The corresponding instantaneous velocity components are
-$u$, $v$, and $w$, so that the velocity vector is
-$\mathbf{u}=(u,v,w)$. Figure~\ref{fig:channel-geometry} summarizes this
-coordinate system. This idealized geometry is widely used for fundamental
-studies because it retains the essential influence of no-slip walls while
-remaining homogeneous in the two wall-parallel directions
-\cite{kimMoinMoser1987}.
+Plane channel flow consists of fluid motion between two stationary, parallel
+walls separated by the full channel height $2\delta$, where $\delta$ is the
+channel half-height. The coordinates $x$, $y$, and $z$ denote the streamwise,
+wall-normal, and spanwise directions, respectively. The corresponding
+instantaneous velocity components are $u$, $v$, and $w$, and the velocity
+vector is $\mathbf{u}=(u,v,w)$. Figure~\ref{fig:channel-geometry} shows the
+coordinate convention used in this chapter.
 
 \begin{figure}[htbp]
   \centering
@@ -34,41 +34,28 @@ remaining homogeneous in the two wall-parallel directions
     \put(86,22){\vector(1,0){15}}
     \put(88,25){mean flow}
   \end{picture}
-  \caption{Idealized plane-channel geometry and coordinate directions. The
-  spanwise direction $z$ is parallel to the walls and perpendicular to the
-  page.}
+  \caption{Plane-channel configuration and coordinate convention used in the
+  present chapter.}
   \label{fig:channel-geometry}
 \end{figure}
 
-The lower and upper walls are located at $y=-\delta$ and $y=\delta$. For
-stationary walls, impermeability and the no-slip condition require
-\begin{equation}
-  \mathbf{u}(x,-\delta,z,t)
-  =\mathbf{u}(x,\delta,z,t)=\mathbf{0},
-  \label{eq:channel-no-slip}
-\end{equation}
-where $t$ denotes time. In an ideal channel simulation, the domain is commonly
-periodic in $x$ and $z$. If its streamwise and spanwise lengths are $L_x$ and
-$L_z$, respectively, the velocity therefore satisfies
-\begin{equation}
-  \mathbf{u}(x+L_x,y,z,t)=\mathbf{u}(x,y,z,t),
-  \qquad
-  \mathbf{u}(x,y,z+L_z,t)=\mathbf{u}(x,y,z,t).
-  \label{eq:channel-periodicity}
-\end{equation}
-These periodic conditions represent a spatially repeating section of a channel;
-they do not imply that individual turbulent structures are steady.
+\subsubsection{Conservation of Mass}
 
-The fluid is initially treated as Newtonian, incompressible, and of constant
-density $\rho$ and constant kinematic viscosity $\nu$. Here, $\rho$ is measured
-in $\mathrm{kg\,m^{-3}}$ and $\nu$ in $\mathrm{m^2\,s^{-1}}$. Conservation of
-mass then reduces to the incompressible continuity equation
+For an incompressible fluid of constant density, conservation of mass reduces
+to
 \begin{equation}
   \boldsymbol{\nabla}\mathbin{\cdot}\mathbf{u}=0,
   \label{eq:incompressible-continuity}
 \end{equation}
-where $\boldsymbol{\nabla}$ is the spatial gradient operator. Conservation of
-momentum is governed by the incompressible Navier--Stokes equations
+where $\boldsymbol{\nabla}$ is the spatial gradient operator. Equation
+\eqref{eq:incompressible-continuity} requires the velocity field to be
+divergence-free and expresses local conservation of fluid mass.
+
+\subsubsection{Conservation of Momentum}
+
+The present formulation treats the fluid as Newtonian, with constant density
+$\rho$ and constant kinematic viscosity $\nu$. Conservation of momentum is
+then described by the incompressible Navier--Stokes equations,
 \begin{equation}
   \frac{\partial \mathbf{u}}{\partial t}
   +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
@@ -76,31 +63,27 @@ momentum is governed by the incompressible Navier--Stokes equations
   +\nu\boldsymbol{\nabla}^{2}\mathbf{u},
   \label{eq:incompressible-navier-stokes}
 \end{equation}
-in which $p$ is the pressure in pascals and
-$\boldsymbol{\nabla}^{2}$ is the Laplace operator. The terms in
-Eq.~\eqref{eq:incompressible-navier-stokes} describe, from left to right,
-local acceleration, convective acceleration, acceleration caused by the
-pressure gradient, and viscous momentum diffusion. Equations
-\eqref{eq:incompressible-continuity} and
-\eqref{eq:incompressible-navier-stokes}, together with the boundary conditions
-in Eqs.~\eqref{eq:channel-no-slip} and \eqref{eq:channel-periodicity}, form the
-dimensional mechanical description used here \cite{pope2000}.
+where $t$ is time, $p$ is pressure, and $\boldsymbol{\nabla}^{2}$ is the
+Laplace operator. In SI units, $\rho$, $\nu$, and $p$ are measured in
+$\mathrm{kg\,m^{-3}}$, $\mathrm{m^2\,s^{-1}}$, and pascals, respectively.
+The two terms on the left-hand side represent local and convective
+acceleration; the right-hand side contains pressure acceleration and viscous
+momentum diffusion \cite{pope2000}.
 
-A streamwise pressure gradient is required to maintain a non-zero flow through
-the channel. A convenient representation separates the pressure into a linear
-mean contribution and a periodic remainder $\widetilde{p}$:
+\subsubsection{Pressure-Gradient Forcing}
+
+A streamwise pressure gradient maintains the channel flow. The pressure is
+written as a linear mean contribution plus a periodic remainder
+$\widetilde{p}$,
 \begin{equation}
   p(x,y,z,t)=-Gx+\widetilde{p}(x,y,z,t),
   \qquad
   G=-\frac{\mathrm{d}\langle p\rangle}{\mathrm{d}x}>0,
   \label{eq:channel-pressure-decomposition}
 \end{equation}
-where $G$ is the imposed streamwise pressure drop per unit length, measured in
-$\mathrm{Pa\,m^{-1}}$, and angle brackets denote a statistical average. The
-periodic pressure remainder $\widetilde{p}$ can satisfy the same streamwise
-periodicity as the velocity. Substitution of
-Eq.~\eqref{eq:channel-pressure-decomposition} into
-Eq.~\eqref{eq:incompressible-navier-stokes} gives
+where $G$ is the imposed streamwise pressure drop per unit length in
+$\mathrm{Pa\,m^{-1}}$, and angle brackets denote a statistical average.
+Substitution into Eq.~\eqref{eq:incompressible-navier-stokes} gives
 \begin{equation}
   \frac{\partial \mathbf{u}}{\partial t}
   +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
@@ -110,64 +93,170 @@ Eq.~\eqref{eq:incompressible-navier-stokes} gives
   \label{eq:pressure-driven-navier-stokes}
 \end{equation}
 where $\mathbf{e}_x$ is the unit vector in the positive streamwise direction.
-Thus, the mean pressure gradient appears as a uniform streamwise acceleration.
-Numerically, an equivalent forcing can be adjusted in time to maintain a
-prescribed flow rate rather than a prescribed value of $G$.
+The final term is the uniform acceleration associated with the mean pressure
+gradient. Equation~\eqref{eq:pressure-driven-navier-stokes} defines the
+physical forcing considered here; its implementation by the solver is not
+specified at this stage.
 
-Fully developed flow is understood in a statistical sense. Its averaged
-velocity and turbulence statistics are independent of $x$ and $z$, although
-the instantaneous turbulent field remains three-dimensional and time-dependent.
-For the velocity, this condition is expressed as
+\subsubsection{Computational Domain and Boundary Conditions}
+
+The walls are located at $y=-\delta$ and $y=\delta$. Impermeability and the
+no-slip condition require
+\begin{equation}
+  \mathbf{u}(x,-\delta,z,t)
+  =\mathbf{u}(x,\delta,z,t)=\mathbf{0}.
+  \label{eq:channel-no-slip}
+\end{equation}
+The zero vector in Eq.~\eqref{eq:channel-no-slip} states that all three
+velocity components vanish at each stationary wall. For a channel domain of
+streamwise length $L_x$ and spanwise length $L_z$, periodicity in the two
+wall-parallel directions is expressed as
+\begin{equation}
+  \mathbf{u}(x+L_x,y,z,t)=\mathbf{u}(x,y,z,t),
+  \qquad
+  \mathbf{u}(x,y,z+L_z,t)=\mathbf{u}(x,y,z,t).
+  \label{eq:channel-periodicity}
+\end{equation}
+These conditions represent a repeating section of the channel and make $x$
+and $z$ statistically homogeneous. The instantaneous flow remains
+three-dimensional and time-dependent \cite{kimMoinMoser1987}.
+
+\subsubsection{Fully Developed Channel Flow}
+
+Fully developed channel flow is defined statistically: its mean quantities do
+not vary in the homogeneous directions. The mean velocity therefore has the
+form
 \begin{equation}
   \langle\mathbf{u}\rangle=\bigl(U(y),0,0\bigr),
   \label{eq:fully-developed-channel-flow}
 \end{equation}
-where $U(y)=\langle u\rangle$ is the mean streamwise velocity. The averaging
-operation and the turbulent fluctuations about this mean will be formalized in
-the subsequent treatment of turbulence statistics.
+where $U(y)=\langle u\rangle$ is the mean streamwise velocity. Equation
+\eqref{eq:fully-developed-channel-flow} describes the mean field only and does
+not imply that the instantaneous turbulent field is steady.
 
-For a bulk scaling, the bulk mean velocity is defined by
+\subsection{Turbulence Statistics for Validation}
+\label{sec:reynolds-decomposition-turbulence-statistics}
+
+Validation of a turbulent channel calculation is based on converged
+statistics rather than individual instantaneous fields. The quantities needed
+for the present work are defined below using the coordinate convention of
+Subsection~\ref{sec:channel-flow-governing-equations}.
+
+\subsubsection{Reynolds Decomposition and Averaging}
+
+The instantaneous velocity is separated into mean and fluctuating parts by the
+Reynolds decomposition,
 \begin{equation}
-  U_b=\frac{1}{2\delta}\int_{-\delta}^{\delta}U(y)\,\mathrm{d}y.
-  \label{eq:channel-bulk-velocity}
+  u_i(\mathbf{x},t)=U_i(\mathbf{x})+u_i'(\mathbf{x},t),
+  \qquad
+  U_i=\langle u_i\rangle,
+  \qquad i\in\{1,2,3\},
+  \label{eq:reynolds-decomposition}
 \end{equation}
-Using $\delta$ as the reference length and $U_b$ as the reference velocity
-introduces the dimensionless variables
+where $\mathbf{x}=(x,y,z)$ is the position vector, $u_i$ is an instantaneous
+velocity component, $U_i$ is its mean, $u_i'$ is its fluctuation, and $i$ is
+the component index. The assignments $u_1=u$, $u_2=v$, and $u_3=w$ correspond
+to the streamwise, wall-normal, and spanwise components. In component form,
+$u=U+u'$, $v=V+v'$, and $w=W+w'$, where $U=\langle u\rangle$,
+$V=\langle v\rangle$, and $W=\langle w\rangle$. All velocity quantities have
+units of $\mathrm{m\,s^{-1}}$. For the fully developed flow in
+Eq.~\eqref{eq:fully-developed-channel-flow}, $U=U(y)$ and $V=W=0$. The
+fluctuations satisfy
 \begin{equation}
-  \mathbf{x}^{*}=\frac{\mathbf{x}}{\delta},
+  \langle u_i'\rangle=0,
   \qquad
-  t^{*}=\frac{tU_b}{\delta},
-  \qquad
-  \mathbf{u}^{*}=\frac{\mathbf{u}}{U_b},
-  \qquad
-  p^{*}=\frac{\widetilde{p}}{\rho U_b^2},
-  \label{eq:channel-bulk-scaling}
+  \langle u'\rangle=\langle v'\rangle=\langle w'\rangle=0.
+  \label{eq:zero-mean-velocity-fluctuations}
 \end{equation}
-where a superscript $*$ identifies a dimensionless quantity. Equations
-\eqref{eq:incompressible-continuity} and
-\eqref{eq:pressure-driven-navier-stokes} then become
-\begin{align}
-  \boldsymbol{\nabla}^{*}\mathbin{\cdot}\mathbf{u}^{*}&=0,
-  \label{eq:dimensionless-continuity}\\
-  \frac{\partial\mathbf{u}^{*}}{\partial t^{*}}
-  +(\mathbf{u}^{*}\mathbin{\cdot}\boldsymbol{\nabla}^{*})\mathbf{u}^{*}
-  &=-\boldsymbol{\nabla}^{*}p^{*}
-  +\frac{1}{\mathrm{Re}_b}\boldsymbol{\nabla}^{*2}\mathbf{u}^{*}
-  +\Pi\mathbf{e}_x,
-  \label{eq:dimensionless-channel-momentum}
-\end{align}
-with
+Equation~\eqref{eq:zero-mean-velocity-fluctuations} follows directly from the
+definition of the mean \cite{pope2000}.
+
+For an instantaneous flow quantity $\phi$, the ideal time average is
 \begin{equation}
-  \mathrm{Re}_b=\frac{U_b\delta}{\nu},
-  \qquad
-  \Pi=\frac{G\delta}{\rho U_b^2}.
-  \label{eq:bulk-reynolds-pressure-parameter}
+  \langle\phi\rangle_t(x,y,z)
+  =\lim_{T\rightarrow\infty}\frac{1}{T}
+  \int_{t_0}^{t_0+T}\phi(x,y,z,t)\,\mathrm{d}t,
+  \label{eq:turbulence-time-average}
 \end{equation}
-Here, $\boldsymbol{\nabla}^{*}$ denotes differentiation with respect to
-$\mathbf{x}^{*}$, $\mathrm{Re}_b$ is the bulk Reynolds number based on the
-channel half-height, and $\Pi$ is the dimensionless pressure-gradient parameter.
-Some literature defines the bulk Reynolds number using the full height
-$2\delta$; stating the reference length is therefore necessary when values are
-compared. This bulk scaling exposes the relative strength of inertia and
-viscosity. A later subsection will introduce the complementary friction-velocity
-scaling needed to describe the near-wall region.
+where $t_0$ is the start of the sampling interval and $T$ is its duration in
+seconds. In a statistically stationary calculation, the converged result is
+independent of $t_0$. Averaging additionally over the homogeneous directions
+gives
+\begin{equation}
+  \langle\phi\rangle(y)
+  =\frac{1}{L_xL_z}\int_0^{L_z}\int_0^{L_x}
+  \langle\phi\rangle_t(x,y,z)\,\mathrm{d}x\,\mathrm{d}z.
+  \label{eq:channel-space-time-average}
+\end{equation}
+Equation~\eqref{eq:channel-space-time-average} is the statistical average used
+below. For finite simulation data, the sampling interval must be long enough
+for each reported quantity to converge. Under an ergodic interpretation, this
+space--time average estimates the corresponding ensemble average. Statistical
+stationarity refers to the statistics, not to a steady instantaneous field.
+
+The second moments are collected in the kinematic Reynolds-stress tensor,
+\begin{equation}
+  R_{ij}(y)=\langle u_i'u_j'\rangle,
+  \label{eq:reynolds-stress-tensor}
+\end{equation}
+where $R_{ij}$ has units of $\mathrm{m^2\,s^{-2}}$. The diagonal components
+$R_{11}$, $R_{22}$, and $R_{33}$ are the streamwise, wall-normal, and spanwise
+normal stresses; the off-diagonal components describe correlations between
+different velocity fluctuations.
+
+\subsubsection{RMS Velocity Fluctuations}
+
+The root-mean-square (RMS) velocity fluctuations are
+\begin{equation}
+  u_{\mathrm{rms}}(y)=\sqrt{\langle u'^2\rangle},
+  \qquad
+  v_{\mathrm{rms}}(y)=\sqrt{\langle v'^2\rangle},
+  \qquad
+  w_{\mathrm{rms}}(y)=\sqrt{\langle w'^2\rangle}.
+  \label{eq:rms-velocity-fluctuations}
+\end{equation}
+These quantities are the square roots of $R_{11}$, $R_{22}$, and $R_{33}$,
+respectively, and have units of $\mathrm{m\,s^{-1}}$. Their profiles measure
+the typical streamwise, wall-normal, and spanwise fluctuation magnitudes across
+the channel and are standard quantities for comparison with reference DNS data
+\cite{kimMoinMoser1987}.
+
+\subsubsection{Reynolds Shear Stress}
+
+The Reynolds-stress component relevant to wall-normal transport of streamwise
+momentum is
+\begin{equation}
+  -R_{12}(y)=-\langle u'v'\rangle.
+  \label{eq:reynolds-shear-stress}
+\end{equation}
+Here, $u'$ and $v'$ are the streamwise and wall-normal velocity fluctuations.
+The kinematic stress in Eq.~\eqref{eq:reynolds-shear-stress} has units of
+$\mathrm{m^2\,s^{-2}}$; multiplication by $\rho$ gives the dimensional
+turbulent shear stress $-\rho\langle u'v'\rangle$ in pascals. This correlation
+quantifies turbulent momentum transfer between wall-parallel layers and is a
+central validation quantity for channel flow \cite{pope2000}.
+
+\subsubsection{Turbulent Kinetic Energy}
+
+The turbulent kinetic energy per unit mass is
+\begin{equation}
+  k(y)=\frac{1}{2}\langle u_i'u_i'\rangle
+  =\frac{1}{2}\left(
+    \langle u'^2\rangle+\langle v'^2\rangle+\langle w'^2\rangle
+  \right),
+  \label{eq:turbulent-kinetic-energy}
+\end{equation}
+where a repeated index denotes summation over the three Cartesian components.
+The quantity $k$ is the mean kinetic energy of the velocity fluctuations per
+unit fluid mass. Its SI units are $\mathrm{m^2\,s^{-2}}$, equivalently
+$\mathrm{J\,kg^{-1}}$.
+
+\subsubsection{Validation Quantities for the Present Work}
+
+The present work will later extract the mean streamwise velocity $U(y)$, the
+three RMS velocity fluctuations, the Reynolds shear stress
+$-\langle u'v'\rangle$, and the turbulent kinetic energy $k(y)$ from BRINE.
+Their definitions are independent of the solver implementation, but the
+coordinate mapping and sampling procedure must be confirmed before the output
+is processed. Agreement with trusted non-buoyant channel DNS data is required
+before differences caused by buoyancy are interpreted.
