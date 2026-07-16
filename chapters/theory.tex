@@ -260,3 +260,133 @@ Their definitions are independent of the solver implementation, but the
 coordinate mapping and sampling procedure must be confirmed before the output
 is processed. Agreement with trusted non-buoyant channel DNS data is required
 before differences caused by buoyancy are interpreted.
+
+\subsection{Wall Scaling, Friction Reynolds Number, and Law of the Wall}
+\label{sec:wall-scaling-law-wall}
+
+Wall scaling relates the near-wall velocity field to the shear exerted by a
+solid boundary. For the mean streamwise velocity $U(z)$ defined in
+Eq.~\eqref{eq:fully-developed-channel-flow}, the positive magnitude of the wall
+shear stress is
+\begin{equation}
+  \tau_w
+  =\mu\left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_w
+  =\rho\nu\left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_w,
+  \label{eq:wall-shear-stress}
+\end{equation}
+where the subscript $w$ denotes evaluation at either wall, $\mu=\rho\nu$ is
+the dynamic viscosity, and $\nu$ is the kinematic viscosity introduced in
+Eq.~\eqref{eq:incompressible-navier-stokes}. The absolute value removes the
+opposite gradient signs at the lower and upper walls. Physically, $\tau_w$ is
+the streamwise force transmitted per unit wall area; its SI unit is the pascal,
+$\mathrm{Pa}=\mathrm{N\,m^{-2}}$.
+
+The corresponding friction velocity, channel half-height, and friction
+Reynolds number are
+\begin{equation}
+  u_\tau=\sqrt{\frac{\tau_w}{\rho}},
+  \qquad
+  h=\frac{L_z}{2},
+  \qquad
+  Re_\tau=\frac{u_\tau h}{\nu}.
+  \label{eq:friction-scaling-quantities}
+\end{equation}
+Here, $u_\tau$ has units of velocity but is a shear-based scaling quantity, not
+the local fluid velocity. The half-height $h$ is identical to $\delta$ in the
+centred geometry of Fig.~\ref{fig:channel-geometry}, and $L_z$ is the full
+wall-normal channel length. The parameter $Re_\tau$ measures the separation
+between the outer length $h$ and the near-wall viscous length; increasing
+$Re_\tau$ generally increases the range of dynamically relevant wall-turbulence
+scales \cite{pope2000}.
+
+The planned project convention uses $L_z=2$, $|\Pi|=1$, and $\rho=1$, where
+$\Pi=\mathrm{d}\langle p\rangle/\mathrm{d}x=-G$ is the signed mean pressure
+gradient associated with Eq.~\eqref{eq:channel-pressure-decomposition}. For a
+fully developed plane channel, the mean streamwise momentum balance gives
+$\tau_w=h|\Pi|$. Consequently,
+\begin{equation}
+  h=1,
+  \qquad
+  \tau_w=1,
+  \qquad
+  u_\tau=1,
+  \qquad
+  \nu=\mu=\frac{1}{Re_\tau}
+  \quad (\rho=1).
+  \label{eq:project-wall-scaling-normalization}
+\end{equation}
+Equation~\eqref{eq:project-wall-scaling-normalization} documents the intended
+nondimensional setup. It is not a result from a completed simulation.
+
+Let $d_w$ be the non-negative distance from a point to the nearest wall. In the
+centred coordinate system of Fig.~\ref{fig:channel-geometry},
+$d_w=h-|z|$; for data stored on $0\leq z\leq L_z$, the equivalent expression is
+$d_w=\min(z,L_z-z)$. The viscous length, wall distance, and mean velocity in
+wall units are
+\begin{equation}
+  \ell_\nu=\frac{\nu}{u_\tau},
+  \qquad
+  z^+=\frac{d_w}{\ell_\nu}=\frac{d_wu_\tau}{\nu},
+  \qquad
+  U^+=\frac{U}{u_\tau}.
+  \label{eq:viscous-length-wall-units}
+\end{equation}
+The RMS quantities from Eq.~\eqref{eq:rms-velocity-fluctuations} and the
+Reynolds shear stress from Eq.~\eqref{eq:reynolds-shear-stress} are scaled as
+\begin{equation}
+  \begin{aligned}
+    u_{\mathrm{rms}}^+&=\frac{u_{\mathrm{rms}}}{u_\tau},
+    &v_{\mathrm{rms}}^+&=\frac{v_{\mathrm{rms}}}{u_\tau},
+    &w_{\mathrm{rms}}^+&=\frac{w_{\mathrm{rms}}}{u_\tau},\\
+    -\langle u'w'\rangle^+
+    &=-\frac{\langle u'w'\rangle}{u_\tau^2}
+    =\frac{-\rho\langle u'w'\rangle}{\tau_w}.
+  \end{aligned}
+  \label{eq:inner-scaled-turbulence-statistics}
+\end{equation}
+
+BRINE uses $z$ and $w$ for the wall-normal coordinate and velocity component,
+respectively. Much of the wall-turbulence literature instead uses $y$ as the
+wall-normal coordinate and therefore denotes wall distance by $y^+$. That
+conventional symbol may be retained in comparison figures only when it is
+defined explicitly as distance from the nearest wall in wall units. It must not
+be confused with the BRINE coordinate $y$, which is spanwise, or with the
+spanwise velocity $v$. The same mapping converts a literature stress
+$-\langle u'v'\rangle$ into the BRINE quantity $-\langle u'w'\rangle$ when the
+reference uses $v$ for wall-normal velocity.
+
+The near-wall flow is commonly described using four approximate regions. In
+the viscous sublayer, molecular viscosity dominates the mean momentum transfer.
+The buffer layer is a transition in which viscous and turbulent effects are
+both important. Farther from the wall, the logarithmic or overlap region links
+inner and outer scaling, whereas the outer region is influenced by the channel
+half-height, pressure-gradient forcing, and centreline conditions. These
+regions do not have universal sharp boundaries; their extent depends in part
+on Reynolds number \cite{pope2000}.
+
+For a smooth wall, the leading inner relation in the viscous sublayer is
+\begin{equation}
+  U^+=z^+.
+  \label{eq:viscous-law-of-wall}
+\end{equation}
+In the logarithmic overlap region, the generic law of the wall is
+\begin{equation}
+  U^+=\frac{1}{\kappa_{\mathrm{vK}}}\ln(z^+)+B,
+  \label{eq:logarithmic-law-of-wall}
+\end{equation}
+where $\kappa_{\mathrm{vK}}$ is the dimensionless von K\'arm\'an constant and
+$B$ is the additive intercept. The symbol $\kappa_{\mathrm{vK}}$ is distinct
+from the thermal diffusivity $\kappa$, which has units of
+$\mathrm{m^2\,s^{-1}}$. No project-specific numerical values are assigned to
+$\kappa_{\mathrm{vK}}$ or $B$ at this stage \cite{pope2000}.
+
+Wall-unit profiles provide a common basis for comparing channel calculations
+at a specified $Re_\tau$. The planned unstratified benchmark at $Re_\tau=590$
+will therefore compare $U^+$, the three RMS fluctuations in
+Eq.~\eqref{eq:inner-scaled-turbulence-statistics}, and the inner-scaled
+Reynolds shear stress with established channel-DNS statistics
+\cite{kimMoinMoser1987,moserKimMansour1999}. This comparison extends the
+validation quantities
+identified in Subsection~\ref{sec:reynolds-decomposition-turbulence-statistics};
+it defines a future validation procedure and does not imply that validation has
+already been completed.

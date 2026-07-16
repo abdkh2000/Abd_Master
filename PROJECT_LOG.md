@@ -2,6 +2,19 @@
 
 ## 2026-07-16
 
+### Wall Scaling, Friction Reynolds Number, and Law of the Wall
+
+- Added the focused theory subsection defining wall shear stress, friction
+  velocity, friction Reynolds number, viscous scaling, wall units, near-wall
+  regions, and the viscous and logarithmic laws of the wall.
+- Documented the planned project normalization and distinguished it explicitly
+  from a completed simulation result.
+- Clarified BRINE's wall-normal $z,w$ convention relative to conventional
+  literature notation and connected the definitions to the planned
+  $Re_\tau=590$ unstratified validation benchmark.
+- Added the verified Moser--Kim--Mansour 1999 benchmark citation and compiled
+  the thesis successfully with XeLaTeX.
+
 ### Scientific Plotting Standard and Thermal Reference Setup
 
 - Installed the repository-local scientific plotting skill and canonical
