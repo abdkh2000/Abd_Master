@@ -851,3 +851,325 @@ symmetrisation, interpolation, and data provenance. Resulting spectra and
 comparison figures must follow the repository's mandatory scientific plotting
 standard, including its export and disclosure requirements. No wave detection
 or validation is claimed at this theory checkpoint.
+
+\subsection[Direct Numerical Simulation, Resolution, and Statistical Convergence]
+{Direct Numerical Simulation, Resolution, and\\ Statistical Convergence}
+\label{sec:dns-resolution-statistical-convergence}
+
+\subsubsection{Direct Numerical Simulation}
+
+Direct numerical simulation (DNS) solves the governing equations without a
+turbulence model. In principle, the computational representation must capture
+the large energy-containing motions, the intermediate inertial-range scales
+through which energy is transferred, and the smallest dynamically relevant
+dissipative motions. Reynolds-averaged Navier--Stokes methods instead model the
+effects of all turbulent fluctuations on the mean flow, whereas large-eddy
+simulation resolves the larger motions and models the unresolved subgrid
+scales. DNS is therefore the most demanding of these approaches in spatial
+resolution, temporal resolution, domain size, and sampling duration
+\cite{pope2000}.
+
+The absence of an active turbulence model is necessary but not sufficient for
+a calculation to be described as adequately resolved DNS. The mesh must
+resolve the relevant velocity and scalar scales, the time step must resolve
+their evolution, the domain must contain the important large structures, and
+the reported statistics must be converged. These requirements must be
+demonstrated for the quantities of interest. The present discussion does not
+assign a spatial discretisation, time-integration method, formal order of
+accuracy, or dealiasing procedure to BRINE because those implementation
+details have not yet been verified from the approved code or documentation.
+
+\subsubsection{Dissipative Scales and Grid Spacing}
+
+For locally isotropic turbulence, the characteristic smallest viscous length
+scale is the Kolmogorov scale
+\begin{equation}
+  \eta=\left(\frac{\nu^3}{\varepsilon}\right)^{1/4},
+  \label{eq:kolmogorov-length-scale}
+\end{equation}
+where $\eta$ is the Kolmogorov length, $\nu$ is the kinematic viscosity, and
+$\varepsilon$ is the turbulent kinetic-energy dissipation rate per unit mass.
+Their SI units are $\mathrm{m}$, $\mathrm{m^2\,s^{-1}}$, and
+$\mathrm{m^2\,s^{-3}}$, respectively. The dissipation rate varies across a
+wall-bounded flow, so strongly dissipative regions can contain a smaller
+$\eta$ than a single global estimate suggests. Resolution should consequently
+be assessed using the spatial distribution of dissipation where it is
+available, rather than one unqualified domain-average value
+\cite{pope2000}.
+
+The smallest scalar scale need not equal the smallest velocity scale. For
+$Pr$ greater than or comparable to unity, a commonly used estimate is the
+Batchelor scale
+\begin{equation}
+  \eta_B=\frac{\eta}{\sqrt{Pr}},
+  \label{eq:batchelor-length-scale}
+\end{equation}
+where $\eta_B$ is the scalar dissipative length and $Pr$ is defined in
+Eq.~\eqref{eq:prandtl-number}. The applicability of
+Eq.~\eqref{eq:batchelor-length-scale} depends on the scalar regime and is most
+relevant when $Pr\gtrsim1$; it is not a universal scalar-resolution rule. The
+planned $Pr=1$ and $Pr=0.7$ cases do not require an extended treatment of
+high-$Pr$ scalar microstructure, but velocity and scalar resolution must still
+be checked separately.
+
+For uniform periodic grids in the wall-parallel directions, the nominal
+spacings are
+\begin{equation}
+  \Delta x=\frac{L_x}{N_x},
+  \qquad
+  \Delta y=\frac{L_y}{N_y},
+  \qquad
+  \Delta z_j=z_{j+1}-z_j,
+  \label{eq:nominal-grid-spacings}
+\end{equation}
+where $L_x$ and $L_y$ are the domain lengths, $N_x$ and $N_y$ are the numbers
+of periodic grid points, and $z_j$ is the $j$th physical wall-normal point.
+The local spacing $\Delta z_j$ is retained because a stretched wall-normal
+grid is generally non-uniform. In wall units,
+\begin{equation}
+  \Delta x^+=\frac{\Delta x\,u_\tau}{\nu},
+  \qquad
+  \Delta y^+=\frac{\Delta y\,u_\tau}{\nu},
+  \qquad
+  \Delta z_j^+=\frac{\Delta z_j\,u_\tau}{\nu},
+  \label{eq:grid-spacings-wall-units}
+\end{equation}
+where $u_\tau$ and $\nu/u_\tau$ are defined in
+Eqs.~\eqref{eq:friction-scaling-quantities} and
+\eqref{eq:viscous-length-wall-units}. The quantities $\Delta x^+$ and
+$\Delta y^+$ characterise the nominal wall-parallel resolution, while
+$\Delta z_j^+$ varies across the channel. Both its minimum near-wall value and
+maximum core value should be reported.
+
+The distance from the wall to the first physical grid point is not necessarily
+the minimum cell width; the distinction depends on whether variables are
+stored at nodes, cell centres, or staggered locations. Ghost nodes are
+computational boundary devices and must not be counted as additional physical
+resolution. Acceptable spacings depend on the numerical method, Reynolds
+number, target statistic, and demonstrated grid convergence. Comparison with
+published channel-DNS grids, such as the established $Re_\tau=590$ reference,
+is useful context but does not replace a resolution or refinement assessment
+\cite{moserKimMansour1999}.
+
+\subsubsection{Domain Size and Wall-Normal Stretching}
+
+A DNS domain must contain the important energy-containing motions as well as
+the smaller scales resolved by the mesh. The streamwise length $L_x$ must
+permit the long structures of the mean-flow direction, the spanwise length
+$L_y$ must accommodate the relevant cross-stream organisation, and the
+wall-normal length is the full channel height $L_z=2h$. The $x$ and $y$
+directions are periodic according to Eq.~\eqref{eq:channel-periodicity}. Their
+admissible wavenumbers are discrete,
+\begin{equation}
+  k_x=\frac{2\pi n_x}{L_x},
+  \qquad
+  k_y=\frac{2\pi n_y}{L_y},
+  \qquad
+  n_x,n_y\in\mathbb{Z},
+  \label{eq:periodic-domain-wavenumbers}
+\end{equation}
+where $n_x$ and $n_y$ are integer mode indices. An undersized periodic domain
+can therefore constrain large turbulent structures artificially.
+
+Internal-wave analysis is also domain-sensitive. The domain and stored-field
+resolution must permit the relevant wavelengths, as discussed in
+Subsection~\ref{sec:internal-gravity-waves}. Periodicity restricts the
+available streamwise and spanwise modes, while wall confinement restricts the
+wall-normal structure. The planned domains have not yet been demonstrated to
+be sufficient for either the largest turbulent structures or the relevant wave
+modes \cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}.
+
+Channel grids commonly cluster points near the walls to resolve steep mean
+velocity and scalar gradients and the thin viscous and conductive layers.
+Stretching improves near-wall resolution without imposing the same fine
+spacing throughout the channel and can reduce the total grid cost relative to
+a uniformly fine mesh. It also has disadvantages: the smallest spacing can
+restrict the time step, abrupt changes in spacing can reduce accuracy, and
+wall-normal differentiation and interpolation require care. The mapping,
+stretching factor, physical point count, and ghost-node treatment must
+therefore be documented. No stretching formula is assumed here because the
+BRINE mapping has not been verified.
+
+The fresh Kleandro thermal setup has an unresolved stretching factor. Its
+separate extended-restart record reports a factor of $2.0$, but this is a
+setup record rather than a universal recommendation and must not be transferred
+to a fresh project case without checking the approved inputs.
+
+\subsubsection{Stability Restrictions and the Solver Time Step}
+
+A generic multidimensional Courant number at a grid location is
+\begin{equation}
+  \mathrm{CFL}
+  =\Delta t\left(
+    \frac{|u|}{\Delta x}
+    +\frac{|v|}{\Delta y}
+    +\frac{|w|}{\Delta z_j}
+  \right),
+  \label{eq:multidimensional-cfl-number}
+\end{equation}
+where $\Delta t$ is the solver time step and $u$, $v$, and $w$ are the local
+streamwise, spanwise, and wall-normal velocities. An explicit or partly
+explicit method generally requires
+$\mathrm{CFL}\leq C_{\mathrm{adv}}$, where $C_{\mathrm{adv}}$ is a
+method-dependent advective stability limit. Its value depends on the actual
+spatial and temporal discretisations and must be established for BRINE rather
+than assumed. The estimate should use the maximum relevant local velocities,
+the local $\Delta z_j$ on a stretched grid, and a safety margin; a universal
+criterion $\mathrm{CFL}<1$ is not asserted.
+
+Generic local measures of momentum and scalar diffusion are
+\begin{align}
+  D_{\nu,j}
+  &=\nu\Delta t\left(
+    \frac{1}{\Delta x^2}
+    +\frac{1}{\Delta y^2}
+    +\frac{1}{\Delta z_j^2}
+  \right),
+  \label{eq:viscous-diffusion-measure}\\
+  D_{\kappa,j}
+  &=\kappa\Delta t\left(
+    \frac{1}{\Delta x^2}
+    +\frac{1}{\Delta y^2}
+    +\frac{1}{\Delta z_j^2}
+  \right),
+  \label{eq:scalar-diffusion-measure}
+\end{align}
+where $\kappa$ is the scalar diffusivity. Stability can require
+$D_{\nu,j}\leq C_\nu$ and $D_{\kappa,j}\leq C_\kappa$, but the constants
+$C_\nu$ and $C_\kappa$ are properties of the verified numerical scheme, not
+physical constants. Both restrictions must be checked using the most
+restrictive local spacing. Because $Pr=\nu/\kappa$, a case with $Pr<1$ has
+$\kappa>\nu$ and scalar diffusion can impose the stronger explicit
+restriction; for $Pr=1$, the two diffusivities are equal. The smallest
+wall-normal spacing may dominate either estimate.
+
+The usable solver time step must satisfy every applicable restriction,
+\begin{equation}
+  \Delta t\leq
+  \min\left(
+    \Delta t_{\mathrm{adv}},
+    \Delta t_\nu,
+    \Delta t_\kappa,
+    \Delta t_{\mathrm{other}}
+  \right),
+  \label{eq:combined-time-step-restriction}
+\end{equation}
+where the terms denote the advective, viscous, scalar-diffusive, and other
+solver-specific limits. A safety margin should be retained. No project time
+step can be selected from these relations until the actual grid, velocity
+range, treatment of diffusion, and BRINE scheme have been confirmed.
+
+\subsubsection{Physical Temporal Resolution and Stored Output}
+
+Numerical stability alone does not ensure adequate temporal resolution.
+$\Delta t$ must also resolve turbulent evolution, near-wall dynamics, scalar
+fluctuations, and any internal-wave oscillations of interest. The solver time
+step is distinct from the restart or checkpoint interval. It also differs from
+the instantaneous-field output interval and the interval between statistical
+samples. Infrequent output can hide physical dynamics even when the solver
+itself is stable.
+
+If stored samples are separated by $\Delta t_s$, their Nyquist frequency is
+\begin{equation}
+  f_N=\frac{1}{2\Delta t_s},
+  \label{eq:nyquist-frequency}
+\end{equation}
+where $f_N$ is measured in hertz for dimensional time and $\Delta t_s$ is the
+sampling interval between stored data. Frequencies above $f_N$ cannot be
+resolved correctly and may be aliased into lower frequencies. Meaningful
+internal-wave spectra therefore require output frequent enough for the
+expected frequency range, while the total sampling duration must be long
+enough for the lowest frequency of interest. No output interval is selected at
+this checkpoint.
+
+\subsubsection{Transients, Stationarity, and Averaging}
+
+Numerical convergence and statistical stationarity are different
+requirements. A time step may remain stable, and any iterative solver may
+meet its numerical tolerance, while the evolving turbulent statistics still
+depend on the initial condition. A turbulent calculation normally passes
+through an initial transient, an approach to statistically stationary
+behaviour, and a production interval used for reported statistics. The
+initial transient should not normally be included in production averages
+unless transient physics is itself the subject of study.
+
+Stationarity can be assessed using histories of bulk velocity or mass flow,
+pressure-gradient forcing, wall shear stress, friction velocity, total kinetic
+energy, scalar mean or variance, wall scalar flux, spatially averaged
+temperature, and relevant buoyancy quantities. The useful set depends on the
+case and its forcing. No single flat-looking history proves stationarity;
+several quantities and more than one portion of the record should be examined.
+
+The ideal time average in Eq.~\eqref{eq:turbulence-time-average} is replaced in
+finite data by
+\begin{equation}
+  \langle\phi\rangle_T
+  =\frac{1}{T}\int_{t_0}^{t_0+T}\phi(t)\,\mathrm{d}t,
+  \label{eq:finite-production-time-average}
+\end{equation}
+where $t_0$ is the beginning of the production window and $T$ is its duration.
+For the channel, plane averaging over the statistically homogeneous $x$ and
+$y$ directions gives the space--time average in
+Eq.~\eqref{eq:channel-space-time-average} and can increase the effective
+sample size. Consecutive stored fields can nevertheless be correlated.
+Consequently, the number of effectively independent samples is controlled by
+the production duration relative to the integral correlation time, not simply
+by the number of output files \cite{pope2000}.
+
+\subsubsection{Statistical and Numerical Convergence Checks}
+
+Practical statistical checks include comparing profiles from successive parts
+of the production window, examining cumulative or running means, and testing
+whether changes become small relative to the intended accuracy. Independent
+time intervals should be compared where possible, and sampling uncertainty
+should be reported. Lower- and upper-wall symmetry is a useful diagnostic only
+when the forcing, boundary conditions, and expected physics justify that
+symmetry; it must not be imposed automatically.
+
+Statistical convergence, grid convergence, time-step convergence, and
+agreement with reference DNS address different questions. Statistical
+convergence concerns sampling uncertainty, grid convergence concerns spatial
+discretisation error, and time-step convergence concerns temporal
+discretisation error. Agreement with a reference tests the combined outcome
+for compatible cases, but does not by itself prove any of the other three.
+For thermal and stratified calculations, convergence should be assessed
+separately for mean velocity, the three RMS velocity components, Reynolds
+shear stress, mean scalar, scalar RMS, turbulent scalar flux, wall flux or wall
+gradient, and any wave-related spectra. These quantities extend the turbulence
+and scalar statistics defined in
+Eqs.~\eqref{eq:rms-velocity-fluctuations},
+\eqref{eq:reynolds-shear-stress}, and
+\eqref{eq:scalar-validation-statistics}.
+
+A credible sensitivity assessment may compare a baseline mesh with a refined
+mesh and, where appropriate, repeat a case with a reduced $\Delta t$. The
+physical parameters must be held fixed, integral quantities and profiles
+should both be compared, and every numerical setting that changes should be
+recorded. This separation helps distinguish physical differences from
+numerical ones. A full refinement campaign is not prescribed here; the
+feasible strategy will depend on the selected benchmark, Leonardo resource
+cost, and advisor approval. Future convergence histories and comparison
+figures must follow the repository's mandatory scientific plotting standard
+and disclose normalization, averaging windows, coordinate mapping,
+interpolation, and any folding or symmetrisation.
+
+\subsubsection{Application to the Planned Project Cases}
+
+The planned sequence uses the friction Reynolds number defined in
+Eq.~\eqref{eq:friction-scaling-quantities}. It consists of an unstratified
+channel benchmark at $Re_\tau=590$, a passive-scalar benchmark at $Pr=1$, and
+a stably stratified case at $Re_\tau=180$, $Pr=0.7$, and $Ri_\tau=120$. The
+passive-scalar Reynolds number remains subject to confirmation because the
+project records contain an unresolved $Re_\tau=550$ versus $Re_\tau=500$
+inconsistency. All values are targets for future work, not completed
+simulations.
+
+Before any case is launched, the project must confirm the physical grid
+dimensions, domain lengths, wall-normal stretching, physical and ghost-node
+counts, viscosity, thermal diffusivity, solver time step, scheme-specific
+stability limits, output and restart intervals, restart mode, production
+averaging window, retained statistics, and compatibility of the reference
+dataset. The actual BRINE inputs and numerical scheme must be inspected before
+final numerical values are assigned. In particular, the earlier $16^3$
+attempt failed during setup before producing a simulation result and therefore
+validated neither the solver nor its numerical resolution.

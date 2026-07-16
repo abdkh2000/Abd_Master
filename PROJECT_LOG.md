@@ -2,6 +2,18 @@
 
 ## 2026-07-16
 
+### DNS Resolution, Time-Step Restrictions, and Statistical Convergence
+
+- Added the DNS-resolution framework covering turbulent and scalar dissipative
+  scales, wall-unit grid spacing, domain size, stretching, and caveated
+  project setup records.
+- Defined generic advective and diffusive time-step measures while leaving all
+  stability constants and BRINE numerical-method details scheme-dependent and
+  unverified.
+- Distinguished temporal stability, physical sampling, statistical
+  stationarity, statistical convergence, grid convergence, time-step
+  convergence, and agreement with reference DNS for the planned benchmarks.
+
 ### Internal Gravity Waves in Stably Stratified Channel Flow
 
 - Added the ideal linear internal-wave equations, dispersion relation, and
