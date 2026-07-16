@@ -2,6 +2,18 @@
 
 ## 2026-07-16
 
+### Internal Gravity Waves in Stably Stratified Channel Flow
+
+- Added the ideal linear internal-wave equations, dispersion relation, and
+  mean-flow Doppler shift using the existing gravity-explicit sign convention.
+- Documented channel confinement, wave--turbulence interaction, and the
+  evidence required to distinguish internal waves from visually wave-like
+  turbulent or sampling behaviour.
+- Connected the theory to the planned $Re_\tau=180$, $Pr=0.7$,
+  $Ri_\tau=120$ benchmark without claiming a completed simulation or wave
+  detection, and recorded the future spectral-analysis and plotting-standard
+  requirements.
+
 ### Boussinesq Approximation and Stable Stratification
 
 - Added the coupled Boussinesq density, buoyancy, momentum, buoyancy-frequency,

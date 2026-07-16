@@ -717,3 +717,137 @@ wave-like structures, alongside the scalar statistics in
 Eq.~\eqref{eq:scalar-validation-statistics}. The exact gravity direction, wall
 temperatures, buoyancy coefficient, and $Ri_\tau$ input relation remain subject
 to confirmation before the benchmark is configured.
+
+\subsection{Internal Gravity Waves in Stably Stratified Channel Flow}
+\label{sec:internal-gravity-waves}
+
+Internal gravity waves are oscillatory motions supported by stable
+stratification. When a fluid parcel is displaced along the direction opposite
+to gravity, its density generally differs from that of its new surroundings.
+The resulting buoyancy force acts as a restoring force when $N^2>0$ in
+Eq.~\eqref{eq:brunt-vaisala-frequency}. The same stable buoyancy that permits
+these waves also resists sustained wall-normal transport, so wave motion and
+turbulence modification must be considered together in a stratified channel
+\cite{pope2000,garciaVillalbaDelAlamo2011}.
+
+Let $\mathbf{e}_s=-\mathbf{g}/g$ be the unit vector in the increasing-$s$
+direction introduced in Subsection~\ref{sec:stable-thermal-stratification}, and
+let $u_s'=\mathbf{u}'\mathbin{\cdot}\mathbf{e}_s$ be the corresponding velocity
+fluctuation. A scalar buoyancy perturbation, positive in the $\mathbf{e}_s$
+direction, is defined by
+\begin{equation}
+  b'=-\frac{g\rho'}{\rho_0}=g\alpha_T\theta',
+  \qquad
+  \mathbf{f}_b'=b'\mathbf{e}_s,
+  \label{eq:internal-wave-buoyancy-perturbation}
+\end{equation}
+where $\rho'$ and $\theta'$ are the dimensional density and temperature
+fluctuations, respectively. The second equality follows from
+Eq.~\eqref{eq:boussinesq-density-temperature}, while the vector direction is
+consistent with Eq.~\eqref{eq:boussinesq-buoyancy-acceleration}. If gravity is
+wall-normal, $s$ is parallel or antiparallel to BRINE's wall-normal coordinate
+$z$; it is not BRINE's spanwise coordinate $y$.
+
+The elementary wave relation is obtained by linearising about a motionless,
+inviscid, uniformly stratified Boussinesq state with constant $N^2>0$. The
+perturbations are assumed small, incompressible, and unaffected by viscosity,
+thermal diffusion, boundaries, mean shear, and nonlinear advection. Under
+these idealisations, the dynamics along $s$ are
+\begin{align}
+  \frac{\partial u_s'}{\partial t}
+    &=-\frac{1}{\rho_0}\frac{\partial p'}{\partial s}+b',
+    \label{eq:linear-internal-wave-momentum}\\
+  \frac{\partial b'}{\partial t}+N^2u_s'&=0,
+    \label{eq:linear-internal-wave-buoyancy}
+\end{align}
+where $p'$ is the pressure perturbation. The second relation expresses the
+restoring response: motion in the positive $s$ direction produces a negative
+buoyancy perturbation. Combining these equations with incompressibility gives
+the internal-wave equation
+\begin{equation}
+  \frac{\partial^2}{\partial t^2}
+  \left(\boldsymbol{\nabla}^2u_s'\right)
+  +N^2\boldsymbol{\nabla}_h^2u_s'=0,
+  \label{eq:internal-gravity-wave-equation}
+\end{equation}
+where $\boldsymbol{\nabla}_h^2=\boldsymbol{\nabla}^2-
+\partial^2/\partial s^2$ contains the two directions perpendicular to gravity.
+This subscript denotes a gravity-horizontal operator and is unrelated to the
+channel half-height $h$.
+
+For a plane wave proportional to
+$\exp[\mathrm{i}(\mathbf{k}_h\mathbin{\cdot}\mathbf{x}_h+ms-
+\widehat{\omega}t)]$, Eq.~\eqref{eq:internal-gravity-wave-equation} yields
+\begin{equation}
+  \widehat{\omega}^{\,2}
+  =N^2\frac{k_h^2}{k_h^2+m^2},
+  \label{eq:internal-gravity-wave-dispersion}
+\end{equation}
+where $\mathbf{k}_h$ is the wavevector perpendicular to gravity,
+$k_h=|\mathbf{k}_h|$, $m$ is the wavenumber along $s$, and
+$\widehat{\omega}$ is the intrinsic angular frequency. Propagating oblique
+internal waves therefore satisfy $0<|\widehat{\omega}|<N$. A wavevector that is
+nearly perpendicular to gravity has $k_h\gg|m|$ and a frequency approaching
+$N$, whereas a wavevector nearly parallel to gravity has
+$k_h\ll|m|$ and a frequency approaching zero. These statements concern the
+wavevector orientation, not the direction of phase or energy propagation.
+
+In a channel with a streamwise mean velocity $U(z)$, an observed angular
+frequency $\omega$ is Doppler shifted. A local intrinsic frequency may be
+written
+\begin{equation}
+  \widehat{\omega}(z)=\omega-k_xU(z),
+  \label{eq:internal-gravity-wave-doppler-shift}
+\end{equation}
+where $k_x$ is the streamwise wavenumber. Equations
+\eqref{eq:internal-gravity-wave-dispersion} and
+\eqref{eq:internal-gravity-wave-doppler-shift} are diagnostic guides rather
+than an exact global dispersion relation for the present channel. The mean
+shear and $N^2$ vary with $z$, and viscosity, thermal diffusion, nonlinear
+interactions, and turbulence are absent from the ideal derivation.
+
+The walls add a further restriction. The impermeability condition in
+Subsection~\ref{sec:channel-flow-governing-equations} requires $w'=0$ at each
+wall; when gravity is wall-normal, the same condition applies to $u_s'$ up to
+its sign. Disturbances generated within the channel may propagate through the
+stratified core, reflect from regions or boundaries that inhibit propagation,
+or combine into standing patterns. Confinement can select discrete
+wall-normal structures, but the admissible structures depend on the actual
+mean profiles and boundary conditions and should not be inferred solely from
+the uniform-$N$ model.
+
+Internal waves exchange kinetic and buoyancy potential energy through the
+buoyancy flux. They can carry coherent motion through a region where
+wall-normal turbulent transport is weak, while wave shear, nonlinear
+interaction, or wave breaking can transfer energy back to turbulence. Channel
+studies report that internal-wave activity can coexist with near-wall
+turbulence and become prominent in a buoyancy-dominated core
+\cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}. This coexistence does not
+make every oscillation a gravity wave: advected turbulent eddies, intermittent
+bursts, slow drift of the mean field, and numerical or sampling artefacts can
+also produce wave-like patterns.
+
+Evidence for an internal-wave interpretation should therefore combine several
+diagnostics. Useful evidence includes coherent peaks in frequency--wavenumber
+spectra, agreement of $\widehat{\omega}$ with its permitted range and with a
+Doppler-shifted dispersion relation, a reproducible phase relationship between
+$u_s'$ and $b'$ or $\theta'$, and a coherent wall-normal mode structure over a
+documented time interval. Propagation, reflection, or standing-wave behaviour
+should be distinguished where the data permit. A single instantaneous
+temperature slice, a smooth mean profile, or oscillation at one probe is not
+sufficient proof.
+
+The planned $Re_\tau=180$, $Pr=0.7$, $Ri_\tau=120$ case is intended to test
+for such behaviour; these remain target parameters and are not completed
+results. Its interpretation must retain the distinction between the local
+$Ri_g$ in Eq.~\eqref{eq:gradient-richardson-number} and the case-level
+$Ri_\tau$ in Eq.~\eqref{eq:generic-friction-richardson-number}. Future
+post-processing should retain time-resolved fields long enough for converged
+frequency estimates, record the sampling interval and analysis window, and
+examine frequency spectra, joint frequency--wavenumber spectra, phase
+relationships, and wall-normal structure. Any comparison must document the
+coordinate mapping, normalization, averaging window, folding or
+symmetrisation, interpolation, and data provenance. Resulting spectra and
+comparison figures must follow the repository's mandatory scientific plotting
+standard, including its export and disclosure requirements. No wave detection
+or validation is claimed at this theory checkpoint.
