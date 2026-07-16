@@ -548,3 +548,172 @@ averaging interval. Any coordinate remapping, profile folding,
 symmetrization, or interpolation must also be disclosed. A non-twin reference
 can support qualitative or semi-quantitative assessment, but not strict
 validation.
+
+\subsection{Boussinesq Approximation and Thermal Buoyancy}
+\label{sec:boussinesq-thermal-buoyancy}
+
+Temperature becomes an active scalar when its associated density variation
+produces a force in the momentum balance. The transport equation
+\eqref{eq:passive-scalar-transport} remains necessary, but the dependence is
+then two-way: the velocity field advects temperature, while temperature
+modifies the velocity through buoyancy.
+
+For modest temperature differences, the Boussinesq approximation linearises
+density about a reference state as
+\begin{equation}
+  \rho(\theta)
+  =\rho_0\left[1-\alpha_T(\theta-\theta_0)\right],
+  \label{eq:boussinesq-density-temperature}
+\end{equation}
+where $\rho_0$ is the reference density, $\theta_0$ is the reference
+temperature, and $\alpha_T$ is the thermal-expansion coefficient in
+$\mathrm{K^{-1}}$. For an ordinary fluid with $\alpha_T>0$, increasing
+temperature decreases density. The coefficient $\alpha_T$ is a thermodynamic
+property and is distinct from the thermal diffusivity $\kappa$ in
+Eq.~\eqref{eq:passive-scalar-transport}.
+
+The approximation assumes that relative density changes are small. Density is
+therefore set to $\rho_0$ in continuity, inertia, and the viscous terms, and is
+allowed to vary only in the gravitational contribution. The velocity remains
+approximately divergence-free as in
+Eq.~\eqref{eq:incompressible-continuity}. This model is not appropriate when
+density changes are too large for the linear relation in
+Eq.~\eqref{eq:boussinesq-density-temperature} to remain accurate
+\cite{pope2000}.
+
+Let $\mathbf{g}$ be the physical gravitational-acceleration vector, pointing
+in the direction in which gravity acts. Its magnitude is
+$g=|\mathbf{g}|$. After the uniform reference contribution $\mathbf{g}$ has
+been absorbed into the hydrostatic pressure, the remaining thermal buoyancy
+acceleration is
+\begin{equation}
+  \mathbf{f}_b
+  =\frac{\rho-\rho_0}{\rho_0}\mathbf{g}
+  =-\alpha_T(\theta-\theta_0)\mathbf{g}.
+  \label{eq:boussinesq-buoyancy-acceleration}
+\end{equation}
+With this convention, a warm perturbation for which
+$\theta-\theta_0>0$ accelerates opposite to $\mathbf{g}$, whereas a cold
+perturbation accelerates along $\mathbf{g}$. Other formulations may reverse
+the displayed sign by defining an upward gravity vector, a buoyancy variable,
+or a nondimensional temperature with the opposite orientation. The sign must
+therefore be interpreted together with the direction of $\mathbf{g}$, the
+definition of $\theta$, and the chosen reference state.
+
+Adding Eq.~\eqref{eq:boussinesq-buoyancy-acceleration} to the pressure-driven
+momentum equation gives
+\begin{equation}
+  \frac{\partial \mathbf{u}}{\partial t}
+  +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
+  =-\frac{1}{\rho_0}\boldsymbol{\nabla}\widetilde{p}_b
+  +\nu\boldsymbol{\nabla}^{2}\mathbf{u}
+  +\frac{G}{\rho_0}\mathbf{e}_x
+  -\alpha_T(\theta-\theta_0)\mathbf{g},
+  \label{eq:boussinesq-pressure-driven-momentum}
+\end{equation}
+where $\widetilde{p}_b$ is the dynamic pressure remainder after the reference
+hydrostatic contribution has been removed. The pressure-gradient term
+$G\mathbf{e}_x/\rho_0$ maintains the mean streamwise flow. The final term is
+the thermal buoyancy acceleration. Equations
+\eqref{eq:passive-scalar-transport} and
+\eqref{eq:boussinesq-pressure-driven-momentum} form the coupled thermal-flow
+system under the stated assumptions.
+
+For BRINE, the advisor-confirmed conceptual information is limited to the
+following: temperature transport is controlled through a temperature flag;
+salinity and melting remain disabled for the present Master Project; and the
+thermal buoyancy coupling is proportional to temperature through a coefficient
+described as an alpha--gravity-type term. The exact variable spelling, input
+location, nondimensional coefficient, and implemented sign have not yet been
+verified in the active code version and are not specified here. Salinity could
+provide an additional density contribution in a more general model, but it is
+outside the present project and no double-diffusive formulation is developed.
+
+\subsection{Stable Thermal Stratification}
+\label{sec:stable-thermal-stratification}
+
+Thermal stratification describes how buoyancy varies along the gravity
+direction. A stable arrangement places the fluid in a local minimum of
+gravitational potential energy: a displaced parcel experiences a restoring
+tendency. In an unstable arrangement, buoyancy amplifies a displacement and
+convection may develop. A neutral arrangement has no leading restoring or
+amplifying buoyancy effect. These statements depend on the density gradient
+relative to gravity, not on a universal assignment of hot and cold channel
+walls. The wall temperatures and gravity sign for the BRINE benchmark must be
+taken from the approved input before a wall orientation is stated.
+
+For a sign-explicit definition, let $s$ increase opposite to
+$\mathbf{g}$, so gravitational potential energy increases with $s$. The
+squared Brunt--V\"ais\"al\"a or buoyancy frequency is then defined by
+\begin{equation}
+  N^2
+  =-\frac{g}{\rho_0}\frac{\mathrm{d}\overline{\rho}}{\mathrm{d}s}
+  =g\alpha_T\frac{\mathrm{d}\Theta}{\mathrm{d}s},
+  \label{eq:brunt-vaisala-frequency}
+\end{equation}
+where $\overline{\rho}(s)$ is the mean density and $\Theta(s)$ is the mean
+dimensional temperature from the decomposition in
+Eq.~\eqref{eq:scalar-reynolds-decomposition}, expressed along $s$. The second
+equality follows only from the dimensional linear density law in
+Eq.~\eqref{eq:boussinesq-density-temperature}. The quantity $N^2$ has units of
+$\mathrm{s^{-2}}$. Under the adopted convention, $N^2>0$ is stable,
+$N^2=0$ is neutral, and $N^2<0$ is unstable. If BRINE transports a
+nondimensional scalar, its temperature scale and sign must be included before
+Eq.~\eqref{eq:brunt-vaisala-frequency} is applied \cite{pope2000}.
+
+Mean shear transfers energy into turbulent motion, whereas stable buoyancy
+opposes wall-normal displacement. Increasing stable stratification can
+therefore weaken turbulent mixing, make momentum and scalar transport more
+anisotropic, reduce turbulence in the channel core, and promote wave-like
+motion. The balance varies across the channel because both shear and
+stratification are spatially non-uniform
+\cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}.
+
+When the stratification and mean-shear gradients are both aligned with the
+BRINE wall-normal coordinate $z$, their local competition can be measured by
+the gradient Richardson number
+\begin{equation}
+  Ri_g(z)=\frac{N^2(z)}{\left(\mathrm{d}U/\mathrm{d}z\right)^2},
+  \label{eq:gradient-richardson-number}
+\end{equation}
+where $U(z)$ is the mean streamwise velocity from
+Eq.~\eqref{eq:fully-developed-channel-flow}. The numerator represents the
+squared buoyancy frequency, while the denominator represents the squared mean
+shear rate. Larger positive $Ri_g$ indicates stronger local buoyancy relative
+to shear; it is distinct from a case-level friction Richardson number.
+
+A friction Richardson number instead compares a characteristic buoyancy
+acceleration $b_\star$ acting over the channel half-height with the wall-shear
+velocity scale. Its generic scaling is
+\begin{equation}
+  Ri_\tau\sim\frac{b_\star h}{u_\tau^2},
+  \label{eq:generic-friction-richardson-number}
+\end{equation}
+where $h$ and $u_\tau$ are defined in
+Eq.~\eqref{eq:friction-scaling-quantities}. The precise definition of
+$b_\star$ depends on the temperature difference or flux, gravity convention,
+and scalar normalization. Consequently, the normalization used by the
+Garc\'ia-Villalba--del {\'A}lamo reference and its mapping to BRINE must be
+verified before Eq.~\eqref{eq:generic-friction-richardson-number} is replaced
+by a project-specific equality \cite{garciaVillalbaDelAlamo2011}.
+
+The dimensionless groups describe different physical balances.
+$Re_\tau$ in Eq.~\eqref{eq:friction-scaling-quantities} compares wall-shear
+and viscous scales, while $Pr$ in Eq.~\eqref{eq:prandtl-number} compares
+momentum and thermal diffusivities. Richardson numbers compare buoyancy with
+shear or wall-friction scales. For stable stratification, a Froude number may
+be written generically as $Fr=U_c/(NL_c)$, where $N=\sqrt{N^2}$ and $U_c$ and
+$L_c$ are stated characteristic velocity and length scales; it compares
+inertial and buoyancy time scales. Any relationship between $Fr$ and a
+Richardson number depends on using compatible scales.
+
+The planned active benchmark uses $Re_\tau=180$, $Pr=0.7$, and
+$Ri_\tau=120$ with stable thermal stratification. These are target parameters,
+not completed simulation results. The expected physical signatures are reduced
+core turbulence and weaker wall-normal mixing, but their occurrence must be
+established from the computed statistics. Planned outputs include the mean
+temperature profile and a temperature-field slice for identifying possible
+wave-like structures, alongside the scalar statistics in
+Eq.~\eqref{eq:scalar-validation-statistics}. The exact gravity direction, wall
+temperatures, buoyancy coefficient, and $Ri_\tau$ input relation remain subject
+to confirmation before the benchmark is configured.

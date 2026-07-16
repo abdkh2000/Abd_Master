@@ -2,6 +2,17 @@
 
 ## 2026-07-16
 
+### Boussinesq Approximation and Stable Stratification
+
+- Added the coupled Boussinesq density, buoyancy, momentum, buoyancy-frequency,
+  and Richardson-number theory using an explicit physical gravity-vector sign
+  convention.
+- Documented the planned $Re_\tau=180$, $Pr=0.7$, $Ri_\tau=120$ stable
+  benchmark as future work and retained the unresolved BRINE gravity, wall,
+  coefficient, and normalization conventions.
+- Added the verified García-Villalba--del Álamo 2011 primary reference
+  and reused Pope and Armenio--Sarkar for the governing theory.
+
 ### Passive Scalar and Temperature Transport
 
 - Added the focused theory subsection defining passive and active scalars, the
