@@ -390,3 +390,161 @@ validation quantities
 identified in Subsection~\ref{sec:reynolds-decomposition-turbulence-statistics};
 it defines a future validation procedure and does not imply that validation has
 already been completed.
+
+\subsection{Passive Scalar and Temperature Transport}
+\label{sec:passive-scalar-temperature-transport}
+
+A scalar field $\theta(\mathbf{x},t)$ can represent temperature when density
+feedback is disabled. Such a scalar is passive: it is transported by the
+velocity field but does not modify the momentum equation. An active scalar, by
+contrast, changes the momentum balance through a coupling such as buoyancy.
+The detailed active-buoyancy formulation is introduced separately from the
+passive transport considered here.
+
+For constant molecular diffusivity, the dimensional advection--diffusion
+equation is
+\begin{equation}
+  \frac{\partial\theta}{\partial t}
+  +\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla}\theta
+  =\kappa\boldsymbol{\nabla}^{2}\theta+Q,
+  \label{eq:passive-scalar-transport}
+\end{equation}
+where $\mathbf{u}$ is the instantaneous velocity from
+Eq.~\eqref{eq:incompressible-navier-stokes}, $\kappa$ is the molecular scalar
+diffusivity, and $Q$ is a local volumetric scalar source expressed per unit
+fluid capacity. The second term on the left of
+Eq.~\eqref{eq:passive-scalar-transport} is advection by the flow, whereas the
+first and second terms on the right describe molecular diffusion and source
+production, respectively. If $\theta$ is temperature, its SI unit is kelvin,
+$\kappa$ has units of $\mathrm{m^2\,s^{-1}}$, and $Q$ has units of
+$\mathrm{K\,s^{-1}}$; every term in the equation then has units of
+$\mathrm{K\,s^{-1}}$. A physical heat-generation rate in
+$\mathrm{W\,m^{-3}}$ must first be divided by the volumetric heat capacity to
+obtain this form. Equation~\eqref{eq:passive-scalar-transport} may also be
+nondimensionalised, but its scales and the resulting source definition must
+then be stated explicitly \cite{pope2000}.
+
+The Prandtl number is
+\begin{equation}
+  Pr=\frac{\nu}{\kappa},
+  \label{eq:prandtl-number}
+\end{equation}
+where $\nu$ is the kinematic viscosity defined in
+Eq.~\eqref{eq:incompressible-navier-stokes}. It is the ratio of molecular
+momentum diffusivity to molecular thermal diffusivity. Momentum and scalar
+diffuse at the same molecular rate when $Pr=1$; scalar diffusion is faster
+when $Pr<1$, whereas momentum diffusion is faster relative to scalar diffusion
+when $Pr>1$.
+
+Using the Reynolds decomposition in Eq.~\eqref{eq:reynolds-decomposition} as
+an analogue, the instantaneous scalar is written as
+\begin{equation}
+  \theta(\mathbf{x},t)=\Theta(z)+\theta'(\mathbf{x},t),
+  \qquad
+  \Theta(z)=\langle\theta\rangle,
+  \qquad
+  \langle\theta'\rangle=0,
+  \label{eq:scalar-reynolds-decomposition}
+\end{equation}
+where $\Theta$ is the mean scalar profile and $\theta'$ is the scalar
+fluctuation. The angle brackets denote the space--time average over the
+homogeneous $x$ and $y$ directions defined in
+Eq.~\eqref{eq:channel-space-time-average}. In addition to $\Theta$, the
+principal scalar statistics are
+\begin{equation}
+  \begin{aligned}
+    \sigma_\theta^2(z)&=\langle\theta'^2\rangle,
+    &\theta_{\mathrm{rms}}(z)&=\sqrt{\sigma_\theta^2}
+      =\sqrt{\langle\theta'^2\rangle},\\
+    F_{\theta,z}(z)&=\langle w'\theta'\rangle.
+  \end{aligned}
+  \label{eq:scalar-validation-statistics}
+\end{equation}
+The mean profile gives the average scalar distribution across the channel,
+$\sigma_\theta^2$ is the scalar variance, and $\theta_{\mathrm{rms}}$ gives the
+characteristic fluctuation amplitude in the same units as $\theta$. The
+turbulent flux $F_{\theta,z}=\langle w'\theta'\rangle$ quantifies scalar
+transport by wall-normal turbulent motion and has units of scalar times
+$\mathrm{m\,s^{-1}}$. Here, $w$ is BRINE's wall-normal velocity component;
+$v$ remains the spanwise component.
+
+Scalar boundary conditions specify either the wall value, its outward-normal
+gradient, or a combination of both. A general linear condition is
+\begin{equation}
+  a\theta+b\frac{\partial\theta}{\partial n}=c
+  \qquad\text{on a wall},
+  \label{eq:scalar-wall-boundary-condition}
+\end{equation}
+where $n$ is the outward unit-normal direction and the coefficients $a$, $b$,
+and $c$ carry the units required for dimensional consistency. A prescribed
+scalar value is a Dirichlet condition, represented by $a=1$ and $b=0$. A
+prescribed scalar flux is a Neumann condition; the insulated zero-flux case is
+$a=0$, $b=1$, and $c=0$. Non-zero $a$ and $b$ give a mixed or Robin condition.
+These mathematical forms do not identify BRINE input-line values, which must
+be checked from the approved case input before use.
+
+\paragraph{Official project benchmark.}
+The current project roadmap specifies a planned case at $Re_\tau=550$ and
+$Pr=1$, with buoyancy disabled, constant isothermal walls $\theta=0$, and
+uniform internal heating $Q=1/Pr$ in the nondimensional scalar equation. The
+intended comparisons include the mean temperature in wall units and the
+temperature RMS. This is a planned benchmark rather than a completed result;
+the separately recorded inconsistency between $Re_\tau=550$ and
+$Re_\tau=500$ must be resolved before the case is configured or run.
+
+\paragraph{Kleandro working reference.}
+The separate working reference uses $Re_\tau=150$, $Pr=1$, and disabled
+buoyancy, with opposed fixed nondimensional wall values $\theta=+1$ at the
+lower wall and $\theta=-1$ at the upper wall. It is useful for understanding
+the thermal workflow and post-processing, but it is not the official
+$Re_\tau=550$ reproduction case. Its parameters and normalization must not be
+combined with those of the internally heated benchmark.
+
+For a generic scalar, the outward-normal component of the molecular scalar
+flux and its friction-scalar scale may be defined as
+\begin{equation}
+  j_w=-\kappa\left.\frac{\partial\Theta}{\partial n}\right|_w,
+  \qquad
+  \theta_\tau=\frac{|j_w|}{u_\tau},
+  \qquad
+  \Delta\Theta^+
+  =s_w\frac{\Theta_w-\Theta}{\theta_\tau},
+  \label{eq:scalar-wall-scaling}
+\end{equation}
+where $\Theta_w$ is the mean wall scalar and $u_\tau$ is the friction velocity
+from Eq.~\eqref{eq:friction-scaling-quantities}. If $\theta$ is temperature,
+$j_w$ has units of $\mathrm{K\,m\,s^{-1}}$ and $\theta_\tau$ has units of
+kelvin; $j_w$ is therefore a kinematic scalar flux rather than a heat flux in
+$\mathrm{W\,m^{-2}}$. The factor $s_w\in\{-1,+1\}$ records the chosen sign
+orientation and is selected separately at each wall so that the plotted
+$\Delta\Theta^+$ has the stated direction. This convention must be reported
+rather than assumed for the final BRINE benchmark. Wall distance is scaled by
+the same $z^+$ defined in Eq.~\eqref{eq:viscous-length-wall-units}.
+
+Like the mean velocity, a passive-scalar profile can contain a near-wall
+conductive region, an overlap region, and a core region. The leading
+near-wall behaviour is linear under appropriate inner scaling. A generic
+scalar logarithmic relation in the overlap region is
+\begin{equation}
+  \Delta\Theta^+
+  =\frac{1}{\kappa_\theta}\ln(z^+)+B_\theta,
+  \label{eq:scalar-logarithmic-law}
+\end{equation}
+where $\kappa_\theta$ is a dimensionless scalar logarithmic-law constant and
+$B_\theta$ is its additive intercept. The symbol $\kappa_\theta$ is distinct
+from the thermal diffusivity $\kappa$ in
+Eq.~\eqref{eq:passive-scalar-transport} and from the von K\'arm\'an velocity
+constant $\kappa_{\mathrm{vK}}$ in
+Eq.~\eqref{eq:logarithmic-law-of-wall}. The region boundaries and the constants
+depend on the scalar boundary condition and normalization; no numerical values
+are assigned here \cite{pope2000}.
+
+Future passive-scalar validation should compare the mean scalar profile,
+$\theta_{\mathrm{rms}}$, the wall scalar gradient or flux where available,
+relevant inner-scaled profiles, and, where reported, the turbulent scalar flux
+$\langle w'\theta'\rangle$. A strict comparison requires compatible
+$Re_\tau$, $Pr$, wall boundary conditions, scalar forcing, normalization, and
+averaging interval. Any coordinate remapping, profile folding,
+symmetrization, or interpolation must also be disclosed. A non-twin reference
+can support qualitative or semi-quantitative assessment, but not strict
+validation.

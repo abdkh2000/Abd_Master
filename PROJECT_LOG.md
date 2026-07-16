@@ -2,6 +2,17 @@
 
 ## 2026-07-16
 
+### Passive Scalar and Temperature Transport
+
+- Added the focused theory subsection defining passive and active scalars, the
+  advection--diffusion equation, Prandtl number, scalar statistics, general
+  wall boundary conditions, scalar wall scaling, and a generic scalar log law.
+- Kept the planned internally heated $Re_\tau=550$ benchmark separate from the
+  opposed-wall $Re_\tau=150$ Kleandro working reference and retained the
+  documented benchmark-value and input-convention uncertainties.
+- Reused the existing Pope reference; no unverified passive-scalar citation or
+  external academic file was added to the repository.
+
 ### Wall Scaling, Friction Reynolds Number, and Law of the Wall
 
 - Added the focused theory subsection defining wall shear stress, friction
