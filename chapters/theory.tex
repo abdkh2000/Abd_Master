@@ -12,7 +12,7 @@ be introduced later.
 Plane channel flow consists of fluid motion between two stationary, parallel
 walls separated by the full channel height $2\delta$, where $\delta$ is the
 channel half-height. The coordinates $x$, $y$, and $z$ denote the streamwise,
-wall-normal, and spanwise directions, respectively. The corresponding
+spanwise, and wall-normal directions, respectively. The corresponding
 instantaneous velocity components are $u$, $v$, and $w$, and the velocity
 vector is $\mathbf{u}=(u,v,w)$. Figure~\ref{fig:channel-geometry} shows the
 coordinate convention used in this chapter.
@@ -23,19 +23,19 @@ coordinate convention used in this chapter.
   \begin{picture}(120,46)
     \put(12,8){\line(1,0){96}}
     \put(12,36){\line(1,0){96}}
-    \put(15,3){stationary wall, $y=-\delta$}
-    \put(15,39){stationary wall, $y=\delta$}
+    \put(15,3){stationary wall, $z=-\delta$}
+    \put(15,39){stationary wall, $z=\delta$}
     \put(43,22){\vector(1,0){30}}
     \put(75,20){$x$}
     \put(43,22){\vector(0,1){11}}
-    \put(39,33){$y$}
+    \put(39,33){$z$}
     \put(43,22){\circle*{1.2}}
-    \put(38,17){$z$ out of the page}
+    \put(38,17){$y$ out of the page}
     \put(86,22){\vector(1,0){15}}
     \put(88,25){mean flow}
   \end{picture}
-  \caption{Plane-channel configuration and coordinate convention used in the
-  present chapter.}
+  \caption{Plane-channel configuration: $x$ is streamwise, $y$ is spanwise
+  (out of the page), and $z$ is wall-normal.}
   \label{fig:channel-geometry}
 \end{figure}
 
@@ -100,25 +100,25 @@ specified at this stage.
 
 \subsubsection{Computational Domain and Boundary Conditions}
 
-The walls are located at $y=-\delta$ and $y=\delta$. Impermeability and the
+The walls are located at $z=-\delta$ and $z=\delta$. Impermeability and the
 no-slip condition require
 \begin{equation}
-  \mathbf{u}(x,-\delta,z,t)
-  =\mathbf{u}(x,\delta,z,t)=\mathbf{0}.
+  \mathbf{u}(x,y,-\delta,t)
+  =\mathbf{u}(x,y,\delta,t)=\mathbf{0}.
   \label{eq:channel-no-slip}
 \end{equation}
 The zero vector in Eq.~\eqref{eq:channel-no-slip} states that all three
 velocity components vanish at each stationary wall. For a channel domain of
-streamwise length $L_x$ and spanwise length $L_z$, periodicity in the two
+streamwise length $L_x$ and spanwise length $L_y$, periodicity in the two
 wall-parallel directions is expressed as
 \begin{equation}
   \mathbf{u}(x+L_x,y,z,t)=\mathbf{u}(x,y,z,t),
   \qquad
-  \mathbf{u}(x,y,z+L_z,t)=\mathbf{u}(x,y,z,t).
+  \mathbf{u}(x,y+L_y,z,t)=\mathbf{u}(x,y,z,t).
   \label{eq:channel-periodicity}
 \end{equation}
 These conditions represent a repeating section of the channel and make $x$
-and $z$ statistically homogeneous. The instantaneous flow remains
+and $y$ statistically homogeneous. The instantaneous flow remains
 three-dimensional and time-dependent \cite{kimMoinMoser1987}.
 
 \subsubsection{Fully Developed Channel Flow}
@@ -127,10 +127,10 @@ Fully developed channel flow is defined statistically: its mean quantities do
 not vary in the homogeneous directions. The mean velocity therefore has the
 form
 \begin{equation}
-  \langle\mathbf{u}\rangle=\bigl(U(y),0,0\bigr),
+  \langle\mathbf{u}\rangle=\bigl(U(z),0,0\bigr),
   \label{eq:fully-developed-channel-flow}
 \end{equation}
-where $U(y)=\langle u\rangle$ is the mean streamwise velocity. Equation
+where $U(z)=\langle u\rangle$ is the mean streamwise velocity. Equation
 \eqref{eq:fully-developed-channel-flow} describes the mean field only and does
 not imply that the instantaneous turbulent field is steady.
 
@@ -156,11 +156,11 @@ Reynolds decomposition,
 where $\mathbf{x}=(x,y,z)$ is the position vector, $u_i$ is an instantaneous
 velocity component, $U_i$ is its mean, $u_i'$ is its fluctuation, and $i$ is
 the component index. The assignments $u_1=u$, $u_2=v$, and $u_3=w$ correspond
-to the streamwise, wall-normal, and spanwise components. In component form,
+to the streamwise, spanwise, and wall-normal components. In component form,
 $u=U+u'$, $v=V+v'$, and $w=W+w'$, where $U=\langle u\rangle$,
 $V=\langle v\rangle$, and $W=\langle w\rangle$. All velocity quantities have
 units of $\mathrm{m\,s^{-1}}$. For the fully developed flow in
-Eq.~\eqref{eq:fully-developed-channel-flow}, $U=U(y)$ and $V=W=0$. The
+Eq.~\eqref{eq:fully-developed-channel-flow}, $U=U(z)$ and $V=W=0$. The
 fluctuations satisfy
 \begin{equation}
   \langle u_i'\rangle=0,
@@ -183,9 +183,9 @@ seconds. In a statistically stationary calculation, the converged result is
 independent of $t_0$. Averaging additionally over the homogeneous directions
 gives
 \begin{equation}
-  \langle\phi\rangle(y)
-  =\frac{1}{L_xL_z}\int_0^{L_z}\int_0^{L_x}
-  \langle\phi\rangle_t(x,y,z)\,\mathrm{d}x\,\mathrm{d}z.
+  \langle\phi\rangle(z)
+  =\frac{1}{L_xL_y}\int_0^{L_y}\int_0^{L_x}
+  \langle\phi\rangle_t(x,y,z)\,\mathrm{d}x\,\mathrm{d}y.
   \label{eq:channel-space-time-average}
 \end{equation}
 Equation~\eqref{eq:channel-space-time-average} is the statistical average used
@@ -196,11 +196,11 @@ stationarity refers to the statistics, not to a steady instantaneous field.
 
 The second moments are collected in the kinematic Reynolds-stress tensor,
 \begin{equation}
-  R_{ij}(y)=\langle u_i'u_j'\rangle,
+  R_{ij}(z)=\langle u_i'u_j'\rangle,
   \label{eq:reynolds-stress-tensor}
 \end{equation}
 where $R_{ij}$ has units of $\mathrm{m^2\,s^{-2}}$. The diagonal components
-$R_{11}$, $R_{22}$, and $R_{33}$ are the streamwise, wall-normal, and spanwise
+$R_{11}$, $R_{22}$, and $R_{33}$ are the streamwise, spanwise, and wall-normal
 normal stresses; the off-diagonal components describe correlations between
 different velocity fluctuations.
 
@@ -208,16 +208,16 @@ different velocity fluctuations.
 
 The root-mean-square (RMS) velocity fluctuations are
 \begin{equation}
-  u_{\mathrm{rms}}(y)=\sqrt{\langle u'^2\rangle},
+  u_{\mathrm{rms}}(z)=\sqrt{\langle u'^2\rangle},
   \qquad
-  v_{\mathrm{rms}}(y)=\sqrt{\langle v'^2\rangle},
+  v_{\mathrm{rms}}(z)=\sqrt{\langle v'^2\rangle},
   \qquad
-  w_{\mathrm{rms}}(y)=\sqrt{\langle w'^2\rangle}.
+  w_{\mathrm{rms}}(z)=\sqrt{\langle w'^2\rangle}.
   \label{eq:rms-velocity-fluctuations}
 \end{equation}
 These quantities are the square roots of $R_{11}$, $R_{22}$, and $R_{33}$,
 respectively, and have units of $\mathrm{m\,s^{-1}}$. Their profiles measure
-the typical streamwise, wall-normal, and spanwise fluctuation magnitudes across
+the typical streamwise, spanwise, and wall-normal fluctuation magnitudes across
 the channel and are standard quantities for comparison with reference DNS data
 \cite{kimMoinMoser1987}.
 
@@ -226,13 +226,13 @@ the channel and are standard quantities for comparison with reference DNS data
 The Reynolds-stress component relevant to wall-normal transport of streamwise
 momentum is
 \begin{equation}
-  -R_{12}(y)=-\langle u'v'\rangle.
+  -R_{13}(z)=-\langle u'w'\rangle.
   \label{eq:reynolds-shear-stress}
 \end{equation}
-Here, $u'$ and $v'$ are the streamwise and wall-normal velocity fluctuations.
+Here, $u'$ and $w'$ are the streamwise and wall-normal velocity fluctuations.
 The kinematic stress in Eq.~\eqref{eq:reynolds-shear-stress} has units of
 $\mathrm{m^2\,s^{-2}}$; multiplication by $\rho$ gives the dimensional
-turbulent shear stress $-\rho\langle u'v'\rangle$ in pascals. This correlation
+turbulent shear stress $-\rho\langle u'w'\rangle$ in pascals. This correlation
 quantifies turbulent momentum transfer between wall-parallel layers and is a
 central validation quantity for channel flow \cite{pope2000}.
 
@@ -240,7 +240,7 @@ central validation quantity for channel flow \cite{pope2000}.
 
 The turbulent kinetic energy per unit mass is
 \begin{equation}
-  k(y)=\frac{1}{2}\langle u_i'u_i'\rangle
+  k(z)=\frac{1}{2}\langle u_i'u_i'\rangle
   =\frac{1}{2}\left(
     \langle u'^2\rangle+\langle v'^2\rangle+\langle w'^2\rangle
   \right),
@@ -253,9 +253,9 @@ $\mathrm{J\,kg^{-1}}$.
 
 \subsubsection{Validation Quantities for the Present Work}
 
-The present work will later extract the mean streamwise velocity $U(y)$, the
+The present work will later extract the mean streamwise velocity $U(z)$, the
 three RMS velocity fluctuations, the Reynolds shear stress
-$-\langle u'v'\rangle$, and the turbulent kinetic energy $k(y)$ from BRINE.
+$-\langle u'w'\rangle$, and the turbulent kinetic energy $k(z)$ from BRINE.
 Their definitions are independent of the solver implementation, but the
 coordinate mapping and sampling procedure must be confirmed before the output
 is processed. Agreement with trusted non-buoyant channel DNS data is required

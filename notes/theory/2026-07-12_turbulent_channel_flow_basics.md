@@ -19,10 +19,10 @@ A channel flow is the flow between two parallel flat walls. The fluid moves main
 Common coordinate names:
 
 - `x`: streamwise direction, along the main flow
-- `y`: wall-normal direction, from one wall toward the other
-- `z`: spanwise direction, parallel to the wall and perpendicular to the main flow
+- `y`: spanwise direction, parallel to the wall and perpendicular to the main flow
+- `z`: wall-normal direction, from one wall toward the other
 
-In an ideal channel DNS, the flow is often periodic in `x` and `z`, while the walls are fixed boundaries in `y`.
+In an ideal channel DNS, the flow is often periodic in `x` and `y`, while the walls are fixed boundaries in `z`.
 
 ## No-Slip Condition At The Walls
 
@@ -66,13 +66,13 @@ For DNS, `Re_tau` strongly affects how fine the grid must be and how expensive t
 
 ## Wall Units
 
-Wall units are normalized variables based on friction velocity and viscosity. They are often marked with a plus sign, such as `y+` or `u+`.
+Wall units are normalized variables based on friction velocity and viscosity. They are often marked with a plus sign, such as `z+` or `u+`.
 
 Wall units are useful because the near-wall region has similar structure across many turbulent wall flows when scaled this way.
 
 Examples:
 
-- `y+`: wall-normal distance measured in wall units
+- `z+`: wall-normal distance measured in wall units
 - `u+`: mean velocity measured using friction velocity
 
 Using wall units helps judge whether the grid near the wall is fine enough for DNS.

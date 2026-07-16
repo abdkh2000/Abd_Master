@@ -2,6 +2,20 @@
 
 ## 2026-07-14
 
+### Advisor Meeting Documentation and Coordinate Correction
+
+- Added a sanitized meeting record covering the confirmed coordinate system,
+  editable code areas, guarded Poseidon and Leonardo workflows,
+  nondimensionalization, time-step criteria, and planned benchmark cases.
+- Corrected the thesis and supporting theory note to use $x$ streamwise, $y$
+  spanwise, and $z$ wall-normal, with $u$, $v$, and $w$ as the corresponding
+  velocity components.
+- Recorded the unresolved benchmark-value inconsistency and the remaining
+  template, registration, thermal-input, convention, benchmark-data, and
+  variable-spelling questions in `TODO.md`.
+- Compiled the corrected thesis with the configured XeLaTeX workflow and
+  visually checked the updated diagram and statistics equations.
+
 ### End-of-Day Repository Closeout
 
 - Verified that local `main` was clean and synchronized with the correct

@@ -20,9 +20,9 @@ case for evaluating mean and second-order turbulence statistics
 Temperature introduces an additional coupling when density variations produce
 a buoyancy force in the momentum balance. The thermal field then becomes
 active and can modify the velocity field. Under stable thermal stratification,
-buoyancy resists wall-normal fluid displacement and can reduce turbulent
-transport and mixing across the channel. Quantifying this interaction is
-important for predicting momentum and heat transfer in stratified flows
+buoyancy resists wall-normal ($z$-direction) fluid displacement and can reduce
+turbulent transport and mixing across the channel. Quantifying this interaction
+is important for predicting momentum and heat transfer in stratified flows
 \cite{armenioSarkar2002}.
 
 The objective of the present project is to establish a reliable workflow for
@@ -30,17 +30,17 @@ studying these effects with the BRINE solver. The planned work first seeks to
 establish or reproduce a non-buoyant turbulent channel-flow baseline and to
 understand the solver setup, execution, and output-processing workflow. Active
 thermal buoyancy will then be introduced to study how stable stratification
-changes turbulence and wall-normal mixing. These are project objectives; their
-outcomes will be assessed from the simulations and validation results reported
-later.
+changes turbulence and wall-normal ($z$-direction) mixing. These are project
+objectives; their outcomes will be assessed from the simulations and validation
+results reported later.
 
 The analysis will compare a non-buoyant case with stably stratified cases.
 Where the confirmed solver configuration permits, the cases will use matched
 operating conditions. The comparison will include the mean streamwise velocity,
-RMS velocity fluctuations, Reynolds shear stress, and turbulent kinetic energy,
-together with thermal quantities defined in later work. Agreement of the
-non-buoyant baseline with trusted DNS data is required before differences in
-the buoyant cases are interpreted.
+RMS velocity fluctuations, Reynolds shear stress $-\langle u'w'\rangle$, and
+turbulent kinetic energy, together with thermal quantities defined in later
+work. Agreement of the non-buoyant baseline with trusted DNS data is required
+before differences in the buoyant cases are interpreted.
 
 The remainder of the thesis is organised around this progression. The
 theoretical background first defines the channel configuration, governing

@@ -1,5 +1,49 @@
 # Project TODO
 
+## 2026-07-14 advisor-meeting follow-up
+
+### Newly answered
+
+- [x] Use the project convention: $x$ streamwise, $y$ spanwise, and $z$
+  wall-normal, with velocity components $u$, $v$, and $w$, respectively.
+- [x] Confirm the editable flag region in `main.f90` around lines 69--74 and
+  keep salinity and melting disabled for the current Master Project.
+- [x] Confirm that the first three lines of `module.f90` define `nx`, `ny`, and
+  `nz`; `input.inp` contains runtime and physical parameters; and `IC.inp`
+  controls velocity and temperature initial conditions.
+- [x] Record the Poseidon workflow: `poseidon.sh` compiles and runs, with about
+  128 points per direction as an approximate practical maximum.
+- [x] Record the Leonardo workflow: use a clean copied folder, compile with
+  `leo.sh`, and submit `go_leo.sh` through `sbatch` with one process per GPU.
+- [x] Record the cluster safety rules: no computation on the login node, no AI
+  autopilot, and manual approval before every cluster-changing command.
+- [x] Confirm the nondimensional relations $h=L_z/2$,
+  $u_\tau=\sqrt{\tau_w/\rho}$, and $Re_\tau=u_\tau h/\nu$. For $L_z=2$,
+  $|\Pi|=1$, and $\rho=1$, use $h=\tau_w=u_\tau=1$ and
+  $\nu=\mu=1/Re_\tau$.
+- [x] Record that the time step must satisfy both diffusion and CFL
+  restrictions, use the more restrictive value with a safety margin, and
+  account for the smallest spacing in the stretched wall-normal grid.
+- [x] Record the planned benchmark sequence: unstratified channel at
+  $Re_\tau=590$; passive scalar at $Re_\tau=550$, $Pr=1$; and stable
+  stratification at $Re_\tau=180$, $Pr=0.7$, $Ri_\tau=120$.
+
+### Outstanding from the meeting
+
+- [ ] Obtain and adopt the official TU Wien thesis template.
+- [ ] Confirm the final thesis title and complete TISS registration.
+- [ ] Obtain the Kleandro thermal test input and post-processing scripts.
+- [ ] Confirm the exact stable wall-temperature arrangement and gravity/sign
+  convention.
+- [ ] Obtain the exact Garcia-Villalba benchmark input and comparison data.
+- [ ] Confirm the exact spelling of the buoyancy variable in the relevant code
+  version.
+- [ ] Resolve the setup/path issue that caused the previous $16^3$ Poseidon
+  attempt to fail before considering another run.
+- [ ] Confirm whether the passive-scalar benchmark should use $Re_\tau=550$ or
+  $Re_\tau=500$; do not run it until the supplementary-document inconsistency
+  is resolved.
+
 ## Immediate setup tasks
 
 - [ ] Restart VS Code and terminal so newly installed Git, Perl, MiKTeX, and PATH updates are fully available.
@@ -26,7 +70,8 @@
 - [x] Email the advisor after the account exists so he can add the account to the project.
 - [x] Complete any required two-factor authentication setup.
 - [x] Follow the official connection procedure for the supercomputer.
-- [ ] Confirm where thesis-scale runs should be launched and how job scripts should be written.
+- [x] Confirm that thesis-scale runs use Leonardo and are submitted with
+  `go_leo.sh` through `sbatch` after compilation with `leo.sh`.
 - [x] Do not place supercomputer credentials, account names, project IDs, or login commands in Git.
 
 ## BRINE code usage tasks
@@ -37,9 +82,11 @@
 - [ ] Build libraries once after copying the folder.
 - [x] Identify the correct machine-specific build and run scripts.
 - [x] Locate and document the purpose of `input.inp`.
-- [x] Locate and document the purpose of `ic.inp`.
-- [x] Locate where `module.F90` sets `nx`, `ny`, and `nz`.
-- [x] Locate where `main.F90` controls flags.
+- [x] Locate and document the purpose of `IC.inp`.
+- [x] Locate where `module.f90` sets `nx`, `ny`, and `nz`.
+- [x] Locate where `main.f90` controls flags.
+- [x] Confirm that the `main.f90` flag region includes temperature, salinity,
+  and melting controls, with salinity and melting disabled for this project.
 - [x] Prepare tiny edit plan for the BRINE working copy.
 - [x] Apply first tiny grid edit in the BRINE working copy.
 - [x] Attempt first tiny compile/run smoke test.
@@ -88,7 +135,9 @@
 - [ ] Which input parameters control the Boussinesq buoyancy term?
 - [ ] What is the temperature/buoyancy sign convention?
 - [ ] Which wall should be hot and which wall should be cold?
-- [ ] Which nondimensional stratification or buoyancy parameter should be tested first?
+- [x] Which nondimensional stratification or buoyancy parameter should be
+  tested first? Current plan: $Re_\tau=180$, $Pr=0.7$, and $Ri_\tau=120$ for
+  the stable benchmark.
 - [ ] Which baseline validation plots are required before enabling buoyancy?
 - [ ] Which reference DNS datasets should be used for the non-buoyant baseline?
 - [ ] What grid and runtime should be used for the first supercomputer test?
