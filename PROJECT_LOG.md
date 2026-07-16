@@ -2,6 +2,14 @@
 
 ## 2026-07-16
 
+### Portable LaTeX Font Selection
+
+- Added a `fontspec` availability check that retains Times New Roman where it
+  is installed and otherwise uses TeX Gyre Termes with an explicit build-log
+  warning for non-final builds.
+- Made the XeLaTeX selection explicit in the GitHub Actions build; the final
+  font requirement remains subject to the official TU Wien template.
+
 ### DNS Resolution, Time-Step Restrictions, and Statistical Convergence
 
 - Added the DNS-resolution framework covering turbulent and scalar dissipative
