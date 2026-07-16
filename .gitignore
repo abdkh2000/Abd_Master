@@ -40,6 +40,7 @@ env/
 data/raw/
 data/interim/
 data/processed/
+template_output/
 *.tmp
 *.temp
 *.bak
@@ -66,4 +67,3 @@ secrets/
 .DS_Store
 Thumbs.db
 desktop.ini
-

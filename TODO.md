@@ -1,5 +1,23 @@
 # Project TODO
 
+## Scientific plotting standard — 2026-07-16
+
+- [x] Install the mandatory repository plotting skill at
+  `.agents/skills/abd-master-scientific-plots/SKILL.md`.
+- [x] Install the canonical NumPy/Matplotlib template at
+  `analysis/plotting/scientific_plot_template.py`.
+- [x] Record the distinct fresh one-million-step validation and extended
+  Leonardo restart parameter sets, including the non-twin-reference caveat.
+- [x] Run the plotting template locally and confirm vector PDF and 300-dpi PNG
+  outputs; keep the generated example files outside Git.
+- [ ] Confirm the wall-normal stretching factor for a fresh validation run
+  from the actual approved input files.
+- [ ] Check the actual BRINE flags, input-line values, and initial-condition
+  selectors before configuring or launching a thermal case.
+- [ ] Determine whether a future reproduction is a fresh run or a restart
+  before choosing between $\Delta t=3\times10^{-4}$ and
+  $\Delta t=5\times10^{-4}$.
+
 ## 2026-07-14 advisor-meeting follow-up
 
 ### Newly answered

@@ -1,5 +1,19 @@
 # Project Log
 
+## 2026-07-16
+
+### Scientific Plotting Standard and Thermal Reference Setup
+
+- Installed the repository-local scientific plotting skill and canonical
+  NumPy/Matplotlib template, and made the skill the mandatory plotting house
+  style in `AGENTS.md`.
+- Added the sanitized Kleandro thermal reference setup with separate fresh-run
+  and extended-restart parameters and explicit limitations on using it for a
+  future reproduction.
+- Ran the plotting template locally and verified that it creates a vector PDF
+  and a 300-dpi PNG with the required line hierarchy, legend order, and no
+  grid. The generated example directory is ignored and is not part of Git.
+
 ## 2026-07-14
 
 ### Advisor Meeting Documentation and Coordinate Correction
