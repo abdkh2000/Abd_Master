@@ -1,5 +1,29 @@
 # Project Log
 
+## 2026-07-18
+
+### Project-Level Theoretical Background Rewrite
+
+- Rebuilt the theoretical background around five project-specific subsections:
+  governing equations, turbulence statistics and wall scaling, scalar transport
+  and buoyancy, stable stratification, and minimum DNS requirements.
+- Removed the geometry figure, full internal-wave derivation and detection
+  workflow, DNS--LES--RANS comparison, dissipative-scale derivations, detailed
+  grid/stretching and time-step theory, sampling formulas, and convergence
+  campaign checklists. Closely related definitions were merged into 13 compact
+  displayed equation blocks, and the three planned cases were connected in a
+  concluding paragraph.
+- Reduced `chapters/theory.tex` from 1,175 to 360 source lines and the compiled
+  theory span from PDF pages 3--29 (27 pages) to pages 3--10 (8 pages), without
+  changing the document typography or layout settings.
+- Compiled successfully with `latexmk -pdf main.tex` through the installed
+  MiKTeX executable. The final log contains no undefined references or
+  citations, duplicate labels, overfull or underfull boxes, or compilation
+  errors; all eight theory pages were rendered and inspected visually.
+- Kept the passive-scalar Reynolds number, exact stable wall-temperature and
+  gravity/sign convention, and BRINE buoyancy-variable and coefficient mapping
+  unresolved in `TODO.md` rather than assigning unverified values.
+
 ## 2026-07-16
 
 ### Portable LaTeX Font Selection

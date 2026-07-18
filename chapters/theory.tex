@@ -1,1175 +1,360 @@
 \section{Theoretical Background}
 \label{sec:theoretical-background}
 
-This chapter defines the physical configuration, governing equations, and
-turbulence statistics required for the present work. It first establishes the
-incompressible, non-buoyant channel-flow baseline; thermal stratification will
-be introduced later.
+This chapter introduces only the theory required to formulate the planned
+channel-flow simulations and assess their statistics. Common coordinate and
+scaling conventions provide a consistent basis for the unstratified,
+passive-scalar, and stably stratified cases.
 
-\subsection{Governing Equations and Physical Configuration}
-\label{sec:channel-flow-governing-equations}
+\subsection{Physical Configuration and Governing Equations}
+\label{sec:physical-configuration-governing-equations}
 
-Plane channel flow consists of fluid motion between two stationary, parallel
-walls separated by the full channel height $2\delta$, where $\delta$ is the
-channel half-height. The coordinates $x$, $y$, and $z$ denote the streamwise,
-spanwise, and wall-normal directions, respectively. The corresponding
-instantaneous velocity components are $u$, $v$, and $w$, and the velocity
-vector is $\mathbf{u}=(u,v,w)$. Figure~\ref{fig:channel-geometry} shows the
-coordinate convention used in this chapter.
+The configuration is plane pressure-driven flow between two stationary,
+parallel walls. The streamwise, spanwise, and wall-normal coordinates are
+$x$, $y$, and $z$, and the corresponding velocity components are $u$, $v$,
+and $w$. The velocity vector is $\mathbf{u}=(u,v,w)$. The walls are at
+$z=\pm h$, where the channel half-height is $h=L_z/2$; the periodic domain
+lengths are $L_x$ and $L_y$ in the wall-parallel directions.
 
-\begin{figure}[htbp]
-  \centering
-  \setlength{\unitlength}{1mm}
-  \begin{picture}(120,46)
-    \put(12,8){\line(1,0){96}}
-    \put(12,36){\line(1,0){96}}
-    \put(15,3){stationary wall, $z=-\delta$}
-    \put(15,39){stationary wall, $z=\delta$}
-    \put(43,22){\vector(1,0){30}}
-    \put(75,20){$x$}
-    \put(43,22){\vector(0,1){11}}
-    \put(39,33){$z$}
-    \put(43,22){\circle*{1.2}}
-    \put(38,17){$y$ out of the page}
-    \put(86,22){\vector(1,0){15}}
-    \put(88,25){mean flow}
-  \end{picture}
-  \caption{Plane-channel configuration: $x$ is streamwise, $y$ is spanwise
-  (out of the page), and $z$ is wall-normal.}
-  \label{fig:channel-geometry}
-\end{figure}
-
-\subsubsection{Conservation of Mass}
-
-For an incompressible fluid of constant density, conservation of mass reduces
-to
+For a Newtonian fluid with constant reference density $\rho_0$ and kinematic
+viscosity $\nu$, the unstratified baseline satisfies the incompressible,
+pressure-driven Navier--Stokes equations. Writing the pressure as a linear
+mean part and a periodic remainder, $p=-Gx+\widetilde p$, with
+$G=-\mathrm{d}\langle p\rangle/\mathrm{d}x>0$, gives
 \begin{equation}
-  \boldsymbol{\nabla}\mathbin{\cdot}\mathbf{u}=0,
-  \label{eq:incompressible-continuity}
+  \begin{aligned}
+    \boldsymbol{\nabla}\mathbin{\cdot}\mathbf{u}&=0,\\
+    \frac{\partial\mathbf{u}}{\partial t}
+      +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
+      &=-\frac{1}{\rho_0}\boldsymbol{\nabla}\widetilde p
+        +\nu\boldsymbol{\nabla}^2\mathbf{u}
+        +\frac{G}{\rho_0}\mathbf{e}_x .
+  \end{aligned}
+  \label{eq:baseline-governing-equations}
 \end{equation}
-where $\boldsymbol{\nabla}$ is the spatial gradient operator. Equation
-\eqref{eq:incompressible-continuity} requires the velocity field to be
-divergence-free and expresses local conservation of fluid mass.
+Here $\mathbf{e}_x$ is the streamwise unit vector. The uniform acceleration
+$G\mathbf{e}_x/\rho_0$ represents the imposed mean pressure gradient; an
+equivalent constant-flow-rate formulation would adjust this forcing in time
+but would not change the statistical definitions below \cite{pope2000}.
 
-\subsubsection{Conservation of Momentum}
-
-The present formulation treats the fluid as Newtonian, with constant density
-$\rho$ and constant kinematic viscosity $\nu$. Conservation of momentum is
-then described by the incompressible Navier--Stokes equations,
+No slip and no penetration apply at both walls, while velocity is periodic in
+$x$ and $y$. These conditions are
 \begin{equation}
-  \frac{\partial \mathbf{u}}{\partial t}
-  +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
-  =-\frac{1}{\rho}\boldsymbol{\nabla}p
-  +\nu\boldsymbol{\nabla}^{2}\mathbf{u},
-  \label{eq:incompressible-navier-stokes}
+  \begin{aligned}
+    \mathbf{u}(x,y,\pm h,t)&=\mathbf{0},\\
+    \mathbf{u}(x+L_x,y,z,t)&=\mathbf{u}(x,y,z,t),\\
+    \mathbf{u}(x,y+L_y,z,t)&=\mathbf{u}(x,y,z,t).
+  \end{aligned}
+  \label{eq:channel-boundary-conditions}
 \end{equation}
-where $t$ is time, $p$ is pressure, and $\boldsymbol{\nabla}^{2}$ is the
-Laplace operator. In SI units, $\rho$, $\nu$, and $p$ are measured in
-$\mathrm{kg\,m^{-3}}$, $\mathrm{m^2\,s^{-1}}$, and pascals, respectively.
-The two terms on the left-hand side represent local and convective
-acceleration; the right-hand side contains pressure acceleration and viscous
-momentum diffusion \cite{pope2000}.
-
-\subsubsection{Pressure-Gradient Forcing}
-
-A streamwise pressure gradient maintains the channel flow. The pressure is
-written as a linear mean contribution plus a periodic remainder
-$\widetilde{p}$,
-\begin{equation}
-  p(x,y,z,t)=-Gx+\widetilde{p}(x,y,z,t),
-  \qquad
-  G=-\frac{\mathrm{d}\langle p\rangle}{\mathrm{d}x}>0,
-  \label{eq:channel-pressure-decomposition}
-\end{equation}
-where $G$ is the imposed streamwise pressure drop per unit length in
-$\mathrm{Pa\,m^{-1}}$, and angle brackets denote a statistical average.
-Substitution into Eq.~\eqref{eq:incompressible-navier-stokes} gives
-\begin{equation}
-  \frac{\partial \mathbf{u}}{\partial t}
-  +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
-  =-\frac{1}{\rho}\boldsymbol{\nabla}\widetilde{p}
-  +\nu\boldsymbol{\nabla}^{2}\mathbf{u}
-  +\frac{G}{\rho}\mathbf{e}_x,
-  \label{eq:pressure-driven-navier-stokes}
-\end{equation}
-where $\mathbf{e}_x$ is the unit vector in the positive streamwise direction.
-The final term is the uniform acceleration associated with the mean pressure
-gradient. Equation~\eqref{eq:pressure-driven-navier-stokes} defines the
-physical forcing considered here; its implementation by the solver is not
-specified at this stage.
-
-\subsubsection{Computational Domain and Boundary Conditions}
-
-The walls are located at $z=-\delta$ and $z=\delta$. Impermeability and the
-no-slip condition require
-\begin{equation}
-  \mathbf{u}(x,y,-\delta,t)
-  =\mathbf{u}(x,y,\delta,t)=\mathbf{0}.
-  \label{eq:channel-no-slip}
-\end{equation}
-The zero vector in Eq.~\eqref{eq:channel-no-slip} states that all three
-velocity components vanish at each stationary wall. For a channel domain of
-streamwise length $L_x$ and spanwise length $L_y$, periodicity in the two
-wall-parallel directions is expressed as
-\begin{equation}
-  \mathbf{u}(x+L_x,y,z,t)=\mathbf{u}(x,y,z,t),
-  \qquad
-  \mathbf{u}(x,y+L_y,z,t)=\mathbf{u}(x,y,z,t).
-  \label{eq:channel-periodicity}
-\end{equation}
-These conditions represent a repeating section of the channel and make $x$
-and $y$ statistically homogeneous. The instantaneous flow remains
-three-dimensional and time-dependent \cite{kimMoinMoser1987}.
-
-\subsubsection{Fully Developed Channel Flow}
-
-Fully developed channel flow is defined statistically: its mean quantities do
-not vary in the homogeneous directions. The mean velocity therefore has the
-form
-\begin{equation}
-  \langle\mathbf{u}\rangle=\bigl(U(z),0,0\bigr),
-  \label{eq:fully-developed-channel-flow}
-\end{equation}
-where $U(z)=\langle u\rangle$ is the mean streamwise velocity. Equation
-\eqref{eq:fully-developed-channel-flow} describes the mean field only and does
-not imply that the instantaneous turbulent field is steady.
-
-\subsection{Turbulence Statistics for Validation}
-\label{sec:reynolds-decomposition-turbulence-statistics}
-
-Validation of a turbulent channel calculation is based on converged
-statistics rather than individual instantaneous fields. The quantities needed
-for the present work are defined below using the coordinate convention of
-Subsection~\ref{sec:channel-flow-governing-equations}.
-
-\subsubsection{Reynolds Decomposition and Averaging}
-
-The instantaneous velocity is separated into mean and fluctuating parts by the
-Reynolds decomposition,
-\begin{equation}
-  u_i(\mathbf{x},t)=U_i(\mathbf{x})+u_i'(\mathbf{x},t),
-  \qquad
-  U_i=\langle u_i\rangle,
-  \qquad i\in\{1,2,3\},
-  \label{eq:reynolds-decomposition}
-\end{equation}
-where $\mathbf{x}=(x,y,z)$ is the position vector, $u_i$ is an instantaneous
-velocity component, $U_i$ is its mean, $u_i'$ is its fluctuation, and $i$ is
-the component index. The assignments $u_1=u$, $u_2=v$, and $u_3=w$ correspond
-to the streamwise, spanwise, and wall-normal components. In component form,
-$u=U+u'$, $v=V+v'$, and $w=W+w'$, where $U=\langle u\rangle$,
-$V=\langle v\rangle$, and $W=\langle w\rangle$. All velocity quantities have
-units of $\mathrm{m\,s^{-1}}$. For the fully developed flow in
-Eq.~\eqref{eq:fully-developed-channel-flow}, $U=U(z)$ and $V=W=0$. The
-fluctuations satisfy
-\begin{equation}
-  \langle u_i'\rangle=0,
-  \qquad
-  \langle u'\rangle=\langle v'\rangle=\langle w'\rangle=0.
-  \label{eq:zero-mean-velocity-fluctuations}
-\end{equation}
-Equation~\eqref{eq:zero-mean-velocity-fluctuations} follows directly from the
-definition of the mean \cite{pope2000}.
-
-For an instantaneous flow quantity $\phi$, the ideal time average is
-\begin{equation}
-  \langle\phi\rangle_t(x,y,z)
-  =\lim_{T\rightarrow\infty}\frac{1}{T}
-  \int_{t_0}^{t_0+T}\phi(x,y,z,t)\,\mathrm{d}t,
-  \label{eq:turbulence-time-average}
-\end{equation}
-where $t_0$ is the start of the sampling interval and $T$ is its duration in
-seconds. In a statistically stationary calculation, the converged result is
-independent of $t_0$. Averaging additionally over the homogeneous directions
-gives
-\begin{equation}
-  \langle\phi\rangle(z)
-  =\frac{1}{L_xL_y}\int_0^{L_y}\int_0^{L_x}
-  \langle\phi\rangle_t(x,y,z)\,\mathrm{d}x\,\mathrm{d}y.
-  \label{eq:channel-space-time-average}
-\end{equation}
-Equation~\eqref{eq:channel-space-time-average} is the statistical average used
-below. For finite simulation data, the sampling interval must be long enough
-for each reported quantity to converge. Under an ergodic interpretation, this
-space--time average estimates the corresponding ensemble average. Statistical
-stationarity refers to the statistics, not to a steady instantaneous field.
-
-The second moments are collected in the kinematic Reynolds-stress tensor,
-\begin{equation}
-  R_{ij}(z)=\langle u_i'u_j'\rangle,
-  \label{eq:reynolds-stress-tensor}
-\end{equation}
-where $R_{ij}$ has units of $\mathrm{m^2\,s^{-2}}$. The diagonal components
-$R_{11}$, $R_{22}$, and $R_{33}$ are the streamwise, spanwise, and wall-normal
-normal stresses; the off-diagonal components describe correlations between
-different velocity fluctuations.
-
-\subsubsection{RMS Velocity Fluctuations}
-
-The root-mean-square (RMS) velocity fluctuations are
-\begin{equation}
-  u_{\mathrm{rms}}(z)=\sqrt{\langle u'^2\rangle},
-  \qquad
-  v_{\mathrm{rms}}(z)=\sqrt{\langle v'^2\rangle},
-  \qquad
-  w_{\mathrm{rms}}(z)=\sqrt{\langle w'^2\rangle}.
-  \label{eq:rms-velocity-fluctuations}
-\end{equation}
-These quantities are the square roots of $R_{11}$, $R_{22}$, and $R_{33}$,
-respectively, and have units of $\mathrm{m\,s^{-1}}$. Their profiles measure
-the typical streamwise, spanwise, and wall-normal fluctuation magnitudes across
-the channel and are standard quantities for comparison with reference DNS data
+The periodic pressure remainder and transported scalar obey the corresponding
+wall-parallel periodicity. Statistically fully developed channel flow means
+that, after transients, its statistics are stationary and independent of the
+homogeneous coordinates $x$ and $y$. The mean velocity consequently has the
+form $\langle\mathbf{u}\rangle=(U(z),0,0)$ even though the instantaneous
+turbulent field remains three-dimensional and unsteady
 \cite{kimMoinMoser1987}.
 
-\subsubsection{Reynolds Shear Stress}
+\subsection{Turbulence Statistics and Wall Scaling}
+\label{sec:turbulence-statistics-wall-scaling}
 
-The Reynolds-stress component relevant to wall-normal transport of streamwise
-momentum is
-\begin{equation}
-  -R_{13}(z)=-\langle u'w'\rangle.
-  \label{eq:reynolds-shear-stress}
-\end{equation}
-Here, $u'$ and $w'$ are the streamwise and wall-normal velocity fluctuations.
-The kinematic stress in Eq.~\eqref{eq:reynolds-shear-stress} has units of
-$\mathrm{m^2\,s^{-2}}$; multiplication by $\rho$ gives the dimensional
-turbulent shear stress $-\rho\langle u'w'\rangle$ in pascals. This correlation
-quantifies turbulent momentum transfer between wall-parallel layers and is a
-central validation quantity for channel flow \cite{pope2000}.
-
-\subsubsection{Turbulent Kinetic Energy}
-
-The turbulent kinetic energy per unit mass is
-\begin{equation}
-  k(z)=\frac{1}{2}\langle u_i'u_i'\rangle
-  =\frac{1}{2}\left(
-    \langle u'^2\rangle+\langle v'^2\rangle+\langle w'^2\rangle
-  \right),
-  \label{eq:turbulent-kinetic-energy}
-\end{equation}
-where a repeated index denotes summation over the three Cartesian components.
-The quantity $k$ is the mean kinetic energy of the velocity fluctuations per
-unit fluid mass. Its SI units are $\mathrm{m^2\,s^{-2}}$, equivalently
-$\mathrm{J\,kg^{-1}}$.
-
-\subsubsection{Validation Quantities for the Present Work}
-
-The present work will later extract the mean streamwise velocity $U(z)$, the
-three RMS velocity fluctuations, the Reynolds shear stress
-$-\langle u'w'\rangle$, and the turbulent kinetic energy $k(z)$ from BRINE.
-Their definitions are independent of the solver implementation, but the
-coordinate mapping and sampling procedure must be confirmed before the output
-is processed. Agreement with trusted non-buoyant channel DNS data is required
-before differences caused by buoyancy are interpreted.
-
-\subsection{Wall Scaling, Friction Reynolds Number, and Law of the Wall}
-\label{sec:wall-scaling-law-wall}
-
-Wall scaling relates the near-wall velocity field to the shear exerted by a
-solid boundary. For the mean streamwise velocity $U(z)$ defined in
-Eq.~\eqref{eq:fully-developed-channel-flow}, the positive magnitude of the wall
-shear stress is
-\begin{equation}
-  \tau_w
-  =\mu\left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_w
-  =\rho\nu\left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_w,
-  \label{eq:wall-shear-stress}
-\end{equation}
-where the subscript $w$ denotes evaluation at either wall, $\mu=\rho\nu$ is
-the dynamic viscosity, and $\nu$ is the kinematic viscosity introduced in
-Eq.~\eqref{eq:incompressible-navier-stokes}. The absolute value removes the
-opposite gradient signs at the lower and upper walls. Physically, $\tau_w$ is
-the streamwise force transmitted per unit wall area; its SI unit is the pascal,
-$\mathrm{Pa}=\mathrm{N\,m^{-2}}$.
-
-The corresponding friction velocity, channel half-height, and friction
-Reynolds number are
-\begin{equation}
-  u_\tau=\sqrt{\frac{\tau_w}{\rho}},
-  \qquad
-  h=\frac{L_z}{2},
-  \qquad
-  Re_\tau=\frac{u_\tau h}{\nu}.
-  \label{eq:friction-scaling-quantities}
-\end{equation}
-Here, $u_\tau$ has units of velocity but is a shear-based scaling quantity, not
-the local fluid velocity. The half-height $h$ is identical to $\delta$ in the
-centred geometry of Fig.~\ref{fig:channel-geometry}, and $L_z$ is the full
-wall-normal channel length. The parameter $Re_\tau$ measures the separation
-between the outer length $h$ and the near-wall viscous length; increasing
-$Re_\tau$ generally increases the range of dynamically relevant wall-turbulence
-scales \cite{pope2000}.
-
-The planned project convention uses $L_z=2$, $|\Pi|=1$, and $\rho=1$, where
-$\Pi=\mathrm{d}\langle p\rangle/\mathrm{d}x=-G$ is the signed mean pressure
-gradient associated with Eq.~\eqref{eq:channel-pressure-decomposition}. For a
-fully developed plane channel, the mean streamwise momentum balance gives
-$\tau_w=h|\Pi|$. Consequently,
-\begin{equation}
-  h=1,
-  \qquad
-  \tau_w=1,
-  \qquad
-  u_\tau=1,
-  \qquad
-  \nu=\mu=\frac{1}{Re_\tau}
-  \quad (\rho=1).
-  \label{eq:project-wall-scaling-normalization}
-\end{equation}
-Equation~\eqref{eq:project-wall-scaling-normalization} documents the intended
-nondimensional setup. It is not a result from a completed simulation.
-
-Let $d_w$ be the non-negative distance from a point to the nearest wall. In the
-centred coordinate system of Fig.~\ref{fig:channel-geometry},
-$d_w=h-|z|$; for data stored on $0\leq z\leq L_z$, the equivalent expression is
-$d_w=\min(z,L_z-z)$. The viscous length, wall distance, and mean velocity in
-wall units are
-\begin{equation}
-  \ell_\nu=\frac{\nu}{u_\tau},
-  \qquad
-  z^+=\frac{d_w}{\ell_\nu}=\frac{d_wu_\tau}{\nu},
-  \qquad
-  U^+=\frac{U}{u_\tau}.
-  \label{eq:viscous-length-wall-units}
-\end{equation}
-The RMS quantities from Eq.~\eqref{eq:rms-velocity-fluctuations} and the
-Reynolds shear stress from Eq.~\eqref{eq:reynolds-shear-stress} are scaled as
+Channel statistics combine an average over the two homogeneous planes with a
+time average over a statistically stationary production interval. For any
+instantaneous quantity $\phi$, an interval of duration $\mathcal{T}$ beginning
+at $t_0$ defines the finite-data average adopted below. The Reynolds
+decomposition is then
 \begin{equation}
   \begin{aligned}
-    u_{\mathrm{rms}}^+&=\frac{u_{\mathrm{rms}}}{u_\tau},
-    &v_{\mathrm{rms}}^+&=\frac{v_{\mathrm{rms}}}{u_\tau},
-    &w_{\mathrm{rms}}^+&=\frac{w_{\mathrm{rms}}}{u_\tau},\\
-    -\langle u'w'\rangle^+
-    &=-\frac{\langle u'w'\rangle}{u_\tau^2}
-    =\frac{-\rho\langle u'w'\rangle}{\tau_w}.
+    \langle\phi\rangle_{xy}(z,t)
+      &=\frac{1}{L_xL_y}\int_0^{L_y}\!\int_0^{L_x}
+        \phi(x,y,z,t)\,\mathrm{d}x\,\mathrm{d}y,\\
+    \langle\phi\rangle(z)
+      &=\frac{1}{\mathcal{T}}\int_{t_0}^{t_0+\mathcal{T}}
+        \langle\phi\rangle_{xy}(z,t)\,\mathrm{d}t,\\
+    u_i&=U_i+u_i',
+    &U_i&=\langle u_i\rangle,
+    \qquad i\in\{1,2,3\},\\
+    \langle u_i'\rangle&=0.
   \end{aligned}
-  \label{eq:inner-scaled-turbulence-statistics}
+  \label{eq:channel-average-reynolds-decomposition}
 \end{equation}
+The project assignments are $u_1=u$, $u_2=v$, and $u_3=w$, while
+$U(z)=\langle u\rangle$ is the mean streamwise velocity. In the infinite-time
+limit the average is independent of $t_0$; in a calculation, stationarity and
+convergence checks must support that independence.
 
-BRINE uses $z$ and $w$ for the wall-normal coordinate and velocity component,
-respectively. Much of the wall-turbulence literature instead uses $y$ as the
-wall-normal coordinate and therefore denotes wall distance by $y^+$. That
-conventional symbol may be retained in comparison figures only when it is
-defined explicitly as distance from the nearest wall in wall units. It must not
-be confused with the BRINE coordinate $y$, which is spanwise, or with the
-spanwise velocity $v$. The same mapping converts a literature stress
-$-\langle u'v'\rangle$ into the BRINE quantity $-\langle u'w'\rangle$ when the
-reference uses $v$ for wall-normal velocity.
-
-The near-wall flow is commonly described using four approximate regions. In
-the viscous sublayer, molecular viscosity dominates the mean momentum transfer.
-The buffer layer is a transition in which viscous and turbulent effects are
-both important. Farther from the wall, the logarithmic or overlap region links
-inner and outer scaling, whereas the outer region is influenced by the channel
-half-height, pressure-gradient forcing, and centreline conditions. These
-regions do not have universal sharp boundaries; their extent depends in part
-on Reynolds number \cite{pope2000}.
-
-For a smooth wall, the leading inner relation in the viscous sublayer is
-\begin{equation}
-  U^+=z^+.
-  \label{eq:viscous-law-of-wall}
-\end{equation}
-In the logarithmic overlap region, the generic law of the wall is
-\begin{equation}
-  U^+=\frac{1}{\kappa_{\mathrm{vK}}}\ln(z^+)+B,
-  \label{eq:logarithmic-law-of-wall}
-\end{equation}
-where $\kappa_{\mathrm{vK}}$ is the dimensionless von K\'arm\'an constant and
-$B$ is the additive intercept. The symbol $\kappa_{\mathrm{vK}}$ is distinct
-from the thermal diffusivity $\kappa$, which has units of
-$\mathrm{m^2\,s^{-1}}$. No project-specific numerical values are assigned to
-$\kappa_{\mathrm{vK}}$ or $B$ at this stage \cite{pope2000}.
-
-Wall-unit profiles provide a common basis for comparing channel calculations
-at a specified $Re_\tau$. The planned unstratified benchmark at $Re_\tau=590$
-will therefore compare $U^+$, the three RMS fluctuations in
-Eq.~\eqref{eq:inner-scaled-turbulence-statistics}, and the inner-scaled
-Reynolds shear stress with established channel-DNS statistics
-\cite{kimMoinMoser1987,moserKimMansour1999}. This comparison extends the
-validation quantities
-identified in Subsection~\ref{sec:reynolds-decomposition-turbulence-statistics};
-it defines a future validation procedure and does not imply that validation has
-already been completed.
-
-\subsection{Passive Scalar and Temperature Transport}
-\label{sec:passive-scalar-temperature-transport}
-
-A scalar field $\theta(\mathbf{x},t)$ can represent temperature when density
-feedback is disabled. Such a scalar is passive: it is transported by the
-velocity field but does not modify the momentum equation. An active scalar, by
-contrast, changes the momentum balance through a coupling such as buoyancy.
-The detailed active-buoyancy formulation is introduced separately from the
-passive transport considered here.
-
-For constant molecular diffusivity, the dimensional advection--diffusion
-equation is
-\begin{equation}
-  \frac{\partial\theta}{\partial t}
-  +\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla}\theta
-  =\kappa\boldsymbol{\nabla}^{2}\theta+Q,
-  \label{eq:passive-scalar-transport}
-\end{equation}
-where $\mathbf{u}$ is the instantaneous velocity from
-Eq.~\eqref{eq:incompressible-navier-stokes}, $\kappa$ is the molecular scalar
-diffusivity, and $Q$ is a local volumetric scalar source expressed per unit
-fluid capacity. The second term on the left of
-Eq.~\eqref{eq:passive-scalar-transport} is advection by the flow, whereas the
-first and second terms on the right describe molecular diffusion and source
-production, respectively. If $\theta$ is temperature, its SI unit is kelvin,
-$\kappa$ has units of $\mathrm{m^2\,s^{-1}}$, and $Q$ has units of
-$\mathrm{K\,s^{-1}}$; every term in the equation then has units of
-$\mathrm{K\,s^{-1}}$. A physical heat-generation rate in
-$\mathrm{W\,m^{-3}}$ must first be divided by the volumetric heat capacity to
-obtain this form. Equation~\eqref{eq:passive-scalar-transport} may also be
-nondimensionalised, but its scales and the resulting source definition must
-then be stated explicitly \cite{pope2000}.
-
-The Prandtl number is
-\begin{equation}
-  Pr=\frac{\nu}{\kappa},
-  \label{eq:prandtl-number}
-\end{equation}
-where $\nu$ is the kinematic viscosity defined in
-Eq.~\eqref{eq:incompressible-navier-stokes}. It is the ratio of molecular
-momentum diffusivity to molecular thermal diffusivity. Momentum and scalar
-diffuse at the same molecular rate when $Pr=1$; scalar diffusion is faster
-when $Pr<1$, whereas momentum diffusion is faster relative to scalar diffusion
-when $Pr>1$.
-
-Using the Reynolds decomposition in Eq.~\eqref{eq:reynolds-decomposition} as
-an analogue, the instantaneous scalar is written as
-\begin{equation}
-  \theta(\mathbf{x},t)=\Theta(z)+\theta'(\mathbf{x},t),
-  \qquad
-  \Theta(z)=\langle\theta\rangle,
-  \qquad
-  \langle\theta'\rangle=0,
-  \label{eq:scalar-reynolds-decomposition}
-\end{equation}
-where $\Theta$ is the mean scalar profile and $\theta'$ is the scalar
-fluctuation. The angle brackets denote the space--time average over the
-homogeneous $x$ and $y$ directions defined in
-Eq.~\eqref{eq:channel-space-time-average}. In addition to $\Theta$, the
-principal scalar statistics are
+The velocity quantities required for later comparison are the three
+root-mean-square (RMS) fluctuations, the Reynolds shear stress, and turbulent
+kinetic energy per unit mass:
 \begin{equation}
   \begin{aligned}
-    \sigma_\theta^2(z)&=\langle\theta'^2\rangle,
-    &\theta_{\mathrm{rms}}(z)&=\sqrt{\sigma_\theta^2}
-      =\sqrt{\langle\theta'^2\rangle},\\
-    F_{\theta,z}(z)&=\langle w'\theta'\rangle.
+    u_{\mathrm{rms}}&=\sqrt{\langle u'^2\rangle},
+    &v_{\mathrm{rms}}&=\sqrt{\langle v'^2\rangle},
+    &w_{\mathrm{rms}}&=\sqrt{\langle w'^2\rangle},\\
+    \tau_{uw}^{\mathrm{turb}}&=-\rho_0\langle u'w'\rangle,
+    &k&=\frac{1}{2}\left(
+      \langle u'^2\rangle+\langle v'^2\rangle+\langle w'^2\rangle
+      \right).
   \end{aligned}
-  \label{eq:scalar-validation-statistics}
+  \label{eq:velocity-validation-statistics}
 \end{equation}
-The mean profile gives the average scalar distribution across the channel,
-$\sigma_\theta^2$ is the scalar variance, and $\theta_{\mathrm{rms}}$ gives the
-characteristic fluctuation amplitude in the same units as $\theta$. The
-turbulent flux $F_{\theta,z}=\langle w'\theta'\rangle$ quantifies scalar
-transport by wall-normal turbulent motion and has units of scalar times
-$\mathrm{m\,s^{-1}}$. Here, $w$ is BRINE's wall-normal velocity component;
-$v$ remains the spanwise component.
+The correlation $-\langle u'w'\rangle$ is the kinematic turbulent transport
+of streamwise momentum in the wall-normal direction. Together, the RMS
+profiles and $k$ show the magnitude and anisotropy of the velocity
+fluctuations \cite{pope2000,kimMoinMoser1987}.
 
-Scalar boundary conditions specify either the wall value, its outward-normal
-gradient, or a combination of both. A general linear condition is
+BRINE uses $z$ and $w$ for the wall-normal coordinate and velocity. Channel
+data that instead use the common literature convention $(y,v)$ in the
+wall-normal direction must therefore be remapped as
+$y_{\mathrm{lit}}\mapsto z$ and $v_{\mathrm{lit}}\mapsto w$; in particular,
+$-\langle u'v'\rangle_{\mathrm{lit}}$ corresponds to
+$-\langle u'w'\rangle$ here. The mapping must be stated explicitly in each
+external comparison.
+
+The positive wall-shear magnitude, friction velocity, and friction Reynolds
+number provide the natural channel scales:
 \begin{equation}
-  a\theta+b\frac{\partial\theta}{\partial n}=c
-  \qquad\text{on a wall},
-  \label{eq:scalar-wall-boundary-condition}
+  \begin{aligned}
+    \tau_{w,\pm}&=\rho_0\nu
+      \left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_{z=\pm h},
+    &\tau_w&=\frac{\tau_{w,-}+\tau_{w,+}}{2}=hG,\\
+    u_\tau&=\sqrt{\frac{\tau_w}{\rho_0}},
+    &Re_\tau&=\frac{u_\tau h}{\nu}.
+  \end{aligned}
+  \label{eq:wall-friction-scales}
 \end{equation}
-where $n$ is the outward unit-normal direction and the coefficients $a$, $b$,
-and $c$ carry the units required for dimensional consistency. A prescribed
-scalar value is a Dirichlet condition, represented by $a=1$ and $b=0$. A
-prescribed scalar flux is a Neumann condition; the insulated zero-flux case is
-$a=0$, $b=1$, and $c=0$. Non-zero $a$ and $b$ give a mixed or Robin condition.
-These mathematical forms do not identify BRINE input-line values, which must
-be checked from the approved case input before use.
+For the reflection-symmetric baseline,
+$\tau_{w,-}=\tau_{w,+}=\tau_w$. The averaged equality $\tau_w=hG$ follows from
+the fully developed mean momentum balance and also supplies a forcing-based
+case scale if thermal conditions make the individual wall stresses unequal.
+Any local wall scaling based instead on $u_{\tau,\pm}$ must be identified in
+the comparison.
 
-\paragraph{Official project benchmark.}
-The current project roadmap specifies a planned case at $Re_\tau=550$ and
-$Pr=1$, with buoyancy disabled, constant isothermal walls $\theta=0$, and
-uniform internal heating $Q=1/Pr$ in the nondimensional scalar equation. The
-intended comparisons include the mean temperature in wall units and the
-temperature RMS. This is a planned benchmark rather than a completed result;
-the separately recorded inconsistency between $Re_\tau=550$ and
-$Re_\tau=500$ must be resolved before the case is configured or run.
+Let $d_w=h-|z|$ be distance from the nearest wall. The viscous length and the
+inner-scaled quantities used for profile comparisons are
+\begin{equation}
+  \begin{aligned}
+    \ell_\nu&=\frac{\nu}{u_\tau},
+    &z^+&=\frac{d_w}{\ell_\nu}=\frac{d_wu_\tau}{\nu},
+    &U^+&=\frac{U}{u_\tau},\\
+    (u_{\mathrm{rms}}^+,v_{\mathrm{rms}}^+,w_{\mathrm{rms}}^+)
+      &=\frac{1}{u_\tau}
+        (u_{\mathrm{rms}},v_{\mathrm{rms}},w_{\mathrm{rms}}),
+    &-\langle u'w'\rangle^+
+      &=-\frac{\langle u'w'\rangle}{u_\tau^2},
+    &k^+&=\frac{k}{u_\tau^2}.
+  \end{aligned}
+  \label{eq:inner-scaled-statistics}
+\end{equation}
+Thus $z^+$ denotes a non-negative wall distance rather than the signed physical
+coordinate.
 
-\paragraph{Kleandro working reference.}
-The separate working reference uses $Re_\tau=150$, $Pr=1$, and disabled
-buoyancy, with opposed fixed nondimensional wall values $\theta=+1$ at the
-lower wall and $\theta=-1$ at the upper wall. It is useful for understanding
-the thermal workflow and post-processing, but it is not the official
-$Re_\tau=550$ reproduction case. Its parameters and normalization must not be
-combined with those of the internally heated benchmark.
+For a smooth wall, the leading viscous behaviour and the overlap approximation
+for the mean velocity can be stated compactly as
+\begin{equation}
+  U^+=z^+\quad\text{(viscous limit)},
+  \qquad
+  U^+=\frac{1}{\kappa_{\mathrm{vK}}}\ln z^+ + B
+  \quad\text{(logarithmic overlap)}.
+  \label{eq:mean-velocity-wall-laws}
+\end{equation}
+Here $\kappa_{\mathrm{vK}}$ and $B$ are the von K\'arm\'an constant and
+intercept, not fitted project parameters. These relations are reference
+behaviours rather than a complete division of the channel into textbook
+regions. The planned $Re_\tau=590$ baseline will be assessed through the
+profiles defined above and comparison with established channel DNS
+\cite{moserKimMansour1999}.
 
-For a generic scalar, the outward-normal component of the molecular scalar
-flux and its friction-scalar scale may be defined as
+\subsection{Scalar Transport and Thermal Buoyancy}
+\label{sec:scalar-transport-thermal-buoyancy}
+
+Let $T(\mathbf{x},t)$ denote dimensional temperature, with molecular thermal
+diffusivity $\kappa$. Its constant-property advection--diffusion equation and
+the Prandtl number are
+\begin{equation}
+  \begin{aligned}
+    \frac{\partial T}{\partial t}
+      +\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla}T
+      &=\kappa\boldsymbol{\nabla}^2T+Q,
+    &Pr&=\frac{\nu}{\kappa}.
+  \end{aligned}
+  \label{eq:temperature-transport-prandtl}
+\end{equation}
+The source $Q$ has units of temperature per unit time and is retained because
+the planned passive-scalar benchmark may use uniform internal heating; it is
+zero when no volumetric source is present. A nondimensional solver variable
+$\theta=(T-T_0)/\Delta T$, where $\Delta T>0$ is its chosen temperature
+scale, obeys an equation of the same form only after its source and boundary
+values have been scaled consistently. Dimensional $T$ is used below wherever
+density or buoyancy is defined.
+
+Applying the average in Eq.~\eqref{eq:channel-average-reynolds-decomposition}
+gives the mean temperature $\Theta(z)=\langle T\rangle$ and fluctuation
+$T'=T-\Theta$. The principal thermal statistics are
+\begin{equation}
+  \begin{aligned}
+    T_{\mathrm{rms}}(z)&=\sqrt{\langle T'^2\rangle},
+    &F_{T,z}(z)&=\langle w'T'\rangle.
+  \end{aligned}
+  \label{eq:temperature-statistics}
+\end{equation}
+The wall-normal turbulent temperature flux $F_{T,z}$ measures transport by
+velocity fluctuations and is distinct from molecular diffusion. The same
+definitions apply to a nondimensional passive scalar after replacing
+$(T,\Theta,T')$ by its consistently scaled variables.
+
+When a wall-scaled mean temperature is reported, define the outward-normal
+kinematic wall flux $j_w$, friction temperature $T_\tau$, and plotted mean by
 \begin{equation}
   j_w=-\kappa\left.\frac{\partial\Theta}{\partial n}\right|_w,
   \qquad
-  \theta_\tau=\frac{|j_w|}{u_\tau},
+  T_\tau=\frac{|j_w|}{u_\tau},
   \qquad
-  \Delta\Theta^+
-  =s_w\frac{\Theta_w-\Theta}{\theta_\tau},
-  \label{eq:scalar-wall-scaling}
+  \Theta^+=s_w\frac{\Theta_w-\Theta}{T_\tau}.
+  \label{eq:temperature-wall-scaling}
 \end{equation}
-where $\Theta_w$ is the mean wall scalar and $u_\tau$ is the friction velocity
-from Eq.~\eqref{eq:friction-scaling-quantities}. If $\theta$ is temperature,
-$j_w$ has units of $\mathrm{K\,m\,s^{-1}}$ and $\theta_\tau$ has units of
-kelvin; $j_w$ is therefore a kinematic scalar flux rather than a heat flux in
-$\mathrm{W\,m^{-2}}$. The factor $s_w\in\{-1,+1\}$ records the chosen sign
-orientation and is selected separately at each wall so that the plotted
-$\Delta\Theta^+$ has the stated direction. This convention must be reported
-rather than assumed for the final BRINE benchmark. Wall distance is scaled by
-the same $z^+$ defined in Eq.~\eqref{eq:viscous-length-wall-units}.
+Here $n$ is the outward wall normal, $\Theta_w$ is the wall temperature, and
+$s_w=\pm1$ states the orientation used for each plotted wall. These quantities
+are evaluated separately at each wall and only when $j_w\neq0$; a zero-flux
+wall has no finite $T_\tau$ scaling. The explicit factor avoids silently
+imposing a temperature sign convention, and $z^+$ remains the wall-distance
+coordinate.
 
-Like the mean velocity, a passive-scalar profile can contain a near-wall
-conductive region, an overlap region, and a core region. The leading
-near-wall behaviour is linear under appropriate inner scaling. A generic
-scalar logarithmic relation in the overlap region is
+Temperature is passive when Eq.~\eqref{eq:temperature-transport-prandtl} is
+solved without feedback to momentum. It is active when density changes create
+a buoyancy force, so that velocity transports temperature and temperature in
+turn modifies velocity. For small relative density variations, the Boussinesq
+approximation uses a reference density $\rho_0$, temperature $T_0$, and thermal
+expansion coefficient $\alpha_T$. With the physical gravity vector
+$\mathbf{g}$ pointing in the direction in which gravity acts, let
+$\widetilde p_b$ denote the periodic dynamic-pressure remainder after removal
+of the reference hydrostatic pressure. The density law and active momentum
+equation are
 \begin{equation}
-  \Delta\Theta^+
-  =\frac{1}{\kappa_\theta}\ln(z^+)+B_\theta,
-  \label{eq:scalar-logarithmic-law}
+  \begin{aligned}
+    \rho(T)&=\rho_0\left[1-\alpha_T(T-T_0)\right],\\
+    \frac{\partial\mathbf{u}}{\partial t}
+      +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
+      &=-\frac{1}{\rho_0}\boldsymbol{\nabla}\widetilde p_b
+        +\nu\boldsymbol{\nabla}^2\mathbf{u}
+        +\frac{G}{\rho_0}\mathbf{e}_x
+        -\alpha_T(T-T_0)\mathbf{g}.
+  \end{aligned}
+  \label{eq:boussinesq-density-momentum}
 \end{equation}
-where $\kappa_\theta$ is a dimensionless scalar logarithmic-law constant and
-$B_\theta$ is its additive intercept. The symbol $\kappa_\theta$ is distinct
-from the thermal diffusivity $\kappa$ in
-Eq.~\eqref{eq:passive-scalar-transport} and from the von K\'arm\'an velocity
-constant $\kappa_{\mathrm{vK}}$ in
-Eq.~\eqref{eq:logarithmic-law-of-wall}. The region boundaries and the constants
-depend on the scalar boundary condition and normalization; no numerical values
-are assigned here \cite{pope2000}.
+The last term is the thermal buoyancy acceleration. For $\alpha_T>0$, a warm
+perturbation accelerates opposite to $\mathbf{g}$ under this convention. The
+exact wall values, gravity orientation, temperature
+normalisation, buoyancy-variable spelling, coefficient mapping, and input sign
+used by BRINE must be fixed from the verified case input rather than inferred
+from Eq.~\eqref{eq:boussinesq-density-momentum} \cite{pope2000}.
 
-Future passive-scalar validation should compare the mean scalar profile,
-$\theta_{\mathrm{rms}}$, the wall scalar gradient or flux where available,
-relevant inner-scaled profiles, and, where reported, the turbulent scalar flux
-$\langle w'\theta'\rangle$. A strict comparison requires compatible
-$Re_\tau$, $Pr$, wall boundary conditions, scalar forcing, normalization, and
-averaging interval. Any coordinate remapping, profile folding,
-symmetrization, or interpolation must also be disclosed. A non-twin reference
-can support qualitative or semi-quantitative assessment, but not strict
-validation.
+\subsection{Stable Stratification and Internal-Wave Relevance}
+\label{sec:stable-stratification-wave-relevance}
 
-\subsection{Boussinesq Approximation and Thermal Buoyancy}
-\label{sec:boussinesq-thermal-buoyancy}
+Stable stratification places denser fluid below lighter fluid in the
+gravitational sense, so that a displaced parcel experiences a restoring
+buoyancy force. Let $s$ increase opposite to $\mathbf{g}$ and let
+$g=|\mathbf{g}|$. For the dimensional Boussinesq temperature, stability means
+that the mean density decreases with $s$, or equivalently that the mean
+temperature increases with $s$ for $\alpha_T>0$.
 
-Temperature becomes an active scalar when its associated density variation
-produces a force in the momentum balance. The transport equation
-\eqref{eq:passive-scalar-transport} remains necessary, but the dependence is
-then two-way: the velocity field advects temperature, while temperature
-modifies the velocity through buoyancy.
-
-For modest temperature differences, the Boussinesq approximation linearises
-density about a reference state as
+For the project-relevant configuration in which gravity is wall-normal, so
+$s$ is aligned with $z$ up to sign, the buoyancy frequency, local gradient
+Richardson number, and case-level friction Richardson number quantify
+complementary aspects of this state:
 \begin{equation}
-  \rho(\theta)
-  =\rho_0\left[1-\alpha_T(\theta-\theta_0)\right],
-  \label{eq:boussinesq-density-temperature}
+  \begin{aligned}
+    N^2(s)&=-\frac{g}{\rho_0}
+      \frac{\mathrm{d}\langle\rho\rangle}{\mathrm{d}s}
+      =g\alpha_T\frac{\mathrm{d}\Theta}{\mathrm{d}s},\\
+    Ri_g(s)&=\frac{N^2(s)}{
+      \left(\mathrm{d}U/\mathrm{d}s\right)^2},\\
+    Ri_\tau&=\frac{g h\,\Delta\rho_\star}{\rho_0u_\tau^2}
+      =\frac{b_\star h}{u_\tau^2},
+    &b_\star&=g\frac{\Delta\rho_\star}{\rho_0}.
+  \end{aligned}
+  \label{eq:stratification-scales}
 \end{equation}
-where $\rho_0$ is the reference density, $\theta_0$ is the reference
-temperature, and $\alpha_T$ is the thermal-expansion coefficient in
-$\mathrm{K^{-1}}$. For an ordinary fluid with $\alpha_T>0$, increasing
-temperature decreases density. The coefficient $\alpha_T$ is a thermodynamic
-property and is distinct from the thermal diffusivity $\kappa$ in
-Eq.~\eqref{eq:passive-scalar-transport}.
+Here $N^2>0$ denotes stable stratification. The quantity $Ri_g$ compares local
+buoyancy and mean shear where the shear is non-zero; it is not a universal
+transition criterion and can be ill-conditioned near a zero-shear centreline.
+The positive contrast $\Delta\rho_\star$ is the imposed stable wall-to-wall
+density difference, so $Ri_\tau$ compares buoyancy over $h$ with wall-friction
+inertia. For dimensional temperature,
+$\Delta\rho_\star/\rho_0\simeq\alpha_T\Delta T_\star$, where
+$\Delta T_\star>0$ is the temperature at larger $s$ minus that at smaller $s$.
+Mapping this definition to a nondimensional case parameter requires the
+verified temperature scale
+\cite{garciaVillalbaDelAlamo2011}.
 
-The approximation assumes that relative density changes are small. Density is
-therefore set to $\rho_0$ in continuity, inertia, and the viscous terms, and is
-allowed to vary only in the gravitational contribution. The velocity remains
-approximately divergence-free as in
-Eq.~\eqref{eq:incompressible-continuity}. This model is not appropriate when
-density changes are too large for the linear relation in
-Eq.~\eqref{eq:boussinesq-density-temperature} to remain accurate
-\cite{pope2000}.
-
-Let $\mathbf{g}$ be the physical gravitational-acceleration vector, pointing
-in the direction in which gravity acts. Its magnitude is
-$g=|\mathbf{g}|$. After the uniform reference contribution $\mathbf{g}$ has
-been absorbed into the hydrostatic pressure, the remaining thermal buoyancy
-acceleration is
-\begin{equation}
-  \mathbf{f}_b
-  =\frac{\rho-\rho_0}{\rho_0}\mathbf{g}
-  =-\alpha_T(\theta-\theta_0)\mathbf{g}.
-  \label{eq:boussinesq-buoyancy-acceleration}
-\end{equation}
-With this convention, a warm perturbation for which
-$\theta-\theta_0>0$ accelerates opposite to $\mathbf{g}$, whereas a cold
-perturbation accelerates along $\mathbf{g}$. Other formulations may reverse
-the displayed sign by defining an upward gravity vector, a buoyancy variable,
-or a nondimensional temperature with the opposite orientation. The sign must
-therefore be interpreted together with the direction of $\mathbf{g}$, the
-definition of $\theta$, and the chosen reference state.
-
-Adding Eq.~\eqref{eq:boussinesq-buoyancy-acceleration} to the pressure-driven
-momentum equation gives
-\begin{equation}
-  \frac{\partial \mathbf{u}}{\partial t}
-  +(\mathbf{u}\mathbin{\cdot}\boldsymbol{\nabla})\mathbf{u}
-  =-\frac{1}{\rho_0}\boldsymbol{\nabla}\widetilde{p}_b
-  +\nu\boldsymbol{\nabla}^{2}\mathbf{u}
-  +\frac{G}{\rho_0}\mathbf{e}_x
-  -\alpha_T(\theta-\theta_0)\mathbf{g},
-  \label{eq:boussinesq-pressure-driven-momentum}
-\end{equation}
-where $\widetilde{p}_b$ is the dynamic pressure remainder after the reference
-hydrostatic contribution has been removed. The pressure-gradient term
-$G\mathbf{e}_x/\rho_0$ maintains the mean streamwise flow. The final term is
-the thermal buoyancy acceleration. Equations
-\eqref{eq:passive-scalar-transport} and
-\eqref{eq:boussinesq-pressure-driven-momentum} form the coupled thermal-flow
-system under the stated assumptions.
-
-For BRINE, the advisor-confirmed conceptual information is limited to the
-following: temperature transport is controlled through a temperature flag;
-salinity and melting remain disabled for the present Master Project; and the
-thermal buoyancy coupling is proportional to temperature through a coefficient
-described as an alpha--gravity-type term. The exact variable spelling, input
-location, nondimensional coefficient, and implemented sign have not yet been
-verified in the active code version and are not specified here. Salinity could
-provide an additional density contribution in a more general model, but it is
-outside the present project and no double-diffusive formulation is developed.
-
-\subsection{Stable Thermal Stratification}
-\label{sec:stable-thermal-stratification}
-
-Thermal stratification describes how buoyancy varies along the gravity
-direction. A stable arrangement places the fluid in a local minimum of
-gravitational potential energy: a displaced parcel experiences a restoring
-tendency. In an unstable arrangement, buoyancy amplifies a displacement and
-convection may develop. A neutral arrangement has no leading restoring or
-amplifying buoyancy effect. These statements depend on the density gradient
-relative to gravity, not on a universal assignment of hot and cold channel
-walls. The wall temperatures and gravity sign for the BRINE benchmark must be
-taken from the approved input before a wall orientation is stated.
-
-For a sign-explicit definition, let $s$ increase opposite to
-$\mathbf{g}$, so gravitational potential energy increases with $s$. The
-squared Brunt--V\"ais\"al\"a or buoyancy frequency is then defined by
-\begin{equation}
-  N^2
-  =-\frac{g}{\rho_0}\frac{\mathrm{d}\overline{\rho}}{\mathrm{d}s}
-  =g\alpha_T\frac{\mathrm{d}\Theta}{\mathrm{d}s},
-  \label{eq:brunt-vaisala-frequency}
-\end{equation}
-where $\overline{\rho}(s)$ is the mean density and $\Theta(s)$ is the mean
-dimensional temperature from the decomposition in
-Eq.~\eqref{eq:scalar-reynolds-decomposition}, expressed along $s$. The second
-equality follows only from the dimensional linear density law in
-Eq.~\eqref{eq:boussinesq-density-temperature}. The quantity $N^2$ has units of
-$\mathrm{s^{-2}}$. Under the adopted convention, $N^2>0$ is stable,
-$N^2=0$ is neutral, and $N^2<0$ is unstable. If BRINE transports a
-nondimensional scalar, its temperature scale and sign must be included before
-Eq.~\eqref{eq:brunt-vaisala-frequency} is applied \cite{pope2000}.
-
-Mean shear transfers energy into turbulent motion, whereas stable buoyancy
-opposes wall-normal displacement. Increasing stable stratification can
-therefore weaken turbulent mixing, make momentum and scalar transport more
-anisotropic, reduce turbulence in the channel core, and promote wave-like
-motion. The balance varies across the channel because both shear and
-stratification are spatially non-uniform
+Stable buoyancy opposes wall-normal displacement and therefore competes with
+shear production. Consequences relevant here include weaker wall-normal
+momentum and scalar transport, modification or suppression of core turbulence,
+and increased anisotropy. The response need not be uniform across the channel:
+near-wall shear can sustain turbulence while buoyancy strongly affects the
+more weakly sheared core
 \cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}.
 
-When the stratification and mean-shear gradients are both aligned with the
-BRINE wall-normal coordinate $z$, their local competition can be measured by
-the gradient Richardson number
-\begin{equation}
-  Ri_g(z)=\frac{N^2(z)}{\left(\mathrm{d}U/\mathrm{d}z\right)^2},
-  \label{eq:gradient-richardson-number}
-\end{equation}
-where $U(z)$ is the mean streamwise velocity from
-Eq.~\eqref{eq:fully-developed-channel-flow}. The numerator represents the
-squared buoyancy frequency, while the denominator represents the squared mean
-shear rate. Larger positive $Ri_g$ indicates stronger local buoyancy relative
-to shear; it is distinct from a case-level friction Richardson number.
+Internal gravity waves are possible because stable buoyancy supplies a
+restoring force. In the ideal inviscid, uniformly stratified limit, a
+propagating wave has intrinsic angular frequency
+$0<|\widehat{\omega}|<N$, where $N=\sqrt{N^2}$; mean shear, confinement,
+viscosity, and turbulence
+modify that simple picture. Temperature or velocity patterns that appear
+wave-like are therefore only candidates. An internal-wave interpretation
+requires coherent evidence from the simulation data that is consistent with
+the buoyancy time scale and spatial structure, not an isolated field snapshot
+or oscillation \cite{armenioSarkar2002}.
 
-A friction Richardson number instead compares a characteristic buoyancy
-acceleration $b_\star$ acting over the channel half-height with the wall-shear
-velocity scale. Its generic scaling is
-\begin{equation}
-  Ri_\tau\sim\frac{b_\star h}{u_\tau^2},
-  \label{eq:generic-friction-richardson-number}
-\end{equation}
-where $h$ and $u_\tau$ are defined in
-Eq.~\eqref{eq:friction-scaling-quantities}. The precise definition of
-$b_\star$ depends on the temperature difference or flux, gravity convention,
-and scalar normalization. Consequently, the normalization used by the
-Garc\'ia-Villalba--del {\'A}lamo reference and its mapping to BRINE must be
-verified before Eq.~\eqref{eq:generic-friction-richardson-number} is replaced
-by a project-specific equality \cite{garciaVillalbaDelAlamo2011}.
+\subsection{DNS Requirements and Application to the Project}
+\label{sec:dns-requirements-project-application}
 
-The dimensionless groups describe different physical balances.
-$Re_\tau$ in Eq.~\eqref{eq:friction-scaling-quantities} compares wall-shear
-and viscous scales, while $Pr$ in Eq.~\eqref{eq:prandtl-number} compares
-momentum and thermal diffusivities. Richardson numbers compare buoyancy with
-shear or wall-friction scales. For stable stratification, a Froude number may
-be written generically as $Fr=U_c/(NL_c)$, where $N=\sqrt{N^2}$ and $U_c$ and
-$L_c$ are stated characteristic velocity and length scales; it compares
-inertial and buoyancy time scales. Any relationship between $Fr$ and a
-Richardson number depends on using compatible scales.
+Direct numerical simulation (DNS) advances the governing velocity and scalar
+equations without a turbulence-closure model. Calling a calculation DNS also
+requires evidence that the dynamically relevant velocity and thermal scales
+are resolved. Mesh resolution, time resolution, domain size, and statistical
+convergence must therefore be demonstrated for the quantities used in the
+project comparisons \cite{pope2000}.
 
-The planned active benchmark uses $Re_\tau=180$, $Pr=0.7$, and
-$Ri_\tau=120$ with stable thermal stratification. These are target parameters,
-not completed simulation results. The expected physical signatures are reduced
-core turbulence and weaker wall-normal mixing, but their occurrence must be
-established from the computed statistics. Planned outputs include the mean
-temperature profile and a temperature-field slice for identifying possible
-wave-like structures, alongside the scalar statistics in
-Eq.~\eqref{eq:scalar-validation-statistics}. The exact gravity direction, wall
-temperatures, buoyancy coefficient, and $Ri_\tau$ input relation remain subject
-to confirmation before the benchmark is configured.
-
-\subsection{Internal Gravity Waves in Stably Stratified Channel Flow}
-\label{sec:internal-gravity-waves}
-
-Internal gravity waves are oscillatory motions supported by stable
-stratification. When a fluid parcel is displaced along the direction opposite
-to gravity, its density generally differs from that of its new surroundings.
-The resulting buoyancy force acts as a restoring force when $N^2>0$ in
-Eq.~\eqref{eq:brunt-vaisala-frequency}. The same stable buoyancy that permits
-these waves also resists sustained wall-normal transport, so wave motion and
-turbulence modification must be considered together in a stratified channel
-\cite{pope2000,garciaVillalbaDelAlamo2011}.
-
-Let $\mathbf{e}_s=-\mathbf{g}/g$ be the unit vector in the increasing-$s$
-direction introduced in Subsection~\ref{sec:stable-thermal-stratification}, and
-let $u_s'=\mathbf{u}'\mathbin{\cdot}\mathbf{e}_s$ be the corresponding velocity
-fluctuation. A scalar buoyancy perturbation, positive in the $\mathbf{e}_s$
-direction, is defined by
-\begin{equation}
-  b'=-\frac{g\rho'}{\rho_0}=g\alpha_T\theta',
-  \qquad
-  \mathbf{f}_b'=b'\mathbf{e}_s,
-  \label{eq:internal-wave-buoyancy-perturbation}
-\end{equation}
-where $\rho'$ and $\theta'$ are the dimensional density and temperature
-fluctuations, respectively. The second equality follows from
-Eq.~\eqref{eq:boussinesq-density-temperature}, while the vector direction is
-consistent with Eq.~\eqref{eq:boussinesq-buoyancy-acceleration}. If gravity is
-wall-normal, $s$ is parallel or antiparallel to BRINE's wall-normal coordinate
-$z$; it is not BRINE's spanwise coordinate $y$.
-
-The elementary wave relation is obtained by linearising about a motionless,
-inviscid, uniformly stratified Boussinesq state with constant $N^2>0$. The
-perturbations are assumed small, incompressible, and unaffected by viscosity,
-thermal diffusion, boundaries, mean shear, and nonlinear advection. Under
-these idealisations, the dynamics along $s$ are
-\begin{align}
-  \frac{\partial u_s'}{\partial t}
-    &=-\frac{1}{\rho_0}\frac{\partial p'}{\partial s}+b',
-    \label{eq:linear-internal-wave-momentum}\\
-  \frac{\partial b'}{\partial t}+N^2u_s'&=0,
-    \label{eq:linear-internal-wave-buoyancy}
-\end{align}
-where $p'$ is the pressure perturbation. The second relation expresses the
-restoring response: motion in the positive $s$ direction produces a negative
-buoyancy perturbation. Combining these equations with incompressibility gives
-the internal-wave equation
-\begin{equation}
-  \frac{\partial^2}{\partial t^2}
-  \left(\boldsymbol{\nabla}^2u_s'\right)
-  +N^2\boldsymbol{\nabla}_h^2u_s'=0,
-  \label{eq:internal-gravity-wave-equation}
-\end{equation}
-where $\boldsymbol{\nabla}_h^2=\boldsymbol{\nabla}^2-
-\partial^2/\partial s^2$ contains the two directions perpendicular to gravity.
-This subscript denotes a gravity-horizontal operator and is unrelated to the
-channel half-height $h$.
-
-For a plane wave proportional to
-$\exp[\mathrm{i}(\mathbf{k}_h\mathbin{\cdot}\mathbf{x}_h+ms-
-\widehat{\omega}t)]$, Eq.~\eqref{eq:internal-gravity-wave-equation} yields
-\begin{equation}
-  \widehat{\omega}^{\,2}
-  =N^2\frac{k_h^2}{k_h^2+m^2},
-  \label{eq:internal-gravity-wave-dispersion}
-\end{equation}
-where $\mathbf{k}_h$ is the wavevector perpendicular to gravity,
-$k_h=|\mathbf{k}_h|$, $m$ is the wavenumber along $s$, and
-$\widehat{\omega}$ is the intrinsic angular frequency. Propagating oblique
-internal waves therefore satisfy $0<|\widehat{\omega}|<N$. A wavevector that is
-nearly perpendicular to gravity has $k_h\gg|m|$ and a frequency approaching
-$N$, whereas a wavevector nearly parallel to gravity has
-$k_h\ll|m|$ and a frequency approaching zero. These statements concern the
-wavevector orientation, not the direction of phase or energy propagation.
-
-In a channel with a streamwise mean velocity $U(z)$, an observed angular
-frequency $\omega$ is Doppler shifted. A local intrinsic frequency may be
-written
-\begin{equation}
-  \widehat{\omega}(z)=\omega-k_xU(z),
-  \label{eq:internal-gravity-wave-doppler-shift}
-\end{equation}
-where $k_x$ is the streamwise wavenumber. Equations
-\eqref{eq:internal-gravity-wave-dispersion} and
-\eqref{eq:internal-gravity-wave-doppler-shift} are diagnostic guides rather
-than an exact global dispersion relation for the present channel. The mean
-shear and $N^2$ vary with $z$, and viscosity, thermal diffusion, nonlinear
-interactions, and turbulence are absent from the ideal derivation.
-
-The walls add a further restriction. The impermeability condition in
-Subsection~\ref{sec:channel-flow-governing-equations} requires $w'=0$ at each
-wall; when gravity is wall-normal, the same condition applies to $u_s'$ up to
-its sign. Disturbances generated within the channel may propagate through the
-stratified core, reflect from regions or boundaries that inhibit propagation,
-or combine into standing patterns. Confinement can select discrete
-wall-normal structures, but the admissible structures depend on the actual
-mean profiles and boundary conditions and should not be inferred solely from
-the uniform-$N$ model.
-
-Internal waves exchange kinetic and buoyancy potential energy through the
-buoyancy flux. They can carry coherent motion through a region where
-wall-normal turbulent transport is weak, while wave shear, nonlinear
-interaction, or wave breaking can transfer energy back to turbulence. Channel
-studies report that internal-wave activity can coexist with near-wall
-turbulence and become prominent in a buoyancy-dominated core
-\cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}. This coexistence does not
-make every oscillation a gravity wave: advected turbulent eddies, intermittent
-bursts, slow drift of the mean field, and numerical or sampling artefacts can
-also produce wave-like patterns.
-
-Evidence for an internal-wave interpretation should therefore combine several
-diagnostics. Useful evidence includes coherent peaks in frequency--wavenumber
-spectra, agreement of $\widehat{\omega}$ with its permitted range and with a
-Doppler-shifted dispersion relation, a reproducible phase relationship between
-$u_s'$ and $b'$ or $\theta'$, and a coherent wall-normal mode structure over a
-documented time interval. Propagation, reflection, or standing-wave behaviour
-should be distinguished where the data permit. A single instantaneous
-temperature slice, a smooth mean profile, or oscillation at one probe is not
-sufficient proof.
-
-The planned $Re_\tau=180$, $Pr=0.7$, $Ri_\tau=120$ case is intended to test
-for such behaviour; these remain target parameters and are not completed
-results. Its interpretation must retain the distinction between the local
-$Ri_g$ in Eq.~\eqref{eq:gradient-richardson-number} and the case-level
-$Ri_\tau$ in Eq.~\eqref{eq:generic-friction-richardson-number}. Future
-post-processing should retain time-resolved fields long enough for converged
-frequency estimates, record the sampling interval and analysis window, and
-examine frequency spectra, joint frequency--wavenumber spectra, phase
-relationships, and wall-normal structure. Any comparison must document the
-coordinate mapping, normalization, averaging window, folding or
-symmetrisation, interpolation, and data provenance. Resulting spectra and
-comparison figures must follow the repository's mandatory scientific plotting
-standard, including its export and disclosure requirements. No wave detection
-or validation is claimed at this theory checkpoint.
-
-\subsection[Direct Numerical Simulation, Resolution, and Statistical Convergence]
-{Direct Numerical Simulation, Resolution, and\\ Statistical Convergence}
-\label{sec:dns-resolution-statistical-convergence}
-
-\subsubsection{Direct Numerical Simulation}
-
-Direct numerical simulation (DNS) solves the governing equations without a
-turbulence model. In principle, the computational representation must capture
-the large energy-containing motions, the intermediate inertial-range scales
-through which energy is transferred, and the smallest dynamically relevant
-dissipative motions. Reynolds-averaged Navier--Stokes methods instead model the
-effects of all turbulent fluctuations on the mean flow, whereas large-eddy
-simulation resolves the larger motions and models the unresolved subgrid
-scales. DNS is therefore the most demanding of these approaches in spatial
-resolution, temporal resolution, domain size, and sampling duration
-\cite{pope2000}.
-
-The absence of an active turbulence model is necessary but not sufficient for
-a calculation to be described as adequately resolved DNS. The mesh must
-resolve the relevant velocity and scalar scales, the time step must resolve
-their evolution, the domain must contain the important large structures, and
-the reported statistics must be converged. These requirements must be
-demonstrated for the quantities of interest. The present discussion does not
-assign a spatial discretisation, time-integration method, formal order of
-accuracy, or dealiasing procedure to BRINE because those implementation
-details have not yet been verified from the approved code or documentation.
-
-\subsubsection{Dissipative Scales and Grid Spacing}
-
-For locally isotropic turbulence, the characteristic smallest viscous length
-scale is the Kolmogorov scale
-\begin{equation}
-  \eta=\left(\frac{\nu^3}{\varepsilon}\right)^{1/4},
-  \label{eq:kolmogorov-length-scale}
-\end{equation}
-where $\eta$ is the Kolmogorov length, $\nu$ is the kinematic viscosity, and
-$\varepsilon$ is the turbulent kinetic-energy dissipation rate per unit mass.
-Their SI units are $\mathrm{m}$, $\mathrm{m^2\,s^{-1}}$, and
-$\mathrm{m^2\,s^{-3}}$, respectively. The dissipation rate varies across a
-wall-bounded flow, so strongly dissipative regions can contain a smaller
-$\eta$ than a single global estimate suggests. Resolution should consequently
-be assessed using the spatial distribution of dissipation where it is
-available, rather than one unqualified domain-average value
-\cite{pope2000}.
-
-The smallest scalar scale need not equal the smallest velocity scale. For
-$Pr$ greater than or comparable to unity, a commonly used estimate is the
-Batchelor scale
-\begin{equation}
-  \eta_B=\frac{\eta}{\sqrt{Pr}},
-  \label{eq:batchelor-length-scale}
-\end{equation}
-where $\eta_B$ is the scalar dissipative length and $Pr$ is defined in
-Eq.~\eqref{eq:prandtl-number}. The applicability of
-Eq.~\eqref{eq:batchelor-length-scale} depends on the scalar regime and is most
-relevant when $Pr\gtrsim1$; it is not a universal scalar-resolution rule. The
-planned $Pr=1$ and $Pr=0.7$ cases do not require an extended treatment of
-high-$Pr$ scalar microstructure, but velocity and scalar resolution must still
-be checked separately.
-
-For uniform periodic grids in the wall-parallel directions, the nominal
-spacings are
-\begin{equation}
-  \Delta x=\frac{L_x}{N_x},
-  \qquad
-  \Delta y=\frac{L_y}{N_y},
-  \qquad
-  \Delta z_j=z_{j+1}-z_j,
-  \label{eq:nominal-grid-spacings}
-\end{equation}
-where $L_x$ and $L_y$ are the domain lengths, $N_x$ and $N_y$ are the numbers
-of periodic grid points, and $z_j$ is the $j$th physical wall-normal point.
-The local spacing $\Delta z_j$ is retained because a stretched wall-normal
-grid is generally non-uniform. In wall units,
+For a channel grid, nominal spacings may be reported in the same inner units as
+the turbulence statistics:
 \begin{equation}
   \Delta x^+=\frac{\Delta x\,u_\tau}{\nu},
   \qquad
   \Delta y^+=\frac{\Delta y\,u_\tau}{\nu},
   \qquad
-  \Delta z_j^+=\frac{\Delta z_j\,u_\tau}{\nu},
-  \label{eq:grid-spacings-wall-units}
+  \Delta z_j^+=\frac{\Delta z_j\,u_\tau}{\nu}.
+  \label{eq:dns-grid-wall-units}
 \end{equation}
-where $u_\tau$ and $\nu/u_\tau$ are defined in
-Eqs.~\eqref{eq:friction-scaling-quantities} and
-\eqref{eq:viscous-length-wall-units}. The quantities $\Delta x^+$ and
-$\Delta y^+$ characterise the nominal wall-parallel resolution, while
-$\Delta z_j^+$ varies across the channel. Both its minimum near-wall value and
-maximum core value should be reported.
+The local $\Delta z_j^+$ allows for wall-normal stretching. These measures do
+not by themselves prove adequate resolution: the numerical method, the
+resolved profiles, and sensitivity to refinement also matter. The domain must
+contain the important large structures, and the time step and stored data must
+resolve the dynamics being interpreted. Actual point counts, stretching,
+domain lengths, time step, stability limits, and output intervals belong to
+the numerical methodology and results.
 
-The distance from the wall to the first physical grid point is not necessarily
-the minimum cell width; the distinction depends on whether variables are
-stored at nodes, cell centres, or staggered locations. Ghost nodes are
-computational boundary devices and must not be counted as additional physical
-resolution. Acceptable spacings depend on the numerical method, Reynolds
-number, target statistic, and demonstrated grid convergence. Comparison with
-published channel-DNS grids, such as the established $Re_\tau=590$ reference,
-is useful context but does not replace a resolution or refinement assessment
-\cite{moserKimMansour1999}.
+Production averages begin only after initial transients decay and monitored
+quantities support statistical stationarity. Within stated uncertainty, the
+averages should be insensitive to reasonable changes in the production window.
+Grid and time-step sensitivity address discretisation error, while comparison
+with reference DNS assesses the combined calculation under compatible
+conditions; none substitutes for the others. These checks apply to velocity
+statistics and, when relevant, to $\Theta$, $T_{\mathrm{rms}}$, and
+$\langle w'T'\rangle$.
 
-\subsubsection{Domain Size and Wall-Normal Stretching}
+The planned sequence applies these definitions progressively. An unstratified
+channel at $Re_\tau=590$ first establishes the workflow and permits comparison
+of $U^+$, the RMS fluctuations, Reynolds shear stress, and $k$ with trusted
+DNS. A passive-scalar channel at $Pr=1$ then tests $\Theta$,
+$T_{\mathrm{rms}}$, and $\langle w'T'\rangle$ with buoyancy disabled; its exact
+run configuration belongs to the methodology chapter. Finally, the active
+stable target at $Re_\tau=180$, $Pr=0.7$, and $Ri_\tau=120$ addresses changes
+in mixing, anisotropy, core turbulence, and possible wave-like motion. These
+parameters are planned targets, not simulation results.
 
-A DNS domain must contain the important energy-containing motions as well as
-the smaller scales resolved by the mesh. The streamwise length $L_x$ must
-permit the long structures of the mean-flow direction, the spanwise length
-$L_y$ must accommodate the relevant cross-stream organisation, and the
-wall-normal length is the full channel height $L_z=2h$. The $x$ and $y$
-directions are periodic according to Eq.~\eqref{eq:channel-periodicity}. Their
-admissible wavenumbers are discrete,
-\begin{equation}
-  k_x=\frac{2\pi n_x}{L_x},
-  \qquad
-  k_y=\frac{2\pi n_y}{L_y},
-  \qquad
-  n_x,n_y\in\mathbb{Z},
-  \label{eq:periodic-domain-wavenumbers}
-\end{equation}
-where $n_x$ and $n_y$ are integer mode indices. An undersized periodic domain
-can therefore constrain large turbulent structures artificially.
-
-Internal-wave analysis is also domain-sensitive. The domain and stored-field
-resolution must permit the relevant wavelengths, as discussed in
-Subsection~\ref{sec:internal-gravity-waves}. Periodicity restricts the
-available streamwise and spanwise modes, while wall confinement restricts the
-wall-normal structure. The planned domains have not yet been demonstrated to
-be sufficient for either the largest turbulent structures or the relevant wave
-modes \cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}.
-
-Channel grids commonly cluster points near the walls to resolve steep mean
-velocity and scalar gradients and the thin viscous and conductive layers.
-Stretching improves near-wall resolution without imposing the same fine
-spacing throughout the channel and can reduce the total grid cost relative to
-a uniformly fine mesh. It also has disadvantages: the smallest spacing can
-restrict the time step, abrupt changes in spacing can reduce accuracy, and
-wall-normal differentiation and interpolation require care. The mapping,
-stretching factor, physical point count, and ghost-node treatment must
-therefore be documented. No stretching formula is assumed here because the
-BRINE mapping has not been verified.
-
-The fresh Kleandro thermal setup has an unresolved stretching factor. Its
-separate extended-restart record reports a factor of $2.0$, but this is a
-setup record rather than a universal recommendation and must not be transferred
-to a fresh project case without checking the approved inputs.
-
-\subsubsection{Stability Restrictions and the Solver Time Step}
-
-A generic multidimensional Courant number at a grid location is
-\begin{equation}
-  \mathrm{CFL}
-  =\Delta t\left(
-    \frac{|u|}{\Delta x}
-    +\frac{|v|}{\Delta y}
-    +\frac{|w|}{\Delta z_j}
-  \right),
-  \label{eq:multidimensional-cfl-number}
-\end{equation}
-where $\Delta t$ is the solver time step and $u$, $v$, and $w$ are the local
-streamwise, spanwise, and wall-normal velocities. An explicit or partly
-explicit method generally requires
-$\mathrm{CFL}\leq C_{\mathrm{adv}}$, where $C_{\mathrm{adv}}$ is a
-method-dependent advective stability limit. Its value depends on the actual
-spatial and temporal discretisations and must be established for BRINE rather
-than assumed. The estimate should use the maximum relevant local velocities,
-the local $\Delta z_j$ on a stretched grid, and a safety margin; a universal
-criterion $\mathrm{CFL}<1$ is not asserted.
-
-Generic local measures of momentum and scalar diffusion are
-\begin{align}
-  D_{\nu,j}
-  &=\nu\Delta t\left(
-    \frac{1}{\Delta x^2}
-    +\frac{1}{\Delta y^2}
-    +\frac{1}{\Delta z_j^2}
-  \right),
-  \label{eq:viscous-diffusion-measure}\\
-  D_{\kappa,j}
-  &=\kappa\Delta t\left(
-    \frac{1}{\Delta x^2}
-    +\frac{1}{\Delta y^2}
-    +\frac{1}{\Delta z_j^2}
-  \right),
-  \label{eq:scalar-diffusion-measure}
-\end{align}
-where $\kappa$ is the scalar diffusivity. Stability can require
-$D_{\nu,j}\leq C_\nu$ and $D_{\kappa,j}\leq C_\kappa$, but the constants
-$C_\nu$ and $C_\kappa$ are properties of the verified numerical scheme, not
-physical constants. Both restrictions must be checked using the most
-restrictive local spacing. Because $Pr=\nu/\kappa$, a case with $Pr<1$ has
-$\kappa>\nu$ and scalar diffusion can impose the stronger explicit
-restriction; for $Pr=1$, the two diffusivities are equal. The smallest
-wall-normal spacing may dominate either estimate.
-
-The usable solver time step must satisfy every applicable restriction,
-\begin{equation}
-  \Delta t\leq
-  \min\left(
-    \Delta t_{\mathrm{adv}},
-    \Delta t_\nu,
-    \Delta t_\kappa,
-    \Delta t_{\mathrm{other}}
-  \right),
-  \label{eq:combined-time-step-restriction}
-\end{equation}
-where the terms denote the advective, viscous, scalar-diffusive, and other
-solver-specific limits. A safety margin should be retained. No project time
-step can be selected from these relations until the actual grid, velocity
-range, treatment of diffusion, and BRINE scheme have been confirmed.
-
-\subsubsection{Physical Temporal Resolution and Stored Output}
-
-Numerical stability alone does not ensure adequate temporal resolution.
-$\Delta t$ must also resolve turbulent evolution, near-wall dynamics, scalar
-fluctuations, and any internal-wave oscillations of interest. The solver time
-step is distinct from the restart or checkpoint interval. It also differs from
-the instantaneous-field output interval and the interval between statistical
-samples. Infrequent output can hide physical dynamics even when the solver
-itself is stable.
-
-If stored samples are separated by $\Delta t_s$, their Nyquist frequency is
-\begin{equation}
-  f_N=\frac{1}{2\Delta t_s},
-  \label{eq:nyquist-frequency}
-\end{equation}
-where $f_N$ is measured in hertz for dimensional time and $\Delta t_s$ is the
-sampling interval between stored data. Frequencies above $f_N$ cannot be
-resolved correctly and may be aliased into lower frequencies. Meaningful
-internal-wave spectra therefore require output frequent enough for the
-expected frequency range, while the total sampling duration must be long
-enough for the lowest frequency of interest. No output interval is selected at
-this checkpoint.
-
-\subsubsection{Transients, Stationarity, and Averaging}
-
-Numerical convergence and statistical stationarity are different
-requirements. A time step may remain stable, and any iterative solver may
-meet its numerical tolerance, while the evolving turbulent statistics still
-depend on the initial condition. A turbulent calculation normally passes
-through an initial transient, an approach to statistically stationary
-behaviour, and a production interval used for reported statistics. The
-initial transient should not normally be included in production averages
-unless transient physics is itself the subject of study.
-
-Stationarity can be assessed using histories of bulk velocity or mass flow,
-pressure-gradient forcing, wall shear stress, friction velocity, total kinetic
-energy, scalar mean or variance, wall scalar flux, spatially averaged
-temperature, and relevant buoyancy quantities. The useful set depends on the
-case and its forcing. No single flat-looking history proves stationarity;
-several quantities and more than one portion of the record should be examined.
-
-The ideal time average in Eq.~\eqref{eq:turbulence-time-average} is replaced in
-finite data by
-\begin{equation}
-  \langle\phi\rangle_T
-  =\frac{1}{T}\int_{t_0}^{t_0+T}\phi(t)\,\mathrm{d}t,
-  \label{eq:finite-production-time-average}
-\end{equation}
-where $t_0$ is the beginning of the production window and $T$ is its duration.
-For the channel, plane averaging over the statistically homogeneous $x$ and
-$y$ directions gives the space--time average in
-Eq.~\eqref{eq:channel-space-time-average} and can increase the effective
-sample size. Consecutive stored fields can nevertheless be correlated.
-Consequently, the number of effectively independent samples is controlled by
-the production duration relative to the integral correlation time, not simply
-by the number of output files \cite{pope2000}.
-
-\subsubsection{Statistical and Numerical Convergence Checks}
-
-Practical statistical checks include comparing profiles from successive parts
-of the production window, examining cumulative or running means, and testing
-whether changes become small relative to the intended accuracy. Independent
-time intervals should be compared where possible, and sampling uncertainty
-should be reported. Lower- and upper-wall symmetry is a useful diagnostic only
-when the forcing, boundary conditions, and expected physics justify that
-symmetry; it must not be imposed automatically.
-
-Statistical convergence, grid convergence, time-step convergence, and
-agreement with reference DNS address different questions. Statistical
-convergence concerns sampling uncertainty, grid convergence concerns spatial
-discretisation error, and time-step convergence concerns temporal
-discretisation error. Agreement with a reference tests the combined outcome
-for compatible cases, but does not by itself prove any of the other three.
-For thermal and stratified calculations, convergence should be assessed
-separately for mean velocity, the three RMS velocity components, Reynolds
-shear stress, mean scalar, scalar RMS, turbulent scalar flux, wall flux or wall
-gradient, and any wave-related spectra. These quantities extend the turbulence
-and scalar statistics defined in
-Eqs.~\eqref{eq:rms-velocity-fluctuations},
-\eqref{eq:reynolds-shear-stress}, and
-\eqref{eq:scalar-validation-statistics}.
-
-A credible sensitivity assessment may compare a baseline mesh with a refined
-mesh and, where appropriate, repeat a case with a reduced $\Delta t$. The
-physical parameters must be held fixed, integral quantities and profiles
-should both be compared, and every numerical setting that changes should be
-recorded. This separation helps distinguish physical differences from
-numerical ones. A full refinement campaign is not prescribed here; the
-feasible strategy will depend on the selected benchmark, Leonardo resource
-cost, and advisor approval. Future convergence histories and comparison
-figures must follow the repository's mandatory scientific plotting standard
-and disclose normalization, averaging windows, coordinate mapping,
-interpolation, and any folding or symmetrisation.
-
-\subsubsection{Application to the Planned Project Cases}
-
-The planned sequence uses the friction Reynolds number defined in
-Eq.~\eqref{eq:friction-scaling-quantities}. It consists of an unstratified
-channel benchmark at $Re_\tau=590$, a passive-scalar benchmark at $Pr=1$, and
-a stably stratified case at $Re_\tau=180$, $Pr=0.7$, and $Ri_\tau=120$. The
-passive-scalar Reynolds number remains subject to confirmation because the
-project records contain an unresolved $Re_\tau=550$ versus $Re_\tau=500$
-inconsistency. All values are targets for future work, not completed
-simulations.
-
-Before any case is launched, the project must confirm the physical grid
-dimensions, domain lengths, wall-normal stretching, physical and ghost-node
-counts, viscosity, thermal diffusivity, solver time step, scheme-specific
-stability limits, output and restart intervals, restart mode, production
-averaging window, retained statistics, and compatibility of the reference
-dataset. The actual BRINE inputs and numerical scheme must be inspected before
-final numerical values are assigned. In particular, the earlier $16^3$
-attempt failed during setup before producing a simulation result and therefore
-validated neither the solver nor its numerical resolution.
+Adequate resolution and converged statistics are prerequisites throughout.
+Isolating buoyancy effects in the stable case additionally requires a
+compatible unstratified reference or an explicit treatment of differences in
+$Re_\tau$ and other operating conditions.
