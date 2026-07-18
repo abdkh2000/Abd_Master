@@ -58,111 +58,56 @@ turbulent field remains three-dimensional and unsteady
 \subsection{Turbulence Statistics and Wall Scaling}
 \label{sec:turbulence-statistics-wall-scaling}
 
-Channel statistics combine an average over the two homogeneous planes with a
-time average over a statistically stationary production interval. For any
-instantaneous quantity $\phi$, an interval of duration $\mathcal{T}$ beginning
-at $t_0$ defines the finite-data average adopted below. The Reynolds
-decomposition is then
+The mean streamwise velocity is $U(z)=\langle u\rangle$. Brackets denote an
+average over time and over the statistically homogeneous streamwise and
+spanwise directions after statistical stationarity has been reached. Each
+instantaneous velocity component is separated into its mean and fluctuating
+parts through the Reynolds decomposition
 \begin{equation}
-  \begin{aligned}
-    \langle\phi\rangle_{xy}(z,t)
-      &=\frac{1}{L_xL_y}\int_0^{L_y}\!\int_0^{L_x}
-        \phi(x,y,z,t)\,\mathrm{d}x\,\mathrm{d}y,\\
-    \langle\phi\rangle(z)
-      &=\frac{1}{\mathcal{T}}\int_{t_0}^{t_0+\mathcal{T}}
-        \langle\phi\rangle_{xy}(z,t)\,\mathrm{d}t,\\
-    u_i&=U_i+u_i',
-    &U_i&=\langle u_i\rangle,
-    \qquad i\in\{1,2,3\},\\
-    \langle u_i'\rangle&=0.
-  \end{aligned}
+  u_i=U_i+u_i',
+  \qquad
+  U_i=\langle u_i\rangle .
   \label{eq:channel-average-reynolds-decomposition}
 \end{equation}
-The project assignments are $u_1=u$, $u_2=v$, and $u_3=w$, while
-$U(z)=\langle u\rangle$ is the mean streamwise velocity. In the infinite-time
-limit the average is independent of $t_0$; in a calculation, stationarity and
-convergence checks must support that independence.
+Here $i\in\{1,2,3\}$ corresponds to the streamwise, spanwise, and wall-normal
+components $(u,v,w)$.
 
-The velocity quantities required for later comparison are the three
-root-mean-square (RMS) fluctuations, the Reynolds shear stress, and turbulent
-kinetic energy per unit mass:
+The quantities used in the project validation plots are
 \begin{equation}
   \begin{aligned}
     u_{\mathrm{rms}}&=\sqrt{\langle u'^2\rangle},
     &v_{\mathrm{rms}}&=\sqrt{\langle v'^2\rangle},
     &w_{\mathrm{rms}}&=\sqrt{\langle w'^2\rangle},\\
-    \tau_{uw}^{\mathrm{turb}}&=-\rho_0\langle u'w'\rangle,
+    -\langle u'w'\rangle&,
     &k&=\frac{1}{2}\left(
       \langle u'^2\rangle+\langle v'^2\rangle+\langle w'^2\rangle
       \right).
   \end{aligned}
   \label{eq:velocity-validation-statistics}
 \end{equation}
-The correlation $-\langle u'w'\rangle$ is the kinematic turbulent transport
-of streamwise momentum in the wall-normal direction. Together, the RMS
-profiles and $k$ show the magnitude and anisotropy of the velocity
-fluctuations \cite{pope2000,kimMoinMoser1987}.
+RMS values measure fluctuation intensity, $-\langle u'w'\rangle$ measures
+wall-normal transport of streamwise momentum, and $k$ is turbulent kinetic
+energy per unit mass \cite{pope2000,kimMoinMoser1987}. BRINE uses $w$ as the
+wall-normal velocity.
 
-BRINE uses $z$ and $w$ for the wall-normal coordinate and velocity. Channel
-data that instead use the common literature convention $(y,v)$ in the
-wall-normal direction must therefore be remapped as
-$y_{\mathrm{lit}}\mapsto z$ and $v_{\mathrm{lit}}\mapsto w$; in particular,
-$-\langle u'v'\rangle_{\mathrm{lit}}$ corresponds to
-$-\langle u'w'\rangle$ here. The mapping must be stated explicitly in each
-external comparison.
-
-The positive wall-shear magnitude, friction velocity, and friction Reynolds
-number provide the natural channel scales:
+The wall-shear magnitude and its associated inner scales are
 \begin{equation}
   \begin{aligned}
-    \tau_{w,\pm}&=\rho_0\nu
-      \left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_{z=\pm h},
-    &\tau_w&=\frac{\tau_{w,-}+\tau_{w,+}}{2}=hG,\\
-    u_\tau&=\sqrt{\frac{\tau_w}{\rho_0}},
-    &Re_\tau&=\frac{u_\tau h}{\nu}.
+    \tau_w&=\rho_0\nu
+      \left|\frac{\mathrm{d}U}{\mathrm{d}z}\right|_w,
+    &u_\tau&=\sqrt{\frac{\tau_w}{\rho_0}},
+    &Re_\tau&=\frac{u_\tau h}{\nu},\\
+    z^+&=\frac{d_wu_\tau}{\nu},
+    &U^+&=\frac{U}{u_\tau}.
   \end{aligned}
   \label{eq:wall-friction-scales}
 \end{equation}
-For the reflection-symmetric baseline,
-$\tau_{w,-}=\tau_{w,+}=\tau_w$. The averaged equality $\tau_w=hG$ follows from
-the fully developed mean momentum balance and also supplies a forcing-based
-case scale if thermal conditions make the individual wall stresses unequal.
-Any local wall scaling based instead on $u_{\tau,\pm}$ must be identified in
-the comparison.
-
-Let $d_w=h-|z|$ be distance from the nearest wall. The viscous length and the
-inner-scaled quantities used for profile comparisons are
-\begin{equation}
-  \begin{aligned}
-    \ell_\nu&=\frac{\nu}{u_\tau},
-    &z^+&=\frac{d_w}{\ell_\nu}=\frac{d_wu_\tau}{\nu},
-    &U^+&=\frac{U}{u_\tau},\\
-    (u_{\mathrm{rms}}^+,v_{\mathrm{rms}}^+,w_{\mathrm{rms}}^+)
-      &=\frac{1}{u_\tau}
-        (u_{\mathrm{rms}},v_{\mathrm{rms}},w_{\mathrm{rms}}),
-    &-\langle u'w'\rangle^+
-      &=-\frac{\langle u'w'\rangle}{u_\tau^2},
-    &k^+&=\frac{k}{u_\tau^2}.
-  \end{aligned}
-  \label{eq:inner-scaled-statistics}
-\end{equation}
-Thus $z^+$ denotes a non-negative wall distance rather than the signed physical
-coordinate.
-
-For a smooth wall, the leading viscous behaviour and the overlap approximation
-for the mean velocity can be stated compactly as
-\begin{equation}
-  U^+=z^+\quad\text{(viscous limit)},
-  \qquad
-  U^+=\frac{1}{\kappa_{\mathrm{vK}}}\ln z^+ + B
-  \quad\text{(logarithmic overlap)}.
-  \label{eq:mean-velocity-wall-laws}
-\end{equation}
-Here $\kappa_{\mathrm{vK}}$ and $B$ are the von K\'arm\'an constant and
-intercept, not fitted project parameters. These relations are reference
-behaviours rather than a complete division of the channel into textbook
-regions. The planned $Re_\tau=590$ baseline will be assessed through the
-profiles defined above and comparison with established channel DNS
+Here $d_w=h-|z|$ is the distance from the nearest wall. RMS velocities are
+normalised by $u_\tau$, while Reynolds shear stress is normalised by
+$u_\tau^2$. For a smooth wall, the mean velocity is approximately linear very
+close to the wall, $U^+\approx z^+$, and approximately logarithmic farther
+from it. The planned $Re_\tau=590$ baseline will be assessed through these
+profiles and comparison with established channel DNS
 \cite{moserKimMansour1999}.
 
 \subsection{Scalar Transport and Thermal Buoyancy}
@@ -296,8 +241,9 @@ near-wall shear can sustain turbulence while buoyancy strongly affects the
 more weakly sheared core
 \cite{armenioSarkar2002,garciaVillalbaDelAlamo2011}.
 
-Internal gravity waves are possible because stable buoyancy supplies a
-restoring force. In the ideal inviscid, uniformly stratified limit, a
+Stable buoyancy provides the restoring force for internal gravity waves.
+
+In the ideal inviscid, uniformly stratified limit, a
 propagating wave has intrinsic angular frequency
 $0<|\widehat{\omega}|<N$, where $N=\sqrt{N^2}$; mean shear, confinement,
 viscosity, and turbulence

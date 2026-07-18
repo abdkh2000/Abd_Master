@@ -13,16 +13,22 @@
 \usepackage{setspace}
 \onehalfspacing
 
-\title{Abd Master Project}
-\author{Abd}
-\date{\today}
-
 \begin{document}
 
-\maketitle
-\tableofcontents
+\pagenumbering{gobble}
+\input{frontmatter/titlepage}
+\clearpage
 
+\pagenumbering{roman}
+\setcounter{page}{1}
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
 \input{chapters/introduction}
+\clearpage
+
 \input{chapters/theory}
 
 \clearpage

@@ -2,6 +2,34 @@
 
 ## 2026-07-18
 
+### Theory Statistics Refinement and Provisional Front Matter
+
+- Found and preserved the completed condensed theory on local `main` at
+  `f6b48df` (`Condense and complete project theory chapter`). After fetching
+  `origin`, that clean local branch was one commit ahead of `origin/main`; the
+  correction therefore continued from the completed local work rather than
+  from the older remote chapter.
+- Refined subsection 2.2, *Turbulence Statistics and Wall Scaling*, from five
+  to three displayed equation environments. The subsection now contains only
+  the Reynolds decomposition, the combined validation statistics, and the
+  combined wall quantities needed for the planned plots. It occupies about one
+  typeset page across physical PDF pages 6--7.
+- Reduced `chapters/theory.tex` from 360 to 306 source lines. The complete
+  theory chapter spans physical PDF pages 5--11 (Arabic pages 3--9), or seven
+  actual pages.
+- Added a provisional, logo-free title page in `frontmatter/titlepage.tex` and
+  replaced the generic `\maketitle` sequence. The final arrangement is an
+  unnumbered cover on physical page 1, a standalone Roman-numbered contents
+  page on physical page 2, the introduction beginning at Arabic page 1 on
+  physical page 3, and the bibliography on physical page 12.
+- Compiled successfully with
+  `& 'C:\Users\abdul\AppData\Local\Programs\MiKTeX\miktex\bin\x64\latexmk.exe' -pdf main.tex`.
+  The repository configuration invoked XeLaTeX and produced a 12-page PDF.
+  The document log contains no undefined references or citations, multiply
+  defined labels, LaTeX/package warnings, overfull or underfull boxes, or
+  compilation errors. The rendered document was inspected visually; only the
+  environmental MiKTeX update-check notice remains in command output.
+
 ### Project-Level Theoretical Background Rewrite
 
 - Rebuilt the theoretical background around five project-specific subsections:
