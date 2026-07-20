@@ -31,8 +31,10 @@ C:\Users\abdul\AppData\Local\Programs\MiKTeX\miktex\bin\x64
 ## Project Layout
 
 - `main.tex`: main LaTeX entry point
-- `chapters/`: document chapters and sections
-- `figures/`: figure assets
+- `frontmatter/titlepage.tex`: adapted TU Wien project-report cover
+- `chapters/`: one source file per major report chapter
+- `figures/cover/`: retained TU Wien and institute cover logos
+- `figures/`: project figure assets
 - `tables/`: table source files or exports
 - `references.bib`: bibliography database
 - `notes/meeting_transcripts/`: advisor meeting transcripts

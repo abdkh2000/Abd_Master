@@ -1,0 +1,42 @@
+\chapter{Tests and Results}
+\label{ch:tests-and-results}
+
+No scientific runtime result is claimed from the failed Leonardo launch because
+neither the diagnostic executable nor BRINE began. This chapter therefore
+retains the planned validation structure without inventing measurements.
+
+\section{Evidence Status}
+
+Table~\ref{tab:evidence-status} defines the distinction used when results are
+added. It prevents source inspection, prepared inputs, and successful runtime
+checks from being reported as equivalent forms of evidence.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Evidence classifications used for the project report.}
+  \label{tab:evidence-status}
+  \begin{spacing}{1.0}
+  \small
+  \begin{tabularx}{\textwidth}{@{}>{\bfseries}lX@{}}
+    \toprule
+    Classification & Meaning in this report \\
+    \midrule
+    Source-confirmed & Established from the active implementation, immutable
+      input, or a directly identified reference artifact. \\
+    Runtime-confirmed & Demonstrated by a completed run and its stated
+      acceptance checks. \\
+    Not tested & No relevant successful runtime observation is available. \\
+    Blocked & A failed prerequisite or absent, unapproved implementation
+      prevents the test. \\
+    \bottomrule
+  \end{tabularx}
+  \end{spacing}
+\end{table}
+
+\section{Planned Validation Sequence}
+
+The completed report will present deterministic boundary checks, canonical
+fresh-start behaviour, checkpoint and restart continuity, time-step evidence,
+one-node performance, and two-node launch and scaling results only when the
+corresponding runtime evidence exists. Comparison plots will follow the
+project's established scientific plotting conventions.

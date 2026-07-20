@@ -1,5 +1,43 @@
 # Project Log
 
+## 2026-07-20
+
+### Advisor Template Integration for the Project Report
+
+- Inspected the extracted advisor template at
+  `MasterThesisTemplate/MasterThesisTemplate`, including its master source,
+  title page, class/configuration files, auxiliary styles, logos, example
+  chapters, figures, and compiled cover. The extracted template itself was
+  left unchanged.
+- Retained the template's A4 proportions, asymmetric professional margins,
+  readable line spacing, blue chapter treatment, one-sided layout, cover
+  composition, and TU Wien and MWM logos. Reimplemented those choices in the
+  existing `main.tex` so the report does not depend on the template class's
+  required `.sdf` file or unrelated sample-only style/configuration files.
+- Replaced the provisional cover with a standalone English `Project Report`
+  cover using the exact project title, supplied student details, July 2026
+  date, and the supervisor/institute wording verified from Kleandros' project
+  document. Thesis-degree, reviewer, approval, abstract, acknowledgement, and
+  sample-placeholder material was omitted.
+- Preserved the completed introduction, reduced theory, equations, citations,
+  labels, references, numerical values, and technical terminology. Added
+  modular chapter files for the numerical method, computational setup, tests
+  and results, and conclusions; these are explicitly structured placeholders
+  and make no scientific claims from the failed Leonardo launch.
+- Kept the project's numbered technical citations and real bibliography, and
+  added consistent equation, table, figure, hyperlink, SI-unit, widow/orphan,
+  header, and chapter-opening formatting. No sample bibliography or sample
+  figures were imported.
+- Built with `latexmk -pdf main.tex`, which uses the repository's XeLaTeX
+  configuration and writes `build/main.pdf`. The final 16-page A4 document has
+  no LaTeX/package warnings, undefined citations or references, duplicate
+  labels, or overfull/underfull boxes in `build/main.log`.
+- Rendered and visually inspected the complete cover, one-page contents,
+  introduction opening, representative theory equations, evidence-status
+  table, conclusions page, and final bibliography page. The contents and main
+  matter begin on separate pages, Arabic numbering starts at the introduction,
+  and no accidental blank or sample-content pages remain.
+
 ## 2026-07-18
 
 ### Theory Statistics Refinement and Provisional Front Matter

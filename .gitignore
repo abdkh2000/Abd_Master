@@ -10,17 +10,28 @@ build/*
 *.idx
 *.ilg
 *.ind
+*.ist
 *.lof
 *.log
 *.lot
 *.out
+*.dvi
+*.ps
 *.run.xml
+*.sdf
 *.synctex.gz
 *.toc
 *.xdv
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
 *.nav
 *.snm
 *.vrb
+__MACOSX/
 
 # PDFs generated from source
 *.pdf

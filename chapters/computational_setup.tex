@@ -1,0 +1,21 @@
+\chapter{Computational Setup}
+\label{ch:computational-setup}
+
+This chapter will contain the immutable inputs, compile-time dimensions,
+physical flags, boundary coefficients, initialisation selectors, grid mapping,
+time step, output cadence, and compute resources for each reported case.
+Values will be classified as source-confirmed or runtime-confirmed so that a
+prepared configuration is not mistaken for a completed calculation.
+
+\section{Case Definition and Provenance}
+
+Each final case description will identify its source revision, binary and input
+checksums, fresh-start or restart state, and the evidence supporting every
+selector. The production-shaped configuration will remain distinct from the
+canonical reference cases.
+
+\section{Runtime Environment}
+
+Compiler, MPI, accelerator, and scheduler settings will be reported from the
+actual successful allocation. A failed scheduler launch that never starts the
+solver provides launch-forensics evidence, but no scientific result.

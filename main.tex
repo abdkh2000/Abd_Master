@@ -1,38 +1,132 @@
-\documentclass[12pt]{article}
+\documentclass[12pt,a4paper,oneside,openany]{book}
 
+% Typography and page layout adapted from the advisor's TU Wien template.
 \usepackage{fontspec}
-\IfFontExistsTF{Times New Roman}
-  {\setmainfont{Times New Roman}}
-  {
-    \PackageWarningNoLine{AbdMaster}
-      {Times New Roman not found; using TeX Gyre Termes for this non-final build}
-    \setmainfont{TeX Gyre Termes}
-  }
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+\usepackage[english]{babel}
+\usepackage[left=30mm,right=25mm,top=30mm,bottom=30mm,headheight=15pt]{geometry}
+\usepackage{setspace}
+\setstretch{1.433}
+\usepackage[protrusion=true,tracking=true]{microtype}
+\usepackage[hang,flushmargin]{footmisc}
+
+% Headings and running page style.
+\usepackage[raggedright]{titlesec}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\definecolor{TUblue}{HTML}{006699}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\bfseries\raggedleft}
+  {\color{TUblue}\titlerule[2.5pt]\vspace{0.5ex}%
+   \fontsize{58}{62}\selectfont\thechapter}
+  {0.3ex}
+  {\Huge}
+\titleformat{name=\chapter,numberless}[display]
+  {\normalfont\sffamily\bfseries\raggedleft}
+  {\color{TUblue}\titlerule[2.5pt]}
+  {2.0ex}
+  {\Huge}
+\titleformat{\section}
+  {\normalfont\Large\sffamily\bfseries}
+  {\thesection}{0.75em}{}
+\titleformat{\subsection}
+  {\normalfont\large\sffamily\bfseries}
+  {\thesubsection}{0.75em}{}
+\titlespacing*{\chapter}{0pt}{-12pt}{28pt}
+\titlespacing*{\section}{0pt}{2.2ex plus 0.5ex minus 0.2ex}{0.9ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.7ex}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\nouppercase{\leftmark}}
+\fancyhead[R]{\small\sffamily\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\small\sffamily\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}}
+
+% Mathematics, units, figures, and tables.
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{setspace}
-\onehalfspacing
+\usepackage{mathtools}
+\usepackage{bm}
+\numberwithin{equation}{chapter}
+\usepackage[per-mode=symbol]{siunitx}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage[
+  font=small,
+  labelfont=bf,
+  labelsep=endash,
+  justification=justified,
+  singlelinecheck=false
+]{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{enumitem}
+\graphicspath{{figures/}}
+
+% Numbered technical citations and clickable PDF navigation.
+\usepackage{cite}
+\usepackage{hyperref}
+\hypersetup{
+  unicode=true,
+  bookmarksopen=true,
+  linktoc=all,
+  colorlinks=true,
+  linkcolor=TUblue,
+  citecolor=TUblue,
+  urlcolor=TUblue,
+  pdftitle={Integration of Canonical Turbulent Validations, Internal Gravity Waves, and Ice Shelf Morphodynamics},
+  pdfauthor={Abdullah Alkhatib}
+}
+\urlstyle{same}
+
+% Conservative typesetting safeguards for the one-sided report.
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35\baselineskip plus 0.1\baselineskip minus 0.05\baselineskip}
+\setcounter{tocdepth}{2}
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\emergencystretch=2em
+\raggedbottom
 
 \begin{document}
 
-\pagenumbering{gobble}
 \input{frontmatter/titlepage}
-\clearpage
 
-\pagenumbering{roman}
-\setcounter{page}{1}
+\frontmatter
+\pagestyle{plain}
+\begingroup
+\setstretch{1.1}
 \tableofcontents
+\endgroup
 \clearpage
 
-\pagenumbering{arabic}
-\setcounter{page}{1}
+\mainmatter
+\pagestyle{fancy}
 \input{chapters/introduction}
-\clearpage
-
 \input{chapters/theory}
+\input{chapters/numerical_method}
+\input{chapters/computational_setup}
+\input{chapters/tests_and_results}
+\input{chapters/conclusions}
 
-\clearpage
-\bibliographystyle{plain}
+\backmatter
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{IEEEtran}
 \bibliography{references}
 
 \end{document}
